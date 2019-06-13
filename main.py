@@ -1,6 +1,6 @@
 import file_reader
 import rocchio_classifier
-import math
+
 
 def calc_accuracy(test_set, classifier, predict_method):
     correct = 0.0
@@ -15,7 +15,7 @@ def calc_accuracy(test_set, classifier, predict_method):
 
 if __name__ == '__main__':
 
-    file_name = "./dataset/amazon_cells_labelled_full.txt"
+    file_name = "./dataset/amazon_cells_labelled_full.txt"  # TODO change to command line?
     train_file_name = "./dataset/amazon_cells_labelled_train.txt"
     test_file_name = "./dataset/amazon_cells_labelled_test.txt"
 
@@ -27,27 +27,42 @@ if __name__ == '__main__':
     train_set_bool, _ = data_0_1_2.build_set("boolean", train_file_name)
     test_set_bool, _ = data_0_1_2.build_set("boolean", test_file_name)
     classifier_bool = rocchio_classifier.RocchioClassifier(train_set_bool)
-    print("Bool: ", calc_accuracy(test_set_bool, classifier_bool, 'euclidean distance'))
+    base_accuracy = calc_accuracy(test_set_bool, classifier_bool, 'euclidean')
+
+    print("Bool: ", base_accuracy)
+    print("Diff to base: 0")
+    print("Improvement from previous: -")
 
     # tf
     train_set_tf, _ = data_0_1_2.build_set("tf", train_file_name)
     test_set_tf, _ = data_0_1_2.build_set("tf", test_file_name)
     classifier_tf = rocchio_classifier.RocchioClassifier(train_set_tf)
-    print("tf: ", calc_accuracy(test_set_tf, classifier_tf, 'euclidean distance'))
+    tf_accuracy = calc_accuracy(test_set_tf, classifier_tf, 'euclidean')
+
+    print("tf: ", tf_accuracy)
+    print("Diff to base: ", tf_accuracy-base_accuracy)
+    print("Improvement from previous: ", tf_accuracy-base_accuracy)
 
     # tfidf
     train_set_tfidf, _ = data_0_1_2.build_set("tfidf", train_file_name)
     test_set_tfidf, _ = data_0_1_2.build_set("tfidf", test_file_name)
     classifier_tfidf = rocchio_classifier.RocchioClassifier(train_set_tfidf)
-    print("tfidf: ", calc_accuracy(test_set_tfidf, classifier_tfidf, 'euclidean distance'))
+    tfidf_accuracy = calc_accuracy(test_set_tfidf, classifier_tfidf, 'euclidean')
+
+    print("tfidf: ", tfidf_accuracy)
+    print("Diff to base: ", tfidf_accuracy-base_accuracy)
+    print("Improvement from previous: ", tfidf_accuracy-tf_accuracy)
 
     # tfidf with lower case and punctuation removal
     data_3 = file_reader.FileReader(file_name, lower_and_remove_punctuation=True, remove_stop_words=False)
     train_set_tfidf, _ = data_3.build_set("tfidf", train_file_name)
     test_set_tfidf, _ = data_3.build_set("tfidf", test_file_name)
     classifier_tfidf = rocchio_classifier.RocchioClassifier(train_set_tfidf)
-    print("tfidf with lower case and punctuation removal: ",
-          calc_accuracy(test_set_tfidf, classifier_tfidf, 'euclidean distance'))
+    tfidf_lower_no_punctuation_accuracy = calc_accuracy(test_set_tfidf, classifier_tfidf, 'euclidean')
+
+    print("tfidf with lower case and punctuation removal: ", tfidf_lower_no_punctuation_accuracy)
+    print("Diff to base: ", tfidf_lower_no_punctuation_accuracy-base_accuracy)
+    print("Improvement from previous: ", tfidf_lower_no_punctuation_accuracy-tfidf_accuracy)
 
     data_4_5 = file_reader.FileReader(file_name, lower_and_remove_punctuation=True, remove_stop_words=True)
 
@@ -55,11 +70,17 @@ if __name__ == '__main__':
     train_set_tfidf, _ = data_4_5.build_set("tfidf", train_file_name)
     test_set_tfidf, _ = data_4_5.build_set("tfidf", test_file_name)
     classifier_tfidf = rocchio_classifier.RocchioClassifier(train_set_tfidf)
+    tfidf_cleaned_words_accuracy = calc_accuracy(test_set_tfidf, classifier_tfidf, 'euclidean')
 
-    print("tfidf with lower case, punctuation removal and stopwords removal: ",
-          calc_accuracy(test_set_tfidf, classifier_tfidf, 'euclidean distance'))
+    print("tfidf with lower case, punctuation removal and stopwords removal: ", tfidf_cleaned_words_accuracy)
+    print("Diff to base: ", tfidf_cleaned_words_accuracy-base_accuracy)
+    print("Improvement from previous: ", tfidf_cleaned_words_accuracy-tfidf_lower_no_punctuation_accuracy)
 
     # tfidf with cosine similarity, lower case, punctuation removal and stopwords removal:
+    tfidf_cleaned_words_cosine_accuracy = calc_accuracy(test_set_tfidf, classifier_tfidf, 'cosine')
+
     print("tfidf with cosine similarity, lower case, punctuation removal and stopwords removal: ",
-          calc_accuracy(test_set_tfidf, classifier_tfidf, 'cosine similarity'))
+          tfidf_cleaned_words_cosine_accuracy)
+    print("Diff to base: ", tfidf_cleaned_words_cosine_accuracy-base_accuracy)
+    print("Improvement from previous: ", tfidf_cleaned_words_cosine_accuracy-tfidf_cleaned_words_accuracy)
 

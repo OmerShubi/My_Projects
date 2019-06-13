@@ -131,12 +131,12 @@ class FileReader:
                         continue
                     vec[self.words[word]] += 1
                 # TODO COMMENT
-                for word in range(len(vec)):
-                    if vec[word] == 0:
+                for word in self.words.keys():
+                    if vec[self.words[word]] == 0:
                         continue
                     else:
-                        temp = vec[word]
-                        vec[word] = temp*math.log((self.number_of_docs/self.words[word]), 10)
+                        temp = vec[self.words[word]]
+                        vec[self.words[word]] = temp*math.log((self.number_of_docs/self.df[word]), 10)
                 doc_class = line.split("\t")[1].rstrip()
                 vec.append(doc_class)
                 doc_set['doc'+str(index)] = vec

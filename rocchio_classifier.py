@@ -28,19 +28,25 @@ class RocchioClassifier:
         """
         Predicts class of document
         Computes distance of doc from each centroid and returns the argmin
+        :return:
         :param document: list of binary values
+        :param prediction_method: select whether to use euclidean or cosine distances
         :return: predicted class
         """
         distances = {}
         for centroid in self.class_centroids:
-            if prediction_method == 'euclidean distance':
+            if prediction_method == 'euclidean':
                 distances[centroid] = (self.eucildean_dist(self.class_centroids.get(centroid), document))
-            elif prediction_method == 'cosine similarity':
+            elif prediction_method == 'cosine':
                 distances[centroid] = (self.cosine_similarity(self.class_centroids.get(centroid), document))
             else:
-                print("wrong value. should be 'euclidean distance' or 'cosine similarity'")
+                print("wrong value. should be 'euclidean' or 'cosine'")
 
-        return min(distances, key=distances.get)
+        if prediction_method == 'euclidean':
+            return min(distances, key=distances.get)
+        if prediction_method == 'cosine':
+            return max(distances, key=distances.get)
+        return -1
 
     def eucildean_dist(self, list1, list2):
         """
