@@ -3,11 +3,13 @@ import math
 
 class FileReader:
 
-    def __init__(self, input_file):
+    def __init__(self, input_file, lower_and_remove_punctuation, remove_stop_words):
         self.file = input_file
         self.words = {}
         self.df = {}
         self.stop_words = []
+        self.lower_and_remove_punctuation = lower_and_remove_punctuation
+        self.remove_stop_words = remove_stop_words
         self.create_stop_words_list()
         self.create_words_bank()
         self.inv_words = {v: k for k, v in self.words.items()}
@@ -33,17 +35,22 @@ class FileReader:
         :param word: string
         :return: updated word - string
         """
-        # Changes word to lower case
-        word = word.lower()
+        if self.lower_and_remove_punctuation:
+            # Changes word to lower case
+            word = word.lower()
 
-        # Removes punctuations
-        updated_word = word.rstrip('.,?!:')
+            # Removes punctuations
+            word = word.rstrip('.,?!:')
+            return word
 
-        # returns empty string if word is a stop word
-        if updated_word in self.stop_words:
-            return ''
-        else:
-            return updated_word
+        if self.remove_stop_words:
+            # returns empty string if word is a stop word
+            if word in self.stop_words:
+                return ''
+            else:
+                return word
+
+        return word
 
     def create_words_bank(self):
         index = 0
@@ -76,6 +83,58 @@ class FileReader:
                     if word == '':
                         continue
                     vec[self.words[word]] = 1
+                doc_class = line.split("\t")[1].rstrip()
+                vec.append(doc_class)
+                doc_set['doc'+str(index)] = vec
+                reg_representation['doc' + str(index)] = line.split("\t")[0]
+                index += 1
+        return doc_set, reg_representation
+
+    def build_set_tf(self, file_to_vector):
+        doc_set = {}
+        reg_representation = {}
+        index = 0
+        with open(file_to_vector, 'r') as reader:
+            for line in reader:
+                vec = len(self.words)*[0,]
+                for word in line.split("\t")[0].split():
+                    word = self.pre_process_word(word)
+                    if word == '':
+                        continue
+                    vec[self.words[word]] += 1
+                #addition TODO COMMENT
+                for word in range(len(vec)):
+                    if vec[word] == 0:
+                        continue
+                    else:
+                        temp = vec[word]
+                        vec[word] = 1 + math.log(temp, 10)
+                doc_class = line.split("\t")[1].rstrip()
+                vec.append(doc_class)
+                doc_set['doc'+str(index)] = vec
+                reg_representation['doc' + str(index)] = line.split("\t")[0]
+                index += 1
+        return doc_set, reg_representation
+
+    def build_set_tfidf(self, file_to_vector):
+        doc_set = {}
+        reg_representation = {}
+        index = 0
+        with open(file_to_vector, 'r') as reader:
+            for line in reader:
+                vec = len(self.words)*[0,]
+                for word in line.split("\t")[0].split():
+                    word = self.pre_process_word(word)
+                    if word == '':
+                        continue
+                    vec[self.words[word]] += 1
+                #addition TODO COMMENT
+                for word in range(len(vec)):
+                    if vec[word] == 0:
+                        continue
+                    else:
+                        temp = vec[word]
+                        vec[word] = temp*math.log(self.inv_words[word], 10)
                 doc_class = line.split("\t")[1].rstrip()
                 vec.append(doc_class)
                 doc_set['doc'+str(index)] = vec
