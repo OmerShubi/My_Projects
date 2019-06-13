@@ -8,6 +8,7 @@ class FileReader:
         self.words = {}
         self.df = {}
         self.stop_words = []
+        self.number_of_docs = 0
         self.lower_and_remove_punctuation = lower_and_remove_punctuation
         self.remove_stop_words = remove_stop_words
         self.create_stop_words_list()
@@ -70,6 +71,7 @@ class FileReader:
                     if word not in self.words.keys(): # if the word doesnt already exists in the words dictionary
                         self.words[word] = index # add it
                         index += 1
+                self.number_of_docs += 1
 
     def build_set_boolean(self, file_to_vector):
         doc_set = {}
@@ -102,7 +104,7 @@ class FileReader:
                     if word == '':
                         continue
                     vec[self.words[word]] += 1
-                #addition TODO COMMENT
+                # TODO COMMENT
                 for word in range(len(vec)):
                     if vec[word] == 0:
                         continue
@@ -128,13 +130,13 @@ class FileReader:
                     if word == '':
                         continue
                     vec[self.words[word]] += 1
-                #addition TODO COMMENT
+                # TODO COMMENT
                 for word in range(len(vec)):
                     if vec[word] == 0:
                         continue
                     else:
                         temp = vec[word]
-                        vec[word] = temp*math.log(self.inv_words[word], 10)
+                        vec[word] = temp*math.log((self.number_of_docs/self.words[word]), 10)
                 doc_class = line.split("\t")[1].rstrip()
                 vec.append(doc_class)
                 doc_set['doc'+str(index)] = vec
