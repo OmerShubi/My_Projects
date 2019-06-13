@@ -42,14 +42,11 @@ class FileReader:
 
             # Removes punctuations
             word = word.rstrip('.,?!:')
-            return word
 
         if self.remove_stop_words:
             # returns empty string if word is a stop word
             if word in self.stop_words:
                 return ''
-            else:
-                return word
 
         return word
 
@@ -104,7 +101,7 @@ class FileReader:
                     if word == '':
                         continue
                     vec[self.words[word]] += 1
-                # TODO COMMENT
+                # After iterating over all words we now have the tf and can store words in tf format
                 for word in range(len(vec)):
                     if vec[word] == 0:
                         continue
@@ -130,7 +127,7 @@ class FileReader:
                     if word == '':
                         continue
                     vec[self.words[word]] += 1
-                # TODO COMMENT
+                # After iterating over all words we now have the tf and can store words in tfidf format
                 for word in self.words.keys():
                     if vec[self.words[word]] == 0:
                         continue

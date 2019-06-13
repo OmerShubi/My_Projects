@@ -43,31 +43,36 @@ class RocchioClassifier:
                 print("wrong value. should be 'euclidean' or 'cosine'")
 
         if prediction_method == 'euclidean':
-            return min(distances, key=distances.get)
-        if prediction_method == 'cosine':
-            return max(distances, key=distances.get)
-        return -1
+            return min(distances, key=distances.get)  # Lower euclidean distance = more similar
+        elif prediction_method == 'cosine':
+            return max(distances, key=distances.get)  # Higher cosine similarity = more similar
+        else:
+            return -1
 
-    def eucildean_dist(self, list1, list2):
+    @staticmethod
+    def eucildean_dist(list1, list2):
         """
         Calculates euclidean distance between two lists of doubles
 
         Assumes lists are of same length
         :param list1: list of doubles
         :param list2: list of doubles
-        :return: distance, double
+        :return: euclidean distance, double
         """
         result = 0
         for i in range(len(list1)):
             result += (list1[i] - list2[i])**2
         return math.sqrt(result)
 
-    def cosine_similarity(self, list1, list2):
+    @staticmethod
+    def cosine_similarity(list1, list2):
         """
-        TODO FILL
-        :param list1:
-        :param list2:
-        :return:
+        Calculates cosine similarity between two lists of doubles
+
+        Assumes lists are of same length
+        :param list1: list of doubles
+        :param list2: list of doubles
+        :return: cosine similarity, double
         """
         list1_norm = 0
         list2_norm = 0
