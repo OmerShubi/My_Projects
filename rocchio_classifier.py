@@ -3,13 +3,16 @@ import sys
 
 
 class RocchioClassifier:
-
     def __init__(self, train_set):
         self.training_set = train_set
         self.class_centroids = {}
         self.training()
 
     def training(self):
+        """
+        Trains the Rocchio classifier (creates the centroids)
+        :return: Nothing
+        """
         class_size = {}
         for doc in self.training_set:
             doc_class = self.training_set[doc][-1]
@@ -24,27 +27,27 @@ class RocchioClassifier:
             for i in range(len(self.class_centroids[c])):
                 self.class_centroids[c][i] /= float(class_size[c])
 
-    def predict(self, document, prediction_method):
+    def predict(self, document, distance_method):
         """
         Predicts class of document
         Computes distance of doc from each centroid and returns the argmin
         :return:
         :param document: list of binary values
-        :param prediction_method: select whether to use euclidean or cosine distances
+        :param distance_method: select whether to use euclidean or cosine distances
         :return: predicted class
         """
         distances = {}
         for centroid in self.class_centroids:
-            if prediction_method == 'euclidean':
+            if distance_method == 'euclidean':
                 distances[centroid] = (self.eucildean_dist(self.class_centroids.get(centroid), document))
-            elif prediction_method == 'cosine':
+            elif distance_method == 'cosine':
                 distances[centroid] = (self.cosine_similarity(self.class_centroids.get(centroid), document))
             else:
                 print("wrong value. should be 'euclidean' or 'cosine'")
 
-        if prediction_method == 'euclidean':
+        if distance_method == 'euclidean':
             return min(distances, key=distances.get)  # Lower euclidean distance = more similar
-        elif prediction_method == 'cosine':
+        elif distance_method == 'cosine':
             return max(distances, key=distances.get)  # Higher cosine similarity = more similar
         else:
             return -1

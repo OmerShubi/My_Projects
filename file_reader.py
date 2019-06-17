@@ -22,6 +22,8 @@ class FileReader:
             return self.build_set_tf(file_to_vector)
         if vector_type == 'tfidf':
             return self.build_set_tfidf(file_to_vector)
+        else:
+            print("vector_type should be 'boolean' / 'tf' / 'tfidf'")
 
     def create_stop_words_list(self):
         with open('./stop_words.txt') as stop_words_file:
@@ -71,6 +73,11 @@ class FileReader:
                 self.number_of_docs += 1
 
     def build_set_boolean(self, file_to_vector):
+        """
+        Builds the data vector using boolean format
+        :param file_to_vector: the file to be processed
+        :return: the file in vector form, using boolean format
+        """
         doc_set = {}
         reg_representation = {}
         index = 0
@@ -90,6 +97,11 @@ class FileReader:
         return doc_set, reg_representation
 
     def build_set_tf(self, file_to_vector):
+        """
+        Builds the data vector using tf format
+        :param file_to_vector: the file to be processed
+        :return: the file in vector form, using tf format
+        """
         doc_set = {}
         reg_representation = {}
         index = 0
@@ -116,6 +128,11 @@ class FileReader:
         return doc_set, reg_representation
 
     def build_set_tfidf(self, file_to_vector):
+        """
+        Builds the data vector using tfidf format
+        :param file_to_vector: the file to be processed
+        :return: the file in vector form, using tfidf format
+        """
         doc_set = {}
         reg_representation = {}
         index = 0
