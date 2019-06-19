@@ -54,21 +54,21 @@ class FileReader:
 
     def create_words_bank(self):
         index = 0
-        with open(self.file, 'r') as reader: # open the file "file"
-            for line in reader: # for each line in file
+        with open(self.file, 'r') as reader:  # open the file "file"
+            for line in reader:  # for each line in file
                 seen_in_this_line = []
                 for word in line.split("\t")[0].split(): # for each word in the line
                     word = self.pre_process_word(word)
                     if word == '':
                         continue
                     if word not in self.df:
-                        self.df[word] = 1 # document frequency
+                        self.df[word] = 1  # document frequency
                         seen_in_this_line.append(word)
                     if word not in seen_in_this_line:
                         self.df[word] += 1
                         seen_in_this_line.append(word)
-                    if word not in self.words.keys(): # if the word doesnt already exists in the words dictionary
-                        self.words[word] = index # add it
+                    if word not in self.words.keys():  # if the word doesnt already exists in the words dictionary
+                        self.words[word] = index  # add it
                         index += 1
                 self.number_of_docs += 1
 
@@ -83,7 +83,7 @@ class FileReader:
         index = 0
         with open(file_to_vector, 'r') as reader:
             for line in reader:
-                vec = len(self.words)*[0,]
+                vec = len(self.words)*[0, ]
                 for word in line.split("\t")[0].split():
                     word = self.pre_process_word(word)
                     if word == '':
@@ -118,8 +118,7 @@ class FileReader:
                     if vec[word] == 0:
                         continue
                     else:
-                        temp = vec[word]
-                        vec[word] = 1 + math.log(temp, 10)
+                        vec[word] = 1 + math.log(vec[word], 10)
                 doc_class = line.split("\t")[1].rstrip()
                 vec.append(doc_class)
                 doc_set['doc'+str(index)] = vec
@@ -149,8 +148,7 @@ class FileReader:
                     if vec[self.words[word]] == 0:
                         continue
                     else:
-                        temp = vec[self.words[word]]
-                        vec[self.words[word]] = temp*math.log((self.number_of_docs/self.df[word]), 10)
+                        vec[self.words[word]] = vec[self.words[word]]*math.log((self.number_of_docs/self.df[word]), 10)
                 doc_class = line.split("\t")[1].rstrip()
                 vec.append(doc_class)
                 doc_set['doc'+str(index)] = vec

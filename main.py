@@ -29,7 +29,7 @@ def test_run(data_type, lower_and_remove_punctuation, remove_stop_words, distanc
     :param distance_method: defines how to calculate distance, expects: 'euclidean' / 'cosine'
     :return: accuracy, the accuracy of the test run
     """
-    file_name = "./dataset/amazon_cells_labelled_full.txt"  # TODO change to command line?
+    file_name = "./dataset/amazon_cells_labelled_full.txt"
     train_file_name = "./dataset/amazon_cells_labelled_train.txt"
     test_file_name = "./dataset/amazon_cells_labelled_test.txt"
 
