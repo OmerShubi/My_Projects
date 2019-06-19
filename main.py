@@ -42,7 +42,6 @@ def test_run(data_type, lower_and_remove_punctuation, remove_stop_words, distanc
 
 
 if __name__ == '__main__':
-    debug = True
 
     print("Accuracy Results:")
 
@@ -71,6 +70,7 @@ if __name__ == '__main__':
     print("tfidf with cosine similarity, lower case, punctuation removal and stopwords removal:",
           tfidf_cleaned_words_cosine_accuracy)
 
+    debug = False
     if debug:
         print("\n DEBUG Full Accuracy Results:")
 
