@@ -12,10 +12,10 @@ if __name__ == '__main__':
 
     data = Data(file_name)
     data = data.preprocess()
-
+    X_train, X_test, y_train, y_test = data.splitToFiveFolds()
     classifier = AlgorithmRunner('KNN')
     classifier.fit(X_train, y_train)
-    classifier.predict()
+    classifier.predict(X_test)
     # TODO KNN (K=10) 5-fold Cross Validation
     # TODO Rocchio 5-fold Cross Validation
     # TODO for each - Precision, Recall, Accuracy
