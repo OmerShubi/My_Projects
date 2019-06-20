@@ -1,6 +1,7 @@
 from sklearn.datasets import load_digits
 import pandas as pd
 import Data
+import AlgorithmRunner
 import sklearn
 
 import AlgorithmRunner
@@ -9,12 +10,14 @@ import AlgorithmRunner
 if __name__ == '__main__':
     file_name = './movie_metadata.csv'
 
-    data = Data.Data(file_name)
+    data = Data(file_name)
     data = data.preprocess()
+
+    classifier = AlgorithmRunner('KNN')
+    classifier.fit(X_train, y_train)
+    classifier.predict()
     # TODO KNN (K=10) 5-fold Cross Validation
-    # sklearn.neighbors.KNeighborsClassifier
     # TODO Rocchio 5-fold Cross Validation
-    # sklearn.neighbors.NearestCentroid
     # TODO for each - Precision, Recall, Accuracy
 
     print("Question 1:")
