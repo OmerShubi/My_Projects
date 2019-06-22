@@ -31,19 +31,25 @@ class Data:
         self.y = data['imdb_score']
 
         # Discard label from data
-        data = data.drop(columns=['imdb_score'], axis=1)
+        data.drop(columns=['imdb_score'], axis=1, inplace=True)
         print(data.head())
 
         genres = data.pop('genres').str.get_dummies()
-        # actors = data.pop('actor_1_name')+"|"+data.pop('actor_2_name')+"|"+data.pop('actor_3_name')
+
+        actor1 = data.pop('actor_1_name')
+        actor2 = data.pop('actor_2_name')
+        actor3 = data.pop('actor_3_name')
+        actors = actor1+"|"+actor2+"|"+actor3
         # print(actors.head())
 
-        # actors = actors.str.get_dummies()
+        actors = actors.str.get_dummies()
+
+
         numerical_columns = data.select_dtypes(include='number').columns
         categorical_columns = data.select_dtypes(exclude='number').columns
         # print(actors.head())
         data = data.join(genres)
-        # data = data.join(actors)
+        data = data.join(actors)
         preprocessor = compose.ColumnTransformer(transformers=
                                                  [('num', preprocessing.StandardScaler(), numerical_columns),
                                                   ('cat', preprocessing.OneHotEncoder(), categorical_columns)],
