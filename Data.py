@@ -38,7 +38,7 @@ class Data:
                                                  remainder='passthrough')
 
         self.X = preprocessor.fit_transform(data)
-        self.y = preprocessing.Binarizer(7).fit_transform(self.y.to_numpy().reshape(-1, 1))
+        self.y = preprocessing.Binarizer(6.95).fit_transform(self.y.to_numpy().reshape(-1, 1))
         self.y = ravel(self.y)
 
     @staticmethod
