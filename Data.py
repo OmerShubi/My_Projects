@@ -1,18 +1,18 @@
 from sklearn import *
 import pandas as pd
-import sklearn_pandas
-
 import numpy as np
 
 # Reads the csv file and save data to memory
 class Data:
     def __init__(self, file_name):
-        self.file = file_name # path to file
+        self.file = file_name  # path to file
         self.data = pd.DataFrame
+        self.X = pd.DataFrame
+        self.y = pd.DataFrame
 
     def preprocess(self):
-        # import csv
 
+        # import csv
         self.data = pd.read_csv(self.file, delimiter=',')
 
         # save all Attributes excluding content_Rating, movie_imdb_link, plot_keywords
@@ -23,27 +23,21 @@ class Data:
 
         #  Handle duplicate movie_tile values
         self.data.drop_duplicates(subset='movie_title', keep='first', inplace=True)
-        genres = self.data['genres']
-        print(genres.head())
-        self.data = self.data.join(self.data.pop('genres').str.get_dummies('|'))
 
-        with pd.option_context('display.max_rows', None, 'display.max_columns',None):
-            print(self.data.head())
+        # self.data = self.data.join(self.data.pop('genres').str.get_dummies('|'))
+        self.y = self.data['imdb_score']
+        self.data = self.data.drop(columns=['imdb_score'], axis=1)
         numerical_columns = self.data.select_dtypes(include='number').columns
         categorical_columns = self.data.select_dtypes(exclude='number').columns
 
-        preprocessor = compose.ColumnTransformer(transformers=[('num',preprocessing.StandardScaler(), numerical_columns),
-                                                        ('cat', preprocessing.OneHotEncoder(), categorical_columns)])
+        preprocessor = compose.ColumnTransformer(transformers=
+                                                 [('num', preprocessing.StandardScaler(), numerical_columns),
+                                                  ('cat', preprocessing.OneHotEncoder(), categorical_columns)])
 
-        cleaned_data = preprocessor.fit_transform(self.data)
-        print(type(cleaned_data))
-
-
-
-
-
-        # self.X_train, self.X_test, self.y_train, self.y_test = \
-        # train_test_split_split(X, y, random_state=0)
+        self.X = preprocessor.fit_transform(self.data)
+        self.y = preprocessing.Binarizer(7).fit_transform(self.y.to_numpy().reshape(-1, 1))
+        self.y = np.ravel(self.y)
 
     def splitToFiveFolds(self):
-                model_selection.KFold(n_splits=5, shuffle=False, random_state=1)
+        return model_selection.KFold(n_splits=5, shuffle=False, random_state=1)
+

@@ -1,5 +1,6 @@
 import sklearn
 
+
 class AlgorithmRunner:
     def __init__(self, classifier_method):
         self.algorithm = self.select_model(classifier_method)
@@ -14,7 +15,7 @@ class AlgorithmRunner:
             print("Error. Expects 'KNN' or 'Rocchio' only.")
 
     def fit(self, X_train, y_train):
-        self.algorithm.fit( X_train, y_train)
+        self.algorithm.fit(X_train, y_train)
 
     def predict(self, X_test):
-        self.algorithm.predict(X_test)
+        return self.algorithm.predict(X_test)
