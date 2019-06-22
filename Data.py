@@ -1,19 +1,20 @@
-from sklearn import *
-import pandas as pd
-import numpy as np
+from sklearn import preprocessing, compose, model_selection
+from pandas import read_csv, DataFrame
+from numpy import ravel
+
 
 # Reads the csv file and save data to memory
 class Data:
     def __init__(self, file_name):
         self.file = file_name  # path to file
-        self.data = pd.DataFrame
-        self.X = pd.DataFrame
-        self.y = pd.DataFrame
+        self.data = DataFrame
+        self.X = DataFrame
+        self.y = DataFrame
 
     def preprocess(self):
 
         # import csv
-        self.data = pd.read_csv(self.file, delimiter=',')
+        self.data = read_csv(self.file, delimiter=',')
 
         # save all Attributes excluding content_Rating, movie_imdb_link, plot_keywords
         self.data.drop(columns=['content_rating', 'movie_imdb_link', 'plot_keywords'], inplace=True)
@@ -36,8 +37,9 @@ class Data:
 
         self.X = preprocessor.fit_transform(self.data)
         self.y = preprocessing.Binarizer(7).fit_transform(self.y.to_numpy().reshape(-1, 1))
-        self.y = np.ravel(self.y)
+        self.y = ravel(self.y)
 
-    def splitToFiveFolds(self):
+    @staticmethod
+    def splitToFiveFolds():
         return model_selection.KFold(n_splits=5, shuffle=False, random_state=1)
 

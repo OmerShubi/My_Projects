@@ -1,4 +1,4 @@
-import sklearn
+from sklearn import neighbors
 
 
 class AlgorithmRunner:
@@ -8,9 +8,9 @@ class AlgorithmRunner:
     @staticmethod
     def select_model(classifier_method):
         if classifier_method == 'KNN':
-            return sklearn.neighbors.KNeighborsClassifier(n_neighbors=10)
+            return neighbors.KNeighborsClassifier(n_neighbors=10)
         elif classifier_method == 'Rocchio':
-            return sklearn.neighbors.NearestCentroid()
+            return neighbors.NearestCentroid()
         else:
             print("Error. Expects 'KNN' or 'Rocchio' only.")
 
