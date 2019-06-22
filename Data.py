@@ -7,35 +7,35 @@ from numpy import ravel
 class Data:
     def __init__(self, file_name):
         self.file = file_name  # path to file
-        self.data = DataFrame
-        self.X = DataFrame
-        self.y = DataFrame
+        self.X = DataFrame  # Data without Labels
+        self.y = DataFrame  # Labels
 
     def preprocess(self):
 
         # import csv
-        self.data = read_csv(self.file, delimiter=',')
+        data = read_csv(self.file, delimiter=',')
 
         # save all Attributes excluding content_Rating, movie_imdb_link, plot_keywords
-        self.data.drop(columns=['content_rating', 'movie_imdb_link', 'plot_keywords'], inplace=True)
+        data.drop(columns=['content_rating', 'movie_imdb_link', 'plot_keywords'], inplace=True)
 
         # discard entries with any NaN value
-        self.data.dropna(inplace=True)
+        data.dropna(inplace=True)
 
         #  Handle duplicate movie_tile values
-        self.data.drop_duplicates(subset='movie_title', keep='first', inplace=True)
+        data.drop_duplicates(subset='movie_title', keep='first', inplace=True)
 
-        # self.data = self.data.join(self.data.pop('genres').str.get_dummies('|'))
-        self.y = self.data['imdb_score']
-        self.data = self.data.drop(columns=['imdb_score'], axis=1)
-        numerical_columns = self.data.select_dtypes(include='number').columns
-        categorical_columns = self.data.select_dtypes(exclude='number').columns
+        # data = data.join(data.pop('genres').str.get_dummies('|'))
+        self.y = data['imdb_score']
+        data = data.drop(columns=['imdb_score'], axis=1)
+        numerical_columns = data.select_dtypes(include='number').columns
+        categorical_columns = data.select_dtypes(exclude='number').columns
 
         preprocessor = compose.ColumnTransformer(transformers=
                                                  [('num', preprocessing.StandardScaler(), numerical_columns),
-                                                  ('cat', preprocessing.OneHotEncoder(), categorical_columns)])
+                                                  ('cat', preprocessing.OneHotEncoder(), categorical_columns)],
+                                                 remainder='passthrough')
 
-        self.X = preprocessor.fit_transform(self.data)
+        self.X = preprocessor.fit_transform(data)
         self.y = preprocessing.Binarizer(7).fit_transform(self.y.to_numpy().reshape(-1, 1))
         self.y = ravel(self.y)
 
