@@ -23,7 +23,12 @@ class Data:
 
         #  Handle duplicate movie_tile values
         self.data.drop_duplicates(subset='movie_title', keep='first', inplace=True)
+        genres = self.data['genres']
+        print(genres.head())
+        self.data = self.data.join(self.data.pop('genres').str.get_dummies('|'))
 
+        with pd.option_context('display.max_rows', None, 'display.max_columns',None):
+            print(self.data.head())
         numerical_columns = self.data.select_dtypes(include='number').columns
         categorical_columns = self.data.select_dtypes(exclude='number').columns
 

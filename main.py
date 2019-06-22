@@ -10,7 +10,7 @@ import AlgorithmRunner
 if __name__ == '__main__':
     file_name = './movie_metadata.csv'
 
-    data = Data(file_name)
+    data = Data.Data(file_name)
     data = data.preprocess()
     X_train, X_test, y_train, y_test = data.splitToFiveFolds()
     classifier = AlgorithmRunner('KNN')
