@@ -24,11 +24,13 @@ class Data:
         #  Handle duplicate movie_tile values
         data.drop_duplicates(subset='movie_title', keep='first', inplace=True)
 
-        # data = data.join(data.pop('genres').str.get_dummies('|'))
         self.y = data['imdb_score']
         data = data.drop(columns=['imdb_score'], axis=1)
+        genres = data.pop('genres').str.get_dummies('|')
+
         numerical_columns = data.select_dtypes(include='number').columns
         categorical_columns = data.select_dtypes(exclude='number').columns
+        data = data.join(genres)
 
         preprocessor = compose.ColumnTransformer(transformers=
                                                  [('num', preprocessing.StandardScaler(), numerical_columns),

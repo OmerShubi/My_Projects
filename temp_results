@@ -1,3 +1,7 @@
 Before Genre Split
 KNN classifier 0.79, 0.38, 0.77
 Rocchio classifier: 0.66, 0.56, 0.72
+
+After Genre Split
+KNN classifier 0.82, 0.41, 0.78
+Rocchio classifier: 0.67, 0.57, 0.73
