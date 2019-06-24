@@ -33,30 +33,46 @@ class Data:
 
         # Discard label from data
         data.drop(columns=['imdb_score'], axis=1, inplace=True)
-#         print(data.head())
 
+        # Turn into dummy variables and discard original column from data
         genres = data.pop('genres').str.get_dummies()
 
     #######
-        actor1 = data['actor_1_name']
-        actor2 = data['actor_2_name']
-        actor3 = data['actor_3_name']
-        actors = actor1.str.cat(actor2, sep="|")
-        actors = actors.str.cat(actor3, sep="|")
-
-        print(actors.head())
-        print("1",genres.head())
-
-        actors = actors.str.get_dummies('|')
-        print("2", actors.head())
-
-        data.drop(columns=['actor_1_name','actor_2_name','actor_3_name'], axis=1, inplace=True)
+        # actor1 = data['actor_1_name']
+        # actor2 = data['actor_2_name']
+        # actor3 = data['actor_3_name']
+        # actors = actor1.str.cat(actor2, sep="|")
+        # actors = actors.str.cat(actor3, sep="|")
+        #
+        # print(actors.head())
+        # print("1",genres.head())
+        #
+        # actors = actors.str.get_dummies('|')
+        # print("2", actors.head())
+        #
+        # data.drop(columns=['actor_1_name','actor_2_name','actor_3_name'], axis=1, inplace=True)
 #####
+        # Merge the 3 actors into one column & delete original columns from data
+        # actors = data.pop('actor_1_name')+"|"+data.pop('actor_2_name')+"|"+data.pop('actor_3_name')
+
+        # Turn into dummy variables
+        # actors = actors.str.get_dummies()
+
+
         numerical_columns = data.select_dtypes(include='number').columns
         categorical_columns = data.select_dtypes(exclude='number').columns
-#         print(actors.head())
+        categorical_columns = categorical_columns.drop(["actor_1_name", "actor_2_name", "actor_3_name"])
+
+
+        print("got here")
+        # data["actors"] = data.join(str.cat((data.pop("actor_1_name"),data.pop["actor_2_name"]), sep="|"))
+        data = data.join(data.pop('actor_1_name').str.cat(data.pop('actor_2_name'), sep="|"))
+        data = data.join(data.pop('actor_1_name').str.cat(data.pop("actor_3_name"), sep="|"))
+        data = data.join(data.pop("actor_1_name").str.get_dummies())
+        print("and here")
+
+
         data = data.join(genres)
-        data = data.join(actors) ###### 
 #         data.to_csv("features.csv")
         preprocessor = compose.ColumnTransformer(transformers=
                                                  [('num', preprocessing.StandardScaler(), numerical_columns),
