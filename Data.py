@@ -1,20 +1,31 @@
 from sklearn import preprocessing, compose, model_selection
-from pandas import read_csv, DataFrame, Series
-from numpy import ravel, savetxt, concatenate
-from scipy import sparse
+import pandas as pd
+from numpy import ravel
+GOODMOVIETHRESHOLD = 6.95
+NUMBEROFFOLDS = 5
 
 
 # Reads the csv file and save data to memory
 class Data:
     def __init__(self, file_name):
-        self.file = file_name #  path to file
-        self.X = DataFrame  # Data without Labels
-        self.y = DataFrame  # Labels
+        """
+
+        :param file_name:
+        """
+        self.file = file_name  # path to file
+        self.X = pd.DataFrame  # Data without Labels
+        self.y = pd.DataFrame  # Labels
 
     def preprocess(self):
+        """
+
+        :return:
+        """
+        # Display current operation
+        print("Reading csv, dropping excluded columns, movie duplicates and rows with na values...")
 
         # import csv
-        data = read_csv(self.file, delimiter=',')
+        data = pd.read_csv(self.file, delimiter=',')
 
         # save all Attributes excluding content_Rating, movie_imdb_link, plot_keywords
         data.drop(columns=['content_rating', 'movie_imdb_link', 'plot_keywords'], inplace=True)
@@ -31,31 +42,46 @@ class Data:
         # saves imdb score as labels & Discard label from data
         self.y = data.pop('imdb_score')
 
+        # Display current operation
+        print("Turning genres column and the 3 actors to dummy variables...")
+
         # Turn into dummy variables and discard original column from data
         genres = data.pop('genres').str.get_dummies()
+
         # Merge the 3 actors into one column & delete original columns from data & Turn into dummy variables
         actors = (data.pop('actor_1_name')+"|"+data.pop('actor_2_name')+"|"+data.pop('actor_3_name')).str.get_dummies()
 
         # Create column lists for transformer
-        numerical_columns = data.select_dtypes(include='number').columns
-        categorical_columns = data.select_dtypes(exclude='number').columns
+        numerical_cols = data.select_dtypes(include='number').columns
+        categorical_cols = data.select_dtypes(exclude='number').columns
 
-        data = data.join(genres)
+        # After creating the column lists - joins back the dummy-variable actors and genres
         data = data.join(actors)
+        data = data.join(genres)
 
-        preprocessor = compose.ColumnTransformer(transformers=
-                                                 [('num', preprocessing.StandardScaler(), numerical_columns),
-                                                  ('cat', preprocessing.OneHotEncoder(), categorical_columns)],
+        # Display current operation
+        print("Applying Standard Scaler to numerical columns and OneHotEncoder for remaining categorical columns...")
+
+        preprocessor = compose.ColumnTransformer(transformers=[('num', preprocessing.StandardScaler(), numerical_cols),
+                                                 ('cat', preprocessing.OneHotEncoder(), categorical_cols)],
                                                  remainder="passthrough")
 
         self.X = preprocessor.fit_transform(data)
-        # actors = actors.to_sparse()
-        # genres = genres.to_sparse()
-        # sel.X
-        self.y = preprocessing.Binarizer(6.95).fit_transform(self.y.to_numpy().reshape(-1, 1))
-        self.y = ravel(self.y)
+
+        # Display current operation
+        print("Binarizing Labels...")
+
+        # all labels lower that 7 become 0, 7 and higher become 1
+        self.y = preprocessing.Binarizer(GOODMOVIETHRESHOLD).fit_transform(self.y.to_numpy().reshape(-1, 1))
+        self.y = ravel(self.y)\
+
+        # Display current operation
+        print("Data preprocessing complete.")
 
     @staticmethod
     def splitToFiveFolds():
-        return model_selection.KFold(n_splits=5, shuffle=False, random_state=1)
+        """
 
+        :return:
+        """
+        return model_selection.KFold(n_splits=NUMBEROFFOLDS, shuffle=False, random_state=1)
