@@ -53,9 +53,6 @@ class AlgorithmRunner:
         fold = 0
         for train_index, test_index in kf.split(data.X):
 
-            fold = fold + 1
-            print("Running algorithm... Fold", fold)
-
             # Splits the data and labels into train and test
             x_train, x_test = data.X[train_index], data.X[test_index]
             y_train, expected = data.y[train_index], data.y[test_index]
@@ -69,7 +66,10 @@ class AlgorithmRunner:
             self.precision += metrics.precision_score(expected, predicted, average='binary')
             self.recall += metrics.recall_score(expected, predicted, average='binary')
 
+            fold = fold + 1
+            print("Fold", fold, " out of 5 completed.")
+
         # Calculate average metrics
-        self.accuracy = self.accuracy/5
-        self.precision = self.precision/5
-        self.recall = self.recall/5
+        self.accuracy = self.accuracy/fold
+        self.precision = self.precision/fold
+        self.recall = self.recall/fold

@@ -6,19 +6,27 @@ if __name__ == '__main__':
 
     file_name = './movie_metadata.csv'
 
+    # Import the data from file and preprocess it
     data = Data(file_name)
     data.preprocess()
 
+    # Initialize and run KNN classifier
+    print("Running KNN Classifier...")
     classifierKNN = AlgorithmRunner('KNN')
-    classifierRocchio = AlgorithmRunner('Rocchio')
-
-    classifierRocchio.cross_val_score(data)
     classifierKNN.cross_val_score(data)
 
+    print("Running Rocchio Classifier...")
+    # Initialize and run Rocchio classifier
+    classifierRocchio = AlgorithmRunner('Rocchio')
+    classifierRocchio.cross_val_score(data)
+
     print("Question 1:")
-    print("KNN classifier {:.2f}, {:.2f}, {:.2f}".format(classifierKNN.precision,
-                                                         classifierKNN.recall, classifierKNN.accuracy))
-    print("Rocchio classifier: {:.2f}, {:.2f}, {:.2f}".format(classifierRocchio.precision, classifierRocchio.recall,
+    print("KNN classifier {:.4f}, {:.4f}, {:.4f}".format(classifierKNN.precision,
+                                                         classifierKNN.recall,
+                                                         classifierKNN.accuracy))
+
+    print("Rocchio classifier: {:.4f}, {:.4f}, {:.4f}".format(classifierRocchio.precision,
+                                                              classifierRocchio.recall,
                                                               classifierRocchio.accuracy))
 
     # print("Question 2:")
