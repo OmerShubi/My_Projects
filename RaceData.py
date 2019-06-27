@@ -1,6 +1,6 @@
 from sklearn import preprocessing, compose, model_selection
 import pandas as pd
-from numpy import ravel
+import numpy as np
 GOODMOVIETHRESHOLD = 6.95
 NUMBEROFFOLDS = 5
 
@@ -61,6 +61,8 @@ class RaceData:
         # After creating the column lists - joins back the dummy-variable  genres
         data = data.join(genres)
 
+        # data['over550kusers'] = data.pop('num_voted_users').apply(lambda x: 1000000 if x > 550000 else 0)
+        # print(data['over550kusers'])
         # Display current operation
         print("Applying Standard Scaler to numerical columns and OneHotEncoder for remaining categorical columns...")
 
@@ -75,7 +77,7 @@ class RaceData:
 
         # all labels lower that 7 become 0, 7 and higher become 1
         self.y = preprocessing.Binarizer(GOODMOVIETHRESHOLD).fit_transform(self.y.to_numpy().reshape(-1, 1))
-        self.y = ravel(self.y)
+        self.y = np.ravel(self.y)
 
         # Display current operation
         print("Data preprocessing complete.")
