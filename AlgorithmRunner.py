@@ -2,25 +2,27 @@ from sklearn import neighbors, metrics
 
 
 class AlgorithmRunner:
-    def __init__(self, classifier_method):
+    def __init__(self, classifier_method, number_of_neighbors=10):
         """
 
         :param classifier_method:
         """
-        self.algorithm = self.select_model(classifier_method)
+        self.algorithm = self.select_model(classifier_method, number_of_neighbors)
         self.accuracy = 0
         self.precision = 0
         self.recall = 0
 
     @staticmethod
-    def select_model(classifier_method):
+    def select_model(classifier_method, number_of_neighbors):
         """
 
         :param classifier_method:
+        :param number_of_neighbors:
+        :param p:
         :return:
         """
         if classifier_method == 'KNN':
-            return neighbors.KNeighborsClassifier(n_neighbors=10)
+            return neighbors.KNeighborsClassifier(n_neighbors=number_of_neighbors, metric='manhattan')
         elif classifier_method == 'Rocchio':
             return neighbors.NearestCentroid()
         else:

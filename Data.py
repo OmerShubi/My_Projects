@@ -73,7 +73,7 @@ class Data:
 
         # all labels lower that 7 become 0, 7 and higher become 1
         self.y = preprocessing.Binarizer(GOODMOVIETHRESHOLD).fit_transform(self.y.to_numpy().reshape(-1, 1))
-        self.y = ravel(self.y)\
+        self.y = ravel(self.y)
 
         # Display current operation
         print("Data preprocessing complete.")

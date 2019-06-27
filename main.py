@@ -37,9 +37,15 @@ def part2(file_name):
 
     # Initialize and run KNN classifier
     print("Running KNN Classifier...")
-    classifier_knn = AlgorithmRunner('KNN')
-    classifier_knn.cross_val_score(data)
+    results =[]
+    for k in range(3, 20, 2):
 
+        classifier_knn = AlgorithmRunner('KNN', number_of_neighbors=k)
+        classifier_knn.cross_val_score(data)
+        result = classifier_knn.accuracy
+        results.append(results)
+        print(result)
+    print(max(results), k)
     print("Running Rocchio Classifier...")
     # Initialize and run Rocchio classifier
     classifier_rocchio = AlgorithmRunner('Rocchio')
@@ -54,6 +60,5 @@ def part2(file_name):
 if __name__ == '__main__':
 
     # part1(file_name='./movie_metadata.csv')
-
     part2(file_name='./movie_metadata.csv')
 

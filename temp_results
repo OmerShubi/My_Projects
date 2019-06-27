@@ -13,3 +13,101 @@ Rocchio classifier: 0.70, 0.58, 0.72
 actors in 1 column
 KNN classifier 0.82, 0.45, 0.77
 Rocchio classifier: 0.70, 0.58, 0.72
+
+Unnamed: 0                   0.049036
+num_critic_for_reviews       0.348092
+duration                     0.369339
+director_facebook_likes      0.194264
+actor_3_facebook_likes       0.068460
+actor_1_facebook_likes       0.093187
+gross                        0.213513
+num_voted_users              0.478826
+cast_total_facebook_likes    0.106305
+facenumber_in_poster        -0.065502
+num_user_for_reviews         0.325452
+budget                       0.046346
+title_year                  -0.129469
+actor_2_facebook_likes       0.101129
+imdb_score                   1.000000
+aspect_ratio                 0.029225
+movie_facebook_likes         0.285137
+dtype: float64
+Turning genres column to dummy variables...
+Applying Standard Scaler to numerical columns and OneHotEncoder for remaining categorical columns...
+Binarizing Labels...
+Data preprocessing complete.
+Running KNN Classifier...
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+Running Rocchio Classifier...
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+Question 2:
+KNN classifier 0.7844033207767984
+Rocchio classifier: 0.7365439052042572
+
+manhattan ,7, weights distances
+0.7860253081227371
+
+
+manhattan range(3, 20, 2 weights distances
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7725030172256153
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7803485352741104
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.789810920528106
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7871052920308671
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.787919028636214
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7833204110741322
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7830505065281791
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7830494093552279
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7816965951066086

@@ -25,11 +25,10 @@ class RaceData:
         print("Reading csv, dropping excluded columns, movie duplicates and rows with na values...")
 
         # import csv
-        data = pd.read_csv(self.file, delimiter=',', usecols=['movie_title',
-                                                              'imdb_score',
-                                                              'num_voted_users',
-                                                              'budget',
-                                                              'genres'])
+        data = pd.read_csv(self.file, delimiter=',')
+
+        # save all Attributes excluding content_Rating, movie_imdb_link, plot_keywords
+        data.drop(columns=['content_rating', 'movie_imdb_link', 'plot_keywords'], inplace=True)
 
         # discard entries with any NaN value
         data.dropna(inplace=True)
@@ -39,21 +38,24 @@ class RaceData:
 
         # As movie title is now unique we can discard it
         data.drop(columns=['movie_title'], inplace=True)
-
         # saves imdb score as labels & Discard label from data
         self.y = data.pop('imdb_score')
 
         # Display current operation
-        print("Turning genres column to dummy variables...")
+        print("Turning genres column and the 3 actors to dummy variables...")
 
         # Turn into dummy variables and discard original column from data
         genres = data.pop('genres').str.get_dummies()
+
+        # Merge the 3 actors into one column & delete original columns from data & Turn into dummy variables
+        actors = (data.pop('actor_1_name')+"|"+data.pop('actor_2_name')+"|"+data.pop('actor_3_name')).str.get_dummies()
 
         # Create column lists for transformer
         numerical_cols = data.select_dtypes(include='number').columns
         categorical_cols = data.select_dtypes(exclude='number').columns
 
-        # After creating the column lists - joins back the dummy-variable  genres
+        # After creating the column lists - joins back the dummy-variable actors and genres
+        # data = data.join(actors)
         data = data.join(genres)
 
         # Display current operation
