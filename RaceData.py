@@ -27,14 +27,20 @@ class RaceData:
         # import csv
         data = pd.read_csv(self.file, delimiter=',')
 
+        # save all Attributes excluding content_Rating, movie_imdb_link, plot_keywords
+        data.drop(columns=['content_rating', 'movie_imdb_link', 'plot_keywords'], inplace=True)
+
         # discard entries with any NaN value
-        # data.dropna(inplace=True)
+        data.dropna(inplace=True)
 
         #  Handle duplicate movie_tile values
-        # data.drop_duplicates(subset='movie_title', keep='first', inplace=True)
+        data.drop_duplicates(subset='movie_title', keep='first', inplace=True)
 
         # As movie title is now unique we can discard it
-        # data.drop(columns=['movie_title'], inplace=True)
+        data.drop(columns=['movie_title'], inplace=True)
+
+        # Utilize the fact that data is not normally distributed
+        data['index1'] = data.index
 
         # saves imdb score as labels & Discard label from data
         self.y = data.pop('imdb_score')

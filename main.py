@@ -60,5 +60,5 @@ def part2(file_name):
 if __name__ == '__main__':
 
     # part1(file_name='./movie_metadata.csv')
-    part2(file_name='./cleaned_data.csv')
+    part2(file_name='./movie_metadata.csv')
 
