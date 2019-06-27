@@ -1,5 +1,6 @@
 from Data import Data
 from RaceData import RaceData
+from RaceRData import RaceRData
 from AlgorithmRunner import AlgorithmRunner
 from RaceAlgorithmRunner import RaceAlgorithmRunner
 
@@ -25,11 +26,11 @@ def part1(file_name):
     classifier_rocchio.cross_val_score(data)
 
     # Display results
-    print("KNN classifier {:.4f}, {:.4f}, {:.4f}".format(classifier_knn.precision,
+    print("KNN classifier {:.8f}, {:.8f}, {:.8f}".format(classifier_knn.precision,
                                                          classifier_knn.recall,
                                                          classifier_knn.accuracy))
 
-    print("Rocchio classifier: {:.4f}, {:.4f}, {:.4f}".format(classifier_rocchio.precision,
+    print("Rocchio classifier: {:.8f}, {:.8f}, {:.8f}".format(classifier_rocchio.precision,
                                                               classifier_rocchio.recall,
                                                               classifier_rocchio.accuracy))
 
@@ -43,21 +44,25 @@ def part2(file_name):
     data.preprocess()
 
     # Initialize and run KNN classifier
-    print("Running KNN Classifier...")
-    classifier_knn = RaceAlgorithmRunner('KNN', number_of_neighbors=7)
-    classifier_knn.cross_val_score(data)
+    # print("Running KNN Classifier...")
+    # classifier_knn = RaceAlgorithmRunner('KNN', number_of_neighbors=61)
+    # classifier_knn.cross_val_score(data)
+
+    # data = RaceRData(file_name)
+    # data.preprocess()
+
     print("Running Rocchio Classifier...")
     # Initialize and run Rocchio classifier
     classifier_rocchio = RaceAlgorithmRunner('Rocchio')
     classifier_rocchio.cross_val_score(data)
 
     # Display results
-    print("KNN classifier",  classifier_knn.accuracy)
+    # print("KNN classifier",  classifier_knn.accuracy)
     print("Rocchio classifier:", classifier_rocchio.accuracy)
 
 
 if __name__ == '__main__':
 
     file_path = sys.argv[1]
-    part1(file_name=file_path)
+    # part1(file_name=file_path)
     part2(file_name=file_path)

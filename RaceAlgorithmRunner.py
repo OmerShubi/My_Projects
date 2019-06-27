@@ -2,7 +2,7 @@ from sklearn import neighbors, metrics
 
 
 class RaceAlgorithmRunner:
-    def __init__(self, classifier_method, number_of_neighbors):
+    def __init__(self, classifier_method, number_of_neighbors=10):
         """
         Initializes the AlgorithRunner with the desired classifier
         :param classifier_method: desired classifier, expects 'KNN' or 'Rocchio'
@@ -14,7 +14,7 @@ class RaceAlgorithmRunner:
         self.recall = 0
 
     @staticmethod
-    def select_model(classifier_method, number_of_neighbors=10):
+    def select_model(classifier_method, number_of_neighbors):
         """
         Initializes desired classifier
         :param classifier_method: desired classifier, expects 'KNN' or 'Rocchio'

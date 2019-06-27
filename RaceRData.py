@@ -7,7 +7,7 @@ NUMBEROFFOLDS = 5
 
 
 # Reads the csv file and save data to memory
-class RaceData:
+class RaceRData:
     def __init__(self, file_name):
         """
         Initializes the data and labels
@@ -56,6 +56,8 @@ class RaceData:
         actors = (data.pop('actor_1_name') + "|" + data.pop('actor_2_name') + "|" +
                   data.pop('actor_3_name')).str.get_dummies()
 
+        # data.drop(columns=['color', 'budget', 'aspect_ratio', 'duration', 'country'], inplace=True)
+
         # Create column lists for transformer
         numerical_cols = data.select_dtypes(include='number').columns
         category_cols = data.select_dtypes(exclude='number').columns
@@ -67,7 +69,7 @@ class RaceData:
         # Display current operation
         print(" Applying Standard Scaler to numerical columns and OneHotEncoder for remaining categorical columns...")
 
-        preprocessor = compose.ColumnTransformer(transformers=[('num', preprocessing.StandardScaler(), numerical_cols),
+        preprocessor = compose.ColumnTransformer(transformers=[('num', preprocessing.MinMaxScaler(), numerical_cols),
                                                                ('cat', preprocessing.OneHotEncoder(), category_cols)],
                                                  remainder="passthrough")
 
