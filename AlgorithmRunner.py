@@ -3,12 +3,12 @@ NEIGHBORS = 10
 
 
 class AlgorithmRunner:
-    def __init__(self, classifier_method, number_of_neighbors=10):
+    def __init__(self, classifier_method):
         """
         Initializes the AlgorithRunner with the desired classifier
         :param classifier_method: desired classifier, expects 'KNN' or 'Rocchio'
         """
-        self.algorithm = self.select_model(classifier_method, number_of_neighbors)
+        self.algorithm = self.select_model(classifier_method)
         self.accuracy = 0
         self.precision = 0
         self.recall = 0

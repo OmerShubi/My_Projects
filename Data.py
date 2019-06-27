@@ -39,9 +39,6 @@ class Data:
         # As movie title is now unique we can discard it
         data.drop(columns=['movie_title'], inplace=True)
 
-        # Utilize the fact that data is not normally distributed
-        data['index1'] = data.index
-
         # saves imdb score as labels & Discard label from data
         self.y = data.pop('imdb_score')
 

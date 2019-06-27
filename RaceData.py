@@ -53,8 +53,8 @@ class RaceData:
         genres = data.pop('genres').str.get_dummies()
 
         # Merge the 3 actors into one column & delete original columns from data & Turn into dummy variables
-        actors = (data.pop('actor_1_name') + "|" + data.pop('actor_2_name') + "|" + data.pop(
-            'actor_3_name')).str.get_dummies()
+        actors = (data.pop('actor_1_name') + "|" + data.pop('actor_2_name') + "|" +
+                  data.pop('actor_3_name')).str.get_dummies()
 
         # Create column lists for transformer
         numerical_cols = data.select_dtypes(include='number').columns
