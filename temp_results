@@ -168,3 +168,33 @@ Fold 3  out of 5 completed.
 Fold 4  out of 5 completed.
 Fold 5  out of 5 completed.
 0.7806140511282595
+
+manhattan range 1,20,2)
+Applying Standard Scaler to numerical columns and OneHotEncoder for remaining categorical columns...
+Binarizing Labels...
+Data preprocessing complete.
+Running KNN Classifier...
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7389660973558132
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7676348608418974
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.778993526679589
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7860253081227371
