@@ -52,14 +52,21 @@ class RaceData:
         genres = data.pop('genres').str.get_dummies()
 
         # Drops actors
-        data.drop(columns=['actor_1_name', 'actor_2_name', 'actor_3_name'])
+        # data.drop(columns=['actor_1_name', 'actor_2_name', 'actor_3_name'])
+        actors = (data.pop('actor_1_name')+"|"+data.pop('actor_2_name')+"|"+data.pop('actor_3_name')).str.get_dummies()
 
+        # data.corrwith(labels)
+        # largest = actors.nlargest(100)
+        # minimum = actors.nsmallest(100)
         # Create column lists for transformer
         numerical_cols = data.select_dtypes(include='number').columns
         categorical_cols = data.select_dtypes(exclude='number').columns
 
         # After creating the column lists - joins back the dummy-variable  genres
         data = data.join(genres)
+        data = data.join(actors)
+        # data = data.join(largest)
+        # data = data.join(minimum)
 
         # data['over550kusers'] = data.pop('num_voted_users').apply(lambda x: 1000000 if x > 550000 else 0)
         # print(data['over550kusers'])
@@ -78,6 +85,10 @@ class RaceData:
         # all labels lower that 7 become 0, 7 and higher become 1
         self.y = preprocessing.Binarizer(GOODMOVIETHRESHOLD).fit_transform(self.y.to_numpy().reshape(-1, 1))
         self.y = np.ravel(self.y)
+        labels = pd.Series(self.y)
+        pd.set_option('display.max_rows', None)
+
+        print((data.corrwith(labels)))
 
         # Display current operation
         print("Data preprocessing complete.")
