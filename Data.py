@@ -9,8 +9,8 @@ NUMBEROFFOLDS = 5
 class Data:
     def __init__(self, file_name):
         """
-
-        :param file_name:
+        Initializes the class
+        :param file_name: path to file
         """
         self.file = file_name  # path to file
         self.X = pd.DataFrame  # Data without Labels
@@ -18,8 +18,8 @@ class Data:
 
     def preprocess(self):
         """
-
-        :return:
+        Preprocesses the data according to specified demands and for the classifiers
+        :return: None
         """
         # Display current operation
         print("Reading csv, dropping excluded columns, movie duplicates and rows with na values...")
@@ -81,7 +81,7 @@ class Data:
     @staticmethod
     def splitToFiveFolds():
         """
-
-        :return:
+        Initializes the sklearn KFold object with NUMBEROFFOLDS(5) for slicing the data
+        :return: model_selection.KFold
         """
         return model_selection.KFold(n_splits=NUMBEROFFOLDS, shuffle=False, random_state=1)

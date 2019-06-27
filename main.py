@@ -1,7 +1,9 @@
 from Data import Data
 from RaceData import RaceData
 from AlgorithmRunner import AlgorithmRunner
+from RaceAlgorithmRunner import RaceAlgorithmRunner
 
+import sys
 
 def part1(file_name):
 
@@ -40,7 +42,7 @@ def part2(file_name):
     results =[]
     for k in range(7, 20, 2):
 
-        classifier_knn = AlgorithmRunner('KNN', number_of_neighbors=k)
+        classifier_knn = RaceAlgorithmRunner('KNN', number_of_neighbors=k)
         classifier_knn.cross_val_score(data)
         result = classifier_knn.accuracy
         results.append(result)
@@ -48,7 +50,7 @@ def part2(file_name):
     print(max(results), k)
     print("Running Rocchio Classifier...")
     # Initialize and run Rocchio classifier
-    classifier_rocchio = AlgorithmRunner('Rocchio')
+    classifier_rocchio = RaceAlgorithmRunner('Rocchio')
     classifier_rocchio.cross_val_score(data)
 
     # Display results
@@ -58,7 +60,7 @@ def part2(file_name):
 
 
 if __name__ == '__main__':
-
-    # part1(file_name='./movie_metadata.csv')
-    part2(file_name='./movie_metadata.csv')
+    file_path = sys.argv[1]
+    part1(file_name=file_path)
+    part2(file_name=file_path)
 

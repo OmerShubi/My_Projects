@@ -1,7 +1,7 @@
 from sklearn import neighbors, metrics
 
 
-class AlgorithmRunner:
+class RaceAlgorithmRunner:
     def __init__(self, classifier_method, number_of_neighbors=10):
         """
 
@@ -22,7 +22,7 @@ class AlgorithmRunner:
         :return:
         """
         if classifier_method == 'KNN':
-            return neighbors.KNeighborsClassifier(n_neighbors=number_of_neighbors)
+            return neighbors.KNeighborsClassifier(n_neighbors=number_of_neighbors, metric='manhattan')
         elif classifier_method == 'Rocchio':
             return neighbors.NearestCentroid()
         else:
