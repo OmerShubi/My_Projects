@@ -2,18 +2,18 @@ from sklearn import neighbors, metrics
 
 
 class AlgorithmRunner:
-    def __init__(self, classifier_method, number_of_neighbors=10):
+    def __init__(self, classifier_method, number_of_neighbors=10, p=2):
         """
 
         :param classifier_method:
         """
-        self.algorithm = self.select_model(classifier_method, number_of_neighbors)
+        self.algorithm = self.select_model(classifier_method, number_of_neighbors,p)
         self.accuracy = 0
         self.precision = 0
         self.recall = 0
 
     @staticmethod
-    def select_model(classifier_method, number_of_neighbors):
+    def select_model(classifier_method, number_of_neighbors, p):
         """
 
         :param classifier_method:
