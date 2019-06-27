@@ -55,7 +55,7 @@ Rocchio classifier: 0.7365439052042572
 manhattan ,7, weights distances
 0.7860253081227371
 
-
+no actors
 manhattan range(3, 20, 2 weights distances
 Fold 1  out of 5 completed.
 Fold 2  out of 5 completed.
@@ -111,3 +111,60 @@ Fold 3  out of 5 completed.
 Fold 4  out of 5 completed.
 Fold 5  out of 5 completed.
 0.7816965951066086
+
+manhattan range(3, 20, 2
+no actor
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7735848297553305
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7811597118092383
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7917046410415829
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7873766594740884
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7884599349010716
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.783049775079545
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7811578831876531
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7822385985444172
+Fold 1  out of 5 completed.
+Fold 2  out of 5 completed.
+Fold 3  out of 5 completed.
+Fold 4  out of 5 completed.
+Fold 5  out of 5 completed.
+0.7806140511282595

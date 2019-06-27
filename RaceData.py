@@ -55,7 +55,7 @@ class RaceData:
         categorical_cols = data.select_dtypes(exclude='number').columns
 
         # After creating the column lists - joins back the dummy-variable actors and genres
-        # data = data.join(actors)
+        data = data.join(actors)
         data = data.join(genres)
 
         # Display current operation
