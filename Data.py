@@ -1,6 +1,6 @@
 from sklearn import preprocessing, compose, model_selection
 import pandas as pd
-from numpy import ravel
+import numpy as np
 GOODMOVIETHRESHOLD = 6.95
 NUMBEROFFOLDS = 5
 
@@ -9,8 +9,8 @@ NUMBEROFFOLDS = 5
 class Data:
     def __init__(self, file_name):
         """
-
-        :param file_name:
+        Initializes the data and labels
+        :param file_name: the path to file
         """
         self.file = file_name  # path to file
         self.X = pd.DataFrame  # Data without Labels
@@ -18,8 +18,8 @@ class Data:
 
     def preprocess(self):
         """
-
-        :return:
+        Preprocesses the data according to specified demands and for the classifiers
+        :return: None
         """
         # Display current operation
         print("Reading csv, dropping excluded columns, movie duplicates and rows with na values...")
@@ -38,6 +38,9 @@ class Data:
 
         # As movie title is now unique we can discard it
         data.drop(columns=['movie_title'], inplace=True)
+
+        # Utilize the fact that data is not normally distributed
+        data['index1'] = data.index
 
         # saves imdb score as labels & Discard label from data
         self.y = data.pop('imdb_score')
@@ -73,7 +76,7 @@ class Data:
 
         # all labels lower that 7 become 0, 7 and higher become 1
         self.y = preprocessing.Binarizer(GOODMOVIETHRESHOLD).fit_transform(self.y.to_numpy().reshape(-1, 1))
-        self.y = ravel(self.y)
+        self.y = np.ravel(self.y)
 
         # Display current operation
         print("Data preprocessing complete.")
@@ -81,7 +84,7 @@ class Data:
     @staticmethod
     def splitToFiveFolds():
         """
-
-        :return:
+        Initializes the sklearn KFold object with NUMBEROFFOLDS(5) for slicing the data
+        :return: model_selection.KFold
         """
         return model_selection.KFold(n_splits=NUMBEROFFOLDS, shuffle=False, random_state=1)

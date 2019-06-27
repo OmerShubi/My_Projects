@@ -1,12 +1,12 @@
 from sklearn import neighbors, metrics
-NEIGHBORS = 10
 
 
-class AlgorithmRunner:
-    def __init__(self, classifier_method, number_of_neighbors=10):
+class RaceAlgorithmRunner:
+    def __init__(self, classifier_method, number_of_neighbors):
         """
         Initializes the AlgorithRunner with the desired classifier
         :param classifier_method: desired classifier, expects 'KNN' or 'Rocchio'
+        :param number_of_neighbors: the number of neighbors for knn model
         """
         self.algorithm = self.select_model(classifier_method, number_of_neighbors)
         self.accuracy = 0
@@ -14,14 +14,15 @@ class AlgorithmRunner:
         self.recall = 0
 
     @staticmethod
-    def select_model(classifier_method):
+    def select_model(classifier_method, number_of_neighbors=10):
         """
         Initializes desired classifier
         :param classifier_method: desired classifier, expects 'KNN' or 'Rocchio'
+        :param number_of_neighbors: the number of neighbors for knn model, default 10
         :return: classifier sklearn object
         """
         if classifier_method == 'KNN':
-            return neighbors.KNeighborsClassifier(n_neighbors=NEIGHBORS)
+            return neighbors.KNeighborsClassifier(n_neighbors=number_of_neighbors, metric='manhattan')
         elif classifier_method == 'Rocchio':
             return neighbors.NearestCentroid()
         else:

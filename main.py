@@ -1,6 +1,7 @@
 from Data import Data
 from RaceData import RaceData
 from AlgorithmRunner import AlgorithmRunner
+import sys
 
 
 def part1(file_name):
@@ -37,15 +38,14 @@ def part2(file_name):
 
     # Initialize and run KNN classifier
     print("Running KNN Classifier...")
-    results =[]
-    for k in range(7, 20, 2):
-
+    results = []
+    for k in range(1, 20, 2):
         classifier_knn = AlgorithmRunner('KNN', number_of_neighbors=k)
         classifier_knn.cross_val_score(data)
         result = classifier_knn.accuracy
         results.append(result)
         print(result)
-    print(max(results), k)
+    print(max(results))
     print("Running Rocchio Classifier...")
     # Initialize and run Rocchio classifier
     classifier_rocchio = AlgorithmRunner('Rocchio')
@@ -59,6 +59,6 @@ def part2(file_name):
 
 if __name__ == '__main__':
 
-    # part1(file_name='./movie_metadata.csv')
-    part2(file_name='./movie_metadata.csv')
-
+    file_path = sys.argv[1]
+    part1(file_name=file_path)
+    part2(file_name=file_path)
