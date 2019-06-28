@@ -44,7 +44,7 @@ def part2(file_name):
 
     # Initialize and run KNN classifier
     # print("Running KNN Classifier...")
-    classifier_knn = RaceAlgorithmRunner('KNN', number_of_neighbors=61)
+    classifier_knn = RaceAlgorithmRunner('KNN', number_of_neighbors=7)
     classifier_knn.cross_val_score(data)
 
     # print("Running Rocchio Classifier...")
@@ -61,4 +61,5 @@ if __name__ == '__main__':
 
     file_path = sys.argv[1]
     part1(file_name=file_path)
+    print("\n")
     part2(file_name=file_path)
