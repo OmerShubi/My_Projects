@@ -1,6 +1,5 @@
 from Data import Data
 from RaceData import RaceData
-from RaceRData import RaceRData
 from AlgorithmRunner import AlgorithmRunner
 from RaceAlgorithmRunner import RaceAlgorithmRunner
 
@@ -16,23 +15,23 @@ def part1(file_name):
     data.preprocess()
 
     # Initialize and run KNN classifier
-    print("Running KNN Classifier...")
+    # print("Running KNN Classifier...")
     classifier_knn = AlgorithmRunner('KNN')
     classifier_knn.cross_val_score(data)
 
-    print("Running Rocchio Classifier...")
+    # print("Running Rocchio Classifier...")
     # Initialize and run Rocchio classifier
     classifier_rocchio = AlgorithmRunner('Rocchio')
     classifier_rocchio.cross_val_score(data)
 
     # Display results
-    print("KNN classifier {:.8f}, {:.8f}, {:.8f}".format(classifier_knn.precision,
-                                                         classifier_knn.recall,
-                                                         classifier_knn.accuracy))
+    print("KNN classifier {}, {}, {}".format(classifier_knn.precision,
+                                             classifier_knn.recall,
+                                             classifier_knn.accuracy))
 
-    print("Rocchio classifier: {:.8f}, {:.8f}, {:.8f}".format(classifier_rocchio.precision,
-                                                              classifier_rocchio.recall,
-                                                              classifier_rocchio.accuracy))
+    print("Rocchio classifier: {}, {}, {}".format(classifier_rocchio.precision,
+                                                  classifier_rocchio.recall,
+                                                  classifier_rocchio.accuracy))
 
 
 def part2(file_name):
@@ -57,12 +56,12 @@ def part2(file_name):
     classifier_rocchio.cross_val_score(data)
 
     # Display results
-    # print("KNN classifier",  classifier_knn.accuracy)
+    print("KNN classifier",  classifier_knn.accuracy)
     print("Rocchio classifier:", classifier_rocchio.accuracy)
 
 
 if __name__ == '__main__':
 
     file_path = sys.argv[1]
-    # part1(file_name=file_path)
+    part1(file_name=file_path)
     part2(file_name=file_path)

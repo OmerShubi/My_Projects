@@ -69,7 +69,7 @@ class AlgorithmRunner:
             self.recall += metrics.recall_score(expected, predicted, average='binary')
 
             fold = fold + 1
-            print("Fold", fold, " out of 5 completed.")
+            # print("Fold", fold, " out of 5 completed.")
 
         # Calculate average metrics
         self.accuracy = self.accuracy/fold

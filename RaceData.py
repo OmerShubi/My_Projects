@@ -23,7 +23,7 @@ class RaceData:
         :return: None
         """
         # Display current operation
-        print(" Reading csv, dropping excluded columns, movie duplicates and rows with na values...")
+        # print(" Reading csv, dropping excluded columns, movie duplicates and rows with na values...")
 
         # import csv
         data = pd.read_csv(self.file, delimiter=',')
@@ -47,7 +47,7 @@ class RaceData:
         self.y = data.pop('imdb_score')
 
         # Display current operation
-        print(" Turning genres column and the 3 actors to dummy variables...")
+        # print(" Turning genres column and the 3 actors to dummy variables...")
 
         # Turn into dummy variables and discard original column from data
         genres = data.pop('genres').str.get_dummies()
@@ -65,7 +65,7 @@ class RaceData:
         data = data.join(genres)
 
         # Display current operation
-        print(" Applying Standard Scaler to numerical columns and OneHotEncoder for remaining categorical columns...")
+        # print(" Applying Standard Scaler to numerical columns and OneHotEncoder for remaining categorical columns...")
 
         preprocessor = compose.ColumnTransformer(transformers=[('num', preprocessing.StandardScaler(), numerical_cols),
                                                                ('cat', preprocessing.OneHotEncoder(), category_cols)],
@@ -74,14 +74,14 @@ class RaceData:
         self.X = preprocessor.fit_transform(data)
 
         # Display current operation
-        print(" Binarizing Labels...")
+        # print(" Binarizing Labels...")
 
         # all labels lower that 7 become 0, 7 and higher become 1
         self.y = preprocessing.Binarizer(GOODMOVIETHRESHOLD).fit_transform(self.y.to_numpy().reshape(-1, 1))
         self.y = np.ravel(self.y)
 
         # Display current operation
-        print(" Data preprocessing complete.")
+        # print(" Data preprocessing complete.")
 
     @staticmethod
     def splitToFiveFolds():
