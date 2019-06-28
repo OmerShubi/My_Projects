@@ -44,11 +44,8 @@ def part2(file_name):
 
     # Initialize and run KNN classifier
     # print("Running KNN Classifier...")
-    # classifier_knn = RaceAlgorithmRunner('KNN', number_of_neighbors=61)
-    # classifier_knn.cross_val_score(data)
-
-    # data = RaceRData(file_name)
-    # data.preprocess()
+    classifier_knn = RaceAlgorithmRunner('KNN', number_of_neighbors=61)
+    classifier_knn.cross_val_score(data)
 
     print("Running Rocchio Classifier...")
     # Initialize and run Rocchio classifier
