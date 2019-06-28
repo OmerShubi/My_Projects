@@ -8,7 +8,7 @@ import sys
 
 def part1(file_name):
 
-    print("Question 1:")
+    print("Question 1:\n")
 
     # Import the data from file and preprocess it
     data = Data(file_name)
@@ -36,7 +36,7 @@ def part1(file_name):
 
 def part2(file_name):
 
-    print("Question 2:")
+    print("Question 2:\n")
 
     # Import the data from file and preprocess it
     data = RaceData(file_name)
@@ -47,7 +47,7 @@ def part2(file_name):
     classifier_knn = RaceAlgorithmRunner('KNN', number_of_neighbors=61)
     classifier_knn.cross_val_score(data)
 
-    print("Running Rocchio Classifier...")
+    # print("Running Rocchio Classifier...")
     # Initialize and run Rocchio classifier
     classifier_rocchio = RaceAlgorithmRunner('Rocchio')
     classifier_rocchio.cross_val_score(data)

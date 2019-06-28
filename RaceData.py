@@ -60,6 +60,9 @@ class RaceData:
         numerical_cols = data.select_dtypes(include='number').columns
         category_cols = data.select_dtypes(exclude='number').columns
 
+        # Convert numerical columns int64 to float64
+        data[numerical_cols] = data[numerical_cols].astype('float64')
+
         # After creating the column lists - joins back the dummy-variable actors and genres
         data = data.join(actors)
         data = data.join(genres)
