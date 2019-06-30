@@ -64,16 +64,20 @@ class Data:
 
         # Display current operation
         # print("Applying Standard Scaler to numerical columns and OneHotEncoder for remaining categorical columns...")
-
-        preprocessor = compose.ColumnTransformer(transformers=[('num', preprocessing.StandardScaler(), numerical_cols),
-                                                 ('cat', preprocessing.OneHotEncoder(), categorical_cols)],
+        # numerical columns minus mean divided by std
+        data_mean = data[numerical_cols].mean()
+        data_std = data[numerical_cols].std()
+        data[numerical_cols] = (data[numerical_cols] - data_mean) / data_std
+        # Apply one hot encoder (dummy variables) for categorical columns
+        preprocessor = compose.ColumnTransformer(transformers=[
+                                                              ('cat', preprocessing.OneHotEncoder(), categorical_cols)],
                                                  remainder="passthrough")
 
         self.X = preprocessor.fit_transform(data)
 
         # Display current operation
         # print("Binarizing Labels...")
-
+        print(self.X.shape)
         # all labels lower that 7 become 0, 7 and higher become 1
         self.y = preprocessing.Binarizer(GOODMOVIETHRESHOLD).fit_transform(self.y.to_numpy().reshape(-1, 1))
         self.y = np.ravel(self.y)
