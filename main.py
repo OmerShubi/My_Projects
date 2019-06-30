@@ -25,7 +25,7 @@ def part1(file_name):
     classifier_rocchio.cross_val_score(data)
 
     # Display results
-    print("KNN classifier {}, {}, {}".format(classifier_knn.precision,
+    print("KNN classifier: {}, {}, {}".format(classifier_knn.precision,
                                              classifier_knn.recall,
                                              classifier_knn.accuracy))
 
@@ -53,7 +53,7 @@ def part2(file_name):
     classifier_rocchio.cross_val_score(data)
 
     # Display results
-    print("KNN classifier",  classifier_knn.accuracy)
+    print("KNN classifier:",  classifier_knn.accuracy)
     print("Rocchio classifier:", classifier_rocchio.accuracy)
 
 
