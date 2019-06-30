@@ -8,7 +8,7 @@ import sys
 
 def part1(file_name):
 
-    print("Question 1:\n")
+    print("Question 1:")
 
     # Import the data from file and preprocess it
     data = Data(file_name)
@@ -36,7 +36,7 @@ def part1(file_name):
 
 def part2(file_name):
 
-    print("Question 2:\n")
+    print("Question 2:")
 
     # Import the data from file and preprocess it
     data = RaceData(file_name)

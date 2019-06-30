@@ -77,7 +77,6 @@ class Data:
 
         # Display current operation
         # print("Binarizing Labels...")
-        print(self.X.shape)
         # all labels lower that 7 become 0, 7 and higher become 1
         self.y = preprocessing.Binarizer(GOODMOVIETHRESHOLD).fit_transform(self.y.to_numpy().reshape(-1, 1))
         self.y = np.ravel(self.y)
