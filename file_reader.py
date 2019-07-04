@@ -155,3 +155,30 @@ class FileReader:
                 reg_representation['doc' + str(index)] = line.split("\t")[0]
                 index += 1
         return doc_set, reg_representation
+
+    def parse_query(self, query):
+        """
+        Builds the data vector using tfidf format
+        :param file_to_vector: the file to be processed
+        :return: the file in vector form, using tfidf format
+        """
+        doc_set = {}
+        reg_representation = {}
+        index = 0
+        vec = len(self.words) * [0, ]
+        for word in query.split("\t")[0].split():
+            word = self.pre_process_word(word)
+            if word == '':
+                continue
+            if word in self.words:
+                vec[self.words[word]] += 1
+        # After iterating over all words we now have the tf and can store words in tfidf format
+        for word in self.words.keys():
+            if vec[self.words[word]] == 0:
+                continue
+            else:
+                vec[self.words[word]] = vec[self.words[word]] * math.log((self.number_of_docs / self.df[word]), 10)
+        doc_set['doc' + str(index)] = vec
+        reg_representation['doc' + str(index)] = query.split("\t")[0]
+        index += 1
+        return vec
