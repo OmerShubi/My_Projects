@@ -1,5 +1,7 @@
 import file_reader
 import rocchio_classifier
+import math
+import sys
 
 
 def calc_accuracy(test_set, classifier, distance_method):
@@ -41,8 +43,41 @@ def test_run(data_type, lower_and_remove_punctuation, remove_stop_words, distanc
     return accuracy
 
 
-if __name__ == '__main__':
+def cosine_similarity(list1, list2):
+    """
+    Calculates cosine similarity between two lists of doubles
 
+    Assumes lists are of same length
+    :param list1: list of doubles
+    :param list2: list of doubles
+    :return: cosine similarity, double
+    """
+    list1_norm = 0
+    list2_norm = 0
+    result = 0
+
+    for i in range(len(list1)):
+        list1_norm += list1[i]**2
+        list2_norm += list2[i]**2
+        result += list1[i]*list2[i]
+
+    list1_norm = math.sqrt(list1_norm)
+    list2_norm = math.sqrt(list2_norm)
+
+    return result/(list1_norm*list2_norm)
+
+
+def retrieve(K, query, tfidf_docs, text_docs):
+    distances = {}
+    for doc in tfidf_docs:
+        distances[doc] = cosine_similarity(query, tfidf_docs[doc])
+    for k in range(K):
+        key = max(distances, key=distances.get)
+        print(str((k+1)) + ". " + key + " - " + text_docs[key] + "Score: " + str(distances[key]))
+        distances.pop(key)
+
+
+def lab5():
     print("Accuracy Results:")
 
     # boolean
@@ -105,3 +140,17 @@ if __name__ == '__main__':
         print("Diff to base: ", tfidf_cleaned_words_cosine_accuracy - base_accuracy)
         print("Improvement from previous: ", tfidf_cleaned_words_cosine_accuracy - tfidf_cleaned_words_accuracy)
 
+
+def lab6(K, query):
+    file_name = "./dataset/amazon_cells_labelled_full.txt"
+    data = file_reader.FileReader(file_name, True, True)
+    tfidf_set, text_set = data.build_set('tfidf', file_name)
+    parsed_query = data.parse_query(query)
+    retrieve(K, parsed_query, tfidf_set, text_set)
+
+
+if __name__ == '__main__':
+    # uncomment to run lab 5
+    # lab5()
+
+    lab6(int(sys.argv[1]), sys.argv[2:][0])
