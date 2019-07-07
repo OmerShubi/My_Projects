@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn import datasets, metrics
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors.nearest_centroid import NearestCentroid
+from analysis_functions import *
 
 
 def main():
@@ -21,16 +22,7 @@ def main():
     # matplotlib.pyplot.imread.  Note that each image must have the same size. For these
     # images, we know which digit they represent: it is given in the 'target' of
     # the dataset.
-    images_and_labels = list(zip(digits.images, digits.target))
-    for index, (image, label) in enumerate(images_and_labels[:8]):
-        plt.subplot(2, 4, index + 1)
-        plt.axis("off")
-        plt.imshow(image, cmap="binary")
-        plt.title("Training: %i" % label)
-        print("this is how it would look like in a matrix: " + str(label))
-        print(digits.images[index])
-    plt.show()
-    plt.close()
+    plot_random_samples(digits.images, digits.target)
 
     # To apply a classifier on this data, we need to flatten the image, to
     # turn the data into a (samples, feature) matrix:
