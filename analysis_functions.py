@@ -1,4 +1,5 @@
 import random
+
 import matplotlib.pyplot as plt
 from sklearn import metrics
 
@@ -28,26 +29,39 @@ def plot_random_samples(images, labels):
     plt.close()
 
 
-def classifier_test(classifier, train, train_labels, test, test_labels):
+def classifier_test(
+    classifier, train, train_labels, test, test_labels, show_results=False
+):
     # Learn the digits on the first half of the data
     classifier.fit(train, train_labels)
     # Now predict the value of the digit on the second half:
     expected = test_labels
     predicted = classifier.predict(test)
-
-    print(
-        "Classification report for classifier %s:\n%s\n"
-        % (classifier, metrics.classification_report(expected, predicted))
-    )
-    print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
-    print("Accuracy: " + str(metrics.accuracy_score(expected, predicted)))
+    if show_results:
+        print(
+            "Classification report for classifier %s:\n%s\n"
+            % (classifier, metrics.classification_report(expected, predicted))
+        )
+        print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
+        print("Accuracy: " + str(metrics.accuracy_score(expected, predicted)))
 
     return predicted
 
 
-def show_pairs(true_class, predicted_class, images, expected, predicted):
-    # plotting the errors of the model
+def show_pairs(
+    true_class, predicted_class, images, expected, predicted, show_results=True
+):
+    """
+
+    :param true_class:
+    :param predicted_class:
+    :param images:
+    :param expected:
+    :param predicted:
+    :return: number of errors for the given classes
+    """
     counter = 0
+    # plotting the errors of the model
     images_and_predictions = list(zip(images, predicted))
     for index, (image, prediction) in enumerate(images_and_predictions[:]):
         if (
@@ -56,9 +70,10 @@ def show_pairs(true_class, predicted_class, images, expected, predicted):
             and predicted[index] == predicted_class
         ):
             counter += 1
-            plt.imshow(image, cmap="binary")
-            plt.title(
-                "Prediction: %i" % prediction + " True Label: %i" % expected[index]
-            )
-            plt.show()
+            if show_results:
+                plt.imshow(image, cmap="binary")
+                plt.title(
+                    "Prediction: %i" % prediction + " True Label: %i" % expected[index]
+                )
+                plt.show()
     return counter
