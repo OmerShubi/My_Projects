@@ -43,3 +43,22 @@ def classifier_test(classifier, train, train_labels, test, test_labels):
     print("Accuracy: " + str(metrics.accuracy_score(expected, predicted)))
 
     return predicted
+
+
+def show_pairs(true_class, predicted_class, images, expected, predicted):
+    # plotting the errors of the model
+    counter = 0
+    images_and_predictions = list(zip(images, predicted))
+    for index, (image, prediction) in enumerate(images_and_predictions[:]):
+        if (
+            expected[index] != predicted[index]
+            and expected[index] == true_class
+            and predicted[index] == predicted_class
+        ):
+            counter += 1
+            plt.imshow(image, cmap="binary")
+            plt.title(
+                "Prediction: %i" % prediction + " True Label: %i" % expected[index]
+            )
+            plt.show()
+    return counter

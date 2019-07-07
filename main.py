@@ -31,10 +31,6 @@ def main():
     n_samples = len(digits.images)
     data = digits.images.reshape((n_samples, -1))
 
-    # Create a KNN classifier
-    classifierKNN = KNeighborsClassifier()
-    classifierRocchio = NearestCentroid()
-
     # Learn the digits on the first half of the data
     train_features, train_target = (
         data[0 : n_samples // 2],
@@ -44,37 +40,35 @@ def main():
     # Now predict the value of the digit on the second half:
     test_features, test_labels = data[n_samples // 2 :], digits.target[n_samples // 2 :]
 
-    predicted_KNN = classifier_test(
-        classifierKNN, train_features, train_target, test_features, test_labels
+    # Create classifiers
+    classifier_knn = KNeighborsClassifier()
+    classifier_rocchio = NearestCentroid()
+
+    predicted_knn = classifier_test(
+        classifier_knn, train_features, train_target, test_features, test_labels
     )
 
-    predicted_Rocchio = classifier_test(
-        classifierRocchio, train_features, train_target, test_features, test_labels
+    predicted_rocchio = classifier_test(
+        classifier_rocchio, train_features, train_target, test_features, test_labels
     )
 
+    test_images = digits.images[n_samples // 2 :]
+    counter2 = 0
+    for true_val in range(10):
+        for predicted_val in range(10):
+            counter2 += show_pairs(
+                true_val, predicted_val, test_images, test_labels, predicted_knn
+            )
+    print(counter2)
+    show_pairs(5, 3, test_images, test_labels, predicted_rocchio)
     # plotting the errors of the model
-    images_and_predictions = list(zip(digits.images[n_samples // 2 :], predicted_KNN))
+    counter = 0
+    images_and_predictions = list(zip(digits.images[n_samples // 2 :], predicted_knn))
     for index, (image, prediction) in enumerate(images_and_predictions[:]):
-        if test_labels[index] == predicted_KNN[index]:
+        if test_labels[index] == predicted_knn[index]:
             continue
-        plt.imshow(image, cmap="binary")
-        plt.title(
-            "KNN Prediction: %i" % prediction + " True Label: %i" % test_labels[index]
-        )
-        plt.show()
-
-    images_and_predictions = list(
-        zip(digits.images[n_samples // 2 :], predicted_Rocchio)
-    )
-    for index, (image, prediction) in enumerate(images_and_predictions[:]):
-        if test_labels[index] == predicted_Rocchio[index]:
-            continue
-        plt.imshow(image, cmap="binary")
-        plt.title(
-            "Rocchio Prediction: %i" % prediction
-            + " True Label: %i" % test_labels[index]
-        )
-        plt.show()
+        counter += 1
+    print(counter)
 
 
 if __name__ == "__main__":
