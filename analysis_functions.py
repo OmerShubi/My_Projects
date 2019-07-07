@@ -1,5 +1,6 @@
 import random
 import matplotlib.pyplot as plt
+from sklearn import metrics
 
 
 def plot_random_samples(images, labels):
@@ -25,3 +26,20 @@ def plot_random_samples(images, labels):
         print(images[index])
     plt.show()
     plt.close()
+
+
+def classifier_test(classifier, train, train_labels, test, test_labels):
+    # Learn the digits on the first half of the data
+    classifier.fit(train, train_labels)
+    # Now predict the value of the digit on the second half:
+    expected = test_labels
+    predicted = classifier.predict(test)
+
+    print(
+        "Classification report for classifier %s:\n%s\n"
+        % (classifier, metrics.classification_report(expected, predicted))
+    )
+    print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
+    print("Accuracy: " + str(metrics.accuracy_score(expected, predicted)))
+
+    return predicted
