@@ -7,7 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 from sklearn.preprocessing import StandardScaler
 
-from analysis_functions import *
+from Lab6.analysis_functions import *
 
 
 def label_with_max_error(test_images, test_labels, predicted, show_images=False):
