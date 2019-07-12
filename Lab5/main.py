@@ -1,5 +1,4 @@
-import file_reader
-import rocchio_classifier
+from Lab5 import file_reader, rocchio_classifier
 import math
 import sys
 
