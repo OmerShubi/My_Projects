@@ -28,7 +28,7 @@ def label_with_max_error(test_images, test_labels, predicted, show_images=False)
     print("label with most errors:", max(range(len(errors)), key=lambda i: errors[i]))
 
 
-def test_run(classifier, scale=False, show_results=False):
+def test_run(classifier, scale=False, show_results=False, show_images=False):
     train_features, train_target, test_features, test_labels = preprocess_data(scale)
 
     predicted = classifier_test(
@@ -40,7 +40,7 @@ def test_run(classifier, scale=False, show_results=False):
         show_results,
     )
 
-    label_with_max_error(test_features, test_labels, predicted)
+    label_with_max_error(test_features, test_labels, predicted, show_images)
 
     show_metrics(test_labels, predicted)
 
@@ -58,7 +58,7 @@ def preprocess_data(scale=False):
         scaler = StandardScaler()
         data = scaler.fit_transform(data)
 
-    # plot_random_samples(digits.images, digits.target)
+    plot_random_samples(digits.images, digits.target)
 
     # Learn the digits on the first half of the data
     train_features, train_target = (
@@ -66,7 +66,7 @@ def preprocess_data(scale=False):
         digits.target[0 : n_samples // 2],
     )
 
-    # Now predict the value of the digit on the second half:
+    # Predict the value of the digit on the second half:
     test_features, test_labels = data[n_samples // 2 :], digits.target[n_samples // 2 :]
 
     return train_features, train_target, test_features, test_labels
@@ -93,12 +93,12 @@ def main():
     classifier_r = NearestCentroid()
 
     print("KNN, unscaled:")
-    test_run(classifier_knn, scale=False)
-    print("KNN, scaled:")
+    test_run(classifier=classifier_knn, scale=False, show_results=True, show_images=True)
+    print("\nKNN, scaled:")
     test_run(classifier_knn, scale=True)
-    print("Rocchio, unscaled:")
+    print("\nRocchio, unscaled:")
     test_run(classifier_r, scale=False)
-    print("Rocchio, scaled:")
+    print("\nRocchio, scaled:")
     test_run(classifier_r, scale=True)
 
 

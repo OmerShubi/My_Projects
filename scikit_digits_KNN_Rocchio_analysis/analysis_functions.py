@@ -49,10 +49,11 @@ def classifier_test(
 
 
 def show_pairs(
-    true_class, predicted_class, images, expected, predicted, show_results=True
+    true_class, predicted_class, images, expected, predicted, show_images=True
 ):
     """
 
+    :param show_results:
     :param true_class:
     :param predicted_class:
     :param images:
@@ -70,8 +71,8 @@ def show_pairs(
             and predicted[index] == predicted_class
         ):
             counter += 1
-            if show_results:
-                plt.imshow(image, cmap="binary")
+            if show_images:
+                plt.imshow(image.reshape((8,8)), cmap="binary")
                 plt.title(
                     "Prediction: %i" % prediction + " True Label: %i" % expected[index]
                 )
