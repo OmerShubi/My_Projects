@@ -1,7 +1,7 @@
-  # Data Science Intro Exercises
+  # My Projects
   All sorts of data science exercises for future reference
-  ## Bash
-  * [Alice in wonderland Analysis](/Lab1)
+  ## Text Analysis
+  * [Alice in wonderland Book (Bash)](/Text_Analysis)
   ## Python
   * [Rocchio Classifier](/Lab5)
   * [Analyzing scikit-learn's digits dataset](/lab6)
