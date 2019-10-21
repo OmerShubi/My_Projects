@@ -3,6 +3,7 @@
 
 #define POINTER_ALREADY_SET "Trying to set a pointer that already used!"
 #include <exception>
+#include <stdexcept>
 
 
 /*

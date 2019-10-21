@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <exception>
+#include <stdexcept>
 #include "StackItem.h"
+
 
 #define ZERO 0
 #define EMPTY_STACK "Empty stack"
