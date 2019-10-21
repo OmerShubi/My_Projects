@@ -25,7 +25,7 @@
   * [Gradient Descent with Constant / Armijo / exact line search (PD Matrix) Step Size (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-with-constant--armijo--exact-line-search-pd-matrix-step-size)
   * [Noisy Gradient Descent Example (MATLAB)](/Optimization/Gradient_Descent/README.md#noisy-gradient-descent-example)
   * [Gradient Descent Example Performance (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-example-usage)
-  
+  * [Gradient Descent kappa coef affect (MATLAB)](/Optimization/Gradient_Descent_kappa_coef_effect)
   ## Others
   * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)
 
