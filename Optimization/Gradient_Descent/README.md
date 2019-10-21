@@ -20,4 +20,4 @@
 [Reconstruction code](/Optimization/Gradient_Descent/Gradient_Descent_Example_Usage.m)
 
 ![graph3_1](/Optimization/Gradient_Descent/Graphs/q3_graph1.png)
-![graph3_2](/Optimization/Gradient_Descent/Graphs/q3_graph1.png)
+![graph3_2](/Optimization/Gradient_Descent/Graphs/q3_graph2.png)
