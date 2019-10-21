@@ -8,13 +8,14 @@
   
   ## Image Related
   * [Analyzing scikit-learn's digits dataset (Python)](/Image_Related/scikit_digits_KNN_Rocchio_analysis)
+  * [Best rank K Approximation (Python)](/Image_Related/Best_K_Approximation)
+  * [PCA + KNN on CIFAR10 (Python)](/Image_Related/PCA+KNN on CIFAR10)
   
   ## Tabular Data
   * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio)
   
   ## Data Structures
   * [Stack Implementation (C++)](/Data_Structures/Stack_Example)
-  * TODO ADD MORE
 
   ## Optimization
   * [Optimal Warehouse Location for Shipments - CVX (MATLAB)](/Optimization/optimal_warehouse_location_for_shipments)
@@ -24,6 +25,7 @@
   * [Gradient Descent with Constant / Armijo / exact line search (PD Matrix) Step Size (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-with-constant--armijo--exact-line-search-pd-matrix-step-size)
   * [Noisy Gradient Descent Example (MATLAB)](/Optimization/Gradient_Descent/README.md#noisy-gradient-descent-example)
   * [Gradient Descent Example Performance (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-example-usage)
+  
   ## Others
   * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)
 
