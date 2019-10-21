@@ -10,5 +10,5 @@ Q. Is the value of this s related to the number of neighbors k or is it independ
 
 A. The value of s is independent of the number of neighbors. Increasing k definitely improves the result, but doesn’t seem to effect the ideal s value.
 
-![graph](/Image_Related/PCA+KNN on CIFAR10/error_rate_as_a_function_of_s_for_each_k.png)
-![table](/Image_Related/PCA+KNN on CIFAR10/error_rates_raw.png)
+![graph](/Image_Related/PCA+KNN_on_CIFAR10/error_rate_as_a_function_of_s_for_each_k.png)
+![table](/Image_Related/PCA+KNN_on_CIFAR10/error_rates_raw.png)
