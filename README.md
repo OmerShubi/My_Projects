@@ -1,5 +1,12 @@
   # My Projects
-  All sorts of data science exercises for future reference
+  All sorts of data science & Computer science exercises and programs for future reference
+    
+  1. [Text Related](#text-related)
+  2. [Image Related](#image-related)
+  3. [Tabular Data](#tabular-data)
+  4. [Data Structures](#data-structures)
+  5. [Optimization](#optimization)
+  6. [Others](#others)
   
   ## Text Related
   * [Alice in Wonderland - Basic Word Mapping (Bash)](/Text_Related/Alice_in_Wonderland)
