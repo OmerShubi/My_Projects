@@ -1,7 +1,7 @@
 #ifndef PETRIDISH_H_
 #define PETRIDISH_H_
 #include <iostream>
-#include "bacteria.h"
+#include "Bacteria.h"
 #include <vector>
 
  /**
