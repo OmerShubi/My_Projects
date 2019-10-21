@@ -101,4 +101,6 @@ awk -v CONVFMT=%.1f '
 		print "Average place of Alice in a line: " avg_alice_place;
 	}' temp_book
 
-
+# Delete temp artifacts
+rm temp_book
+rm -r files_d # comment this if the processed data is required.
