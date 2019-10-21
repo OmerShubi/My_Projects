@@ -17,7 +17,7 @@
   * [Analyzing scikit-learn's digits dataset (Python)](/Image_Related/scikit_digits_KNN_Rocchio_analysis)
   * [Best rank K Approximation (Python)](/Image_Related/Best_K_Approximation)
   * [PCA + KNN on CIFAR10 (Python)](/Image_Related/PCA+KNN_on_CIFAR10)
-  * [Gradient Descent vs FISTA for Image Deblurring](/Image_Related/Image Deblurring/README.md)
+  * [Gradient Descent vs FISTA for Image Deblurring](/Image_Related/Image_Deblurring)
   
   ## Tabular Data
   * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio)
