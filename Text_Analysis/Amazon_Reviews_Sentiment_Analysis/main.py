@@ -1,24 +1,8 @@
-from Lab5 import file_reader, rocchio_classifier
-import math
 import sys
 
-
-def calc_accuracy(test_set, classifier, distance_method):
-    """
-    Calculates a given classifier's accuracy on a test set, using the chosen distance method (euclidean / cosine)
-    :param test_set: the test set, dictionary
-    :param classifier: the trained rocchio classifier
-    :param distance_method:
-    :return:
-    """
-    correct = 0.0
-    total = len(test_set.keys())
-    for key in test_set:
-        real = test_set[key][-1]
-        predicted = classifier.predict(test_set[key][0:-1], distance_method)
-        if real == predicted:
-            correct += 1.0
-    return correct/total
+from file_reader import FileReader
+from rocchio_classifier import RocchioClassifier
+from utils import cosine_similarity, calc_accuracy
 
 
 def test_run(data_type, lower_and_remove_punctuation, remove_stop_words, distance_method):
@@ -34,36 +18,12 @@ def test_run(data_type, lower_and_remove_punctuation, remove_stop_words, distanc
     train_file_name = "./dataset/amazon_cells_labelled_train.txt"
     test_file_name = "./dataset/amazon_cells_labelled_test.txt"
 
-    data = file_reader.FileReader(file_name, lower_and_remove_punctuation, remove_stop_words)
+    data = FileReader(file_name, lower_and_remove_punctuation, remove_stop_words)
     train_set, _ = data.build_set(data_type, train_file_name)
     test_set, _ = data.build_set(data_type, test_file_name)
-    classifier = rocchio_classifier.RocchioClassifier(train_set)
+    classifier = RocchioClassifier(train_set)
     accuracy = calc_accuracy(test_set, classifier, distance_method)
     return accuracy
-
-
-def cosine_similarity(list1, list2):
-    """
-    Calculates cosine similarity between two lists of doubles
-
-    Assumes lists are of same length
-    :param list1: list of doubles
-    :param list2: list of doubles
-    :return: cosine similarity, double
-    """
-    list1_norm = 0
-    list2_norm = 0
-    result = 0
-
-    for i in range(len(list1)):
-        list1_norm += list1[i]**2
-        list2_norm += list2[i]**2
-        result += list1[i]*list2[i]
-
-    list1_norm = math.sqrt(list1_norm)
-    list2_norm = math.sqrt(list2_norm)
-
-    return result/(list1_norm*list2_norm)
 
 
 def retrieve(K, query, tfidf_docs, text_docs):
@@ -72,15 +32,21 @@ def retrieve(K, query, tfidf_docs, text_docs):
         distances[doc] = cosine_similarity(query, tfidf_docs[doc])
     for k in range(K):
         key = max(distances, key=distances.get)
-        print(str((k+1)) + ". " + key + " - " + text_docs[key] + "Score: " + str(distances[key]))
+        print(str((k+1)) + ". " + key + " - " + text_docs[key] + " Score: " + str(distances[key]))
         distances.pop(key)
 
 
-def lab5():
+def Rocchio_in_action_multiple_configurations(full_results=False):
+    """
+    Checks accuracy of the Rocchio Classifier, with different configuration options
+    :param full_results: displays more in-depth results
+    :return:
+    """
     print("Accuracy Results:")
 
     # boolean
-    base_accuracy = test_run('boolean', False, False, 'euclidean')
+    base_accuracy = test_run(data_type='boolean', lower_and_remove_punctuation=False,
+                             remove_stop_words=False, distance_method='euclidean')
     print("Bool:", base_accuracy)
 
     # tf
@@ -104,8 +70,7 @@ def lab5():
     print("tfidf with cosine similarity, lower case, punctuation removal and stopwords removal:",
           tfidf_cleaned_words_cosine_accuracy)
 
-    debug = False
-    if debug:
+    if full_results:
         print("\n DEBUG Full Accuracy Results:")
 
         # boolean
@@ -140,16 +105,26 @@ def lab5():
         print("Improvement from previous: ", tfidf_cleaned_words_cosine_accuracy - tfidf_cleaned_words_accuracy)
 
 
-def lab6(K, query):
+def retrieve_best_k_related_reviews(K, query):
+    """
+    Utilizing the Rocchio Classifier,
+    finds and displays the k most relevant reviews to a given query, and their score.
+    :param K: int, number of related documents desired
+    :param query: string, the query to check the reviews against.
+    :return:
+    """
     file_name = "./dataset/amazon_cells_labelled_full.txt"
-    data = file_reader.FileReader(file_name, True, True)
+    data = FileReader(file_name, True, True)
     tfidf_set, text_set = data.build_set('tfidf', file_name)
     parsed_query = data.parse_query(query)
     retrieve(K, parsed_query, tfidf_set, text_set)
 
 
 if __name__ == '__main__':
-    # uncomment to run lab 5
-    # lab5()
+    # Run with 'python -m main 5 "camera"' if run into issues with imports
 
-    lab6(int(sys.argv[1]), sys.argv[2:][0])
+    Rocchio_in_action_multiple_configurations(full_results=True)
+
+    retrieve_best_k_related_reviews(5, "samsung phone")  # Hardcoded version
+
+    # retrieve_best_k_related_reviews(int(sys.argv[1]), sys.argv[2:][0])  # Command line version
