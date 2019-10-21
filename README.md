@@ -17,3 +17,8 @@
 
   ## C++ Inheritance
   * [Petridish Simulation (C++)](/Others/PetriDish_Simulation)
+  
+  ## Optimization
+  * [Optimal Warehouse Location for Shipments - Projection Gradient Descent (MATLAB)](/Optimization/optimal_warehouse_location_for_shipments)
+  * [Solving a function with CVX #1 (MATLAB)](/Optimization/cvx_solve_function_1.m)
+  * [Solving a function with CVX #2 (MATLAB)](/Optimization/cvx_solve_function_2.m)
