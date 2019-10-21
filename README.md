@@ -20,8 +20,10 @@
   * [Optimal Warehouse Location for Shipments - CVX (MATLAB)](/Optimization/optimal_warehouse_location_for_shipments)
   * [Solving a function with CVX #1 (MATLAB)](/Optimization/cvx_solve_function_1.m)
   * [Solving a function with CVX #2 (MATLAB)](/Optimization/cvx_solve_function_2.m)
-  * [Solviong a function with Projection Gradient Descent (MATLAB)](/Optimization/Projection_Gradient_Descent_1)
-  
+  * [Solving a function with Projection Gradient Descent (MATLAB)](/Optimization/Projection_Gradient_Descent_1)
+  * [Gradient Descent with Constant / Armijo / exact line search (PD Matrix) Step Size (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-with-constant--armijo--exact-line-search-pd-matrix-step-size)
+  * [Noisy Gradient Descent Example (MATLAB)](/Optimization/Gradient_Descent/README.md#noisy-gradient-descent-example)
+  * [Gradient Descent Example Performance (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-example-usage)
   ## Others
-  * [Petridish Simulation -Inheritance (C++)](/Others/PetriDish_Simulation)
+  * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)
 
