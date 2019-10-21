@@ -16,5 +16,5 @@
   * [Stack Implementation (C++)](/Data_Structures/Stack_Example)
   * TODO ADD MORE
 
-  ## C++ Inheritance
-  * [Petridish Simulation (C++)](/Others/PetriDish_Simulation)
+  ## Others
+  * [Petridish Simulation -Inheritance (C++)](/Others/PetriDish_Simulation)
