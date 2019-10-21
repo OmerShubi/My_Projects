@@ -4,7 +4,7 @@ from AlgorithmRunner import AlgorithmRunner
 from RaceAlgorithmRunner import RaceAlgorithmRunner
 
 import sys
-
+import pathlib
 
 def part1(file_name):
 
@@ -59,7 +59,18 @@ def part2(file_name):
 
 if __name__ == '__main__':
 
-    file_path = sys.argv[1]
+    try:
+        # file_path = sys.argv[1]
+        file_path = "movie_metadata.csv"
+
+    except IndexError:
+        print("File path missing.")
+        sys.exit(1)
+
+    if not pathlib.Path(file_path).is_file():
+        print("File -", file_path,"doesn't exist.")
+        sys.exit(1)
+
     part1(file_name=file_path)
     print("\n")
     part2(file_name=file_path)
