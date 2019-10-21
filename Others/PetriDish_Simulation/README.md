@@ -1,3 +1,9 @@
+Class Inheritance in C++
+
+Make the simulation `g++ main.cpp ActiveBacteria.cpp PetriDish.cpp DieteticBacteria.cpp HungryBacteria.cpp LazyBacteria.cpp -o Simulation` in linux environment.
+
+run `./Simulation` to play around with the petridish.
+
 System Description:
 
 A computerized Petri dish simulation. This is a coding exercise, not related to biology...
