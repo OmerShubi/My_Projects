@@ -17,6 +17,7 @@
   * [Analyzing scikit-learn's digits dataset (Python)](/Image_Related/scikit_digits_KNN_Rocchio_analysis)
   * [Best rank K Approximation (Python)](/Image_Related/Best_K_Approximation)
   * [PCA + KNN on CIFAR10 (Python)](/Image_Related/PCA+KNN_on_CIFAR10)
+  * [Gradient Descent vs FISTA for Image Deblurring](/Image_Related/Image Deblurring/README.md)
   
   ## Tabular Data
   * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio)
@@ -32,7 +33,7 @@
   * [Gradient Descent with Constant / Armijo / exact line search (PD Matrix) Step Size (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-with-constant--armijo--exact-line-search-pd-matrix-step-size)
   * [Noisy Gradient Descent Example (MATLAB)](/Optimization/Gradient_Descent/README.md#noisy-gradient-descent-example)
   * [Gradient Descent Example Performance (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-example-usage)
-  * [Gradient Descent kappa coef affect (MATLAB)](/Optimization/Gradient_Descent_kappa_coef_effect)
+  * [Gradient Descent kappa coef effect (MATLAB)](/Optimization/Gradient_Descent_kappa_coef_effect)
   ## Others
   * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)
 
