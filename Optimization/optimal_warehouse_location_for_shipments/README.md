@@ -4,4 +4,4 @@ The result is nicely showed in the image below.
 ![image](/Optimization/optimal_warehouse_location_for_shipments/optimal_warehouse_location_for_shipments.jpeg)
 
 To reconstruct run the
-[Projection_Gradient_Descent_solve_function.m](optimal_warehouse_location_for_shipments.m) file.
+[optimal_warehouse_location_for_shipments.m](optimal_warehouse_location_for_shipments.m) file.
