@@ -10,7 +10,7 @@ image==1.5.27
 kiwisolver==1.1.0         # via matplotlib
 matplotlib==3.0.3
 numpy==1.16.3
-pillow==6.0.0             # via image
+pillow==6.2.0             # via image
 pyparsing==2.4.0          # via matplotlib
 python-dateutil==2.8.0    # via matplotlib
 pytz==2019.1              # via django
