@@ -28,7 +28,9 @@ $H_0:\mu=0 C = \frac{\bar{x}- {\mu}_0}{\sigma/\sqrt{n}} $
 
 Given the question definitions:
 
+
 ```{r}
+# Not in use
 mu <- 0
 sd <- 2
 n <- 16
@@ -49,16 +51,132 @@ n <- 16
 iterations <- 5000
 
 # Simulate 5000 tests, each with 16 samples.
-means <- rnorm(iterations, mu, sd/n)
+means <- rnorm(iterations, mu, sd/sqrt(n))
 
 # Calculate the z-score for each simulation
 Z = (means-mu)/(sd/sqrt(n))
 
-p_value <- pnorm(Z,mu,sd)
-p_value <- 1 - p_value
-hist(p_value)
+pvals <- pnorm(Z,mu,sd)
+pvals <- 1 - pvals
+hist(pvals)
 ```
 
 2.
 
 In our opinion, $p_{value}\sim Normal(0.5,???)$
+
+3.
+```{r}
+
+length(pvals[pvals<0.1])/iterations
+
+```
+
+
+Part B
+======
+```{r}
+mu <- 0
+sd <- 2
+n <- 32
+iterations <- 5000
+
+# Simulate 5000 tests, each with 32 samples.
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-mu)/(sd/sqrt(n))
+
+pvals <- pnorm(Z,mu,sd)
+pvals <- 1 - pvals
+hist(pvals)
+```
+
+
+נראה שהשונות יותר קטנה, והתוחלת נותרה זהה
+
+Part C
+======
+
+1.
+
+```{r}
+mu <- 0.5
+sd <- 2
+n <- 16
+iterations <- 5000
+
+# Simulate 5000 tests, each with 16 samples.
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-mu)/(sd/sqrt(n))
+
+pvals <- pnorm(Z,mu,sd)
+pvals <- 1 - pvals
+hist(pvals)
+```
+
+
+
+Part D
+======
+
+1.
+
+```{r}
+mu <- 1
+sd <- 2
+n <- 16
+iterations <- 5000
+
+# Simulate 5000 tests, each with 16 samples.
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-mu)/(sd/sqrt(n))
+
+pvals <- pnorm(Z,mu,sd)
+pvals <- 1 - pvals
+hist(pvals)
+```
+
+
+Part E
+======
+
+1.
+
+```{r}
+mu <- 0.5
+sd <- 2
+n <- 32
+iterations <- 5000
+
+# Simulate 5000 tests, each with 16 samples.
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-mu)/(sd/sqrt(n))
+
+pvals <- pnorm(Z,mu,sd)
+pvals <- 1 - pvals
+hist(pvals)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
