@@ -1751,30 +1751,68 @@ summary {
 <!-- rnb-text-begin -->
 <p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
 <p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Ctrl+Shift+Enter</em>.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
 <p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
+<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
+<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
+<div id="question-1" class="section level2">
+<h2>Question 1</h2>
+</div>
+<div id="part-a" class="section level1">
+<h1>Part A</h1>
+<ol style="list-style-type: decimal">
+<li></li>
+</ol>
+<p>$H_0:=0 C =  $</p>
+<p>Given the question definitions:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSA2XG54XG5gYGAifQ== -->
-<pre class="r"><code>x &lt;- 6
-x</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXUgPC0gMFxuc2QgPC0gMlxubiA8LSAxNlxudmVjMSA8LSBybm9ybShuLCBtdSwgc2QpXG52ZWMxX21lYW4gPC1tZWFuKHZlYzEpXG5cbkMgPSAodmVjMV9tZWFuLW11KS8oc2Qvc3FydChuKSlcbnBfdmFsdWUgPC0gcG5vcm0oQyxtdSxzZClcbjEtcF92YWx1ZVxuYGBgIn0= -->
+<pre class="r"><code>mu &lt;- 0
+sd &lt;- 2
+n &lt;- 16
+vec1 &lt;- rnorm(n, mu, sd)
+vec1_mean &lt;-mean(vec1)
+
+C = (vec1_mean-mu)/(sd/sqrt(n))
+p_value &lt;- pnorm(C,mu,sd)
+1-p_value</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDZcbiJ9 -->
-<pre><code>[1] 6</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuNjMxNjU1MlxuIn0= -->
+<pre><code>[1] 0.6316552</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXUgPC0gMFxuc2QgPC0gMlxubiA8LSAxNlxuaXRlcmF0aW9ucyA8LSA1MDAwMFxuXG4jIFNpbXVsYXRlIDUwMDAgdGVzdHMsIGVhY2ggd2l0aCAxNiBzYW1wbGVzLlxubWVhbnMgPC0gcm5vcm0oaXRlcmF0aW9ucywgbXUsIHNkL24pXG5cbiMgQ2FsY3VsYXRlIHRoZSB6LXNjb3JlIGZvciBlYWNoIHNpbXVsYXRpb25cblogPSAobWVhbnMtbXUpLyhzZC9zcXJ0KG4pKVxuXG5wX3ZhbHVlIDwtIHBub3JtKFosbXUsc2QpXG5wX3ZhbHVlIDwtIDEgLSBwX3ZhbHVlXG5oaXN0KHBfdmFsdWUpXG5gYGAifQ== -->
+<pre class="r"><code>mu &lt;- 0
+sd &lt;- 2
+n &lt;- 16
+iterations &lt;- 50000
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiANCg0KVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiANCg0KYGBge3J9DQpwbG90KGNhcnMpDQpgYGANCg0KQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkN0cmwrQWx0K0kqLg0KYGBge3J9DQp4IDwtIDYNCngNCmBgYA0KDQpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4NCg0KVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLg0K</div>
+# Simulate 5000 tests, each with 16 samples.
+means &lt;- rnorm(iterations, mu, sd/n)
+
+# Calculate the z-score for each simulation
+Z = (means-mu)/(sd/sqrt(n))
+
+p_value &lt;- pnorm(Z,mu,sd)
+p_value &lt;- 1 - p_value
+hist(p_value)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-plot-begin eyJjb25kaXRpb25zIjpbXSwiaGVpZ2h0IjoyODUuNTM3Nywic2l6ZV9iZWhhdmlvciI6MCwid2lkdGgiOjQ2Mn0= -->
+<p><img src="data:image/png;base64,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" /></p>
+<!-- rnb-plot-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: decimal">
+<li></li>
+</ol>
+<p>In our opinion, <span class="math inline">\(p_{value}\sim Normal(0.5,???)\)</span></p>
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiANCg0KVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiANCg0KDQpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ3RybCtBbHQrSSouDQoNCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ3RybCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLg0KDQpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuIENvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4gSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuDQoNCg0KUXVlc3Rpb24gMQ0KLS0tLS0tLS0tLQ0KDQpQYXJ0IEENCj09PT09PQ0KDQoxLg0KDQoNCiRIXzA6XG11PTAgQyA9IFxmcmFje1xiYXJ7eH0tIHtcbXV9XzB9e1xzaWdtYS9cc3FydHtufX0gJA0KDQpHaXZlbiB0aGUgcXVlc3Rpb24gZGVmaW5pdGlvbnM6DQoNCmBgYHtyfQ0KbXUgPC0gMA0Kc2QgPC0gMg0KbiA8LSAxNg0KdiA8LSBybm9ybShuLCBtdSwgc2QpDQp2X21lYW4gPC1tZWFuKHYpDQoNCkMgPSAodl9tZWFuLW11KS8oc2Qvc3FydChuKSkNCnBfdmFsdWUgPC0gcG5vcm0oQyxtdSxzZCkNCjEtcF92YWx1ZQ0KYGBgDQoNCg0KDQpgYGB7cn0NCm11IDwtIDANCnNkIDwtIDINCm4gPC0gMTYNCml0ZXJhdGlvbnMgPC0gNTAwMA0KDQojIFNpbXVsYXRlIDUwMDAgdGVzdHMsIGVhY2ggd2l0aCAxNiBzYW1wbGVzLg0KbWVhbnMgPC0gcm5vcm0oaXRlcmF0aW9ucywgbXUsIHNkL24pDQoNCiMgQ2FsY3VsYXRlIHRoZSB6LXNjb3JlIGZvciBlYWNoIHNpbXVsYXRpb24NClogPSAobWVhbnMtbXUpLyhzZC9zcXJ0KG4pKQ0KDQpwX3ZhbHVlIDwtIHBub3JtKFosbXUsc2QpDQpwX3ZhbHVlIDwtIDEgLSBwX3ZhbHVlDQpoaXN0KHBfdmFsdWUpDQpgYGANCg0KMi4NCg0KSW4gb3VyIG9waW5pb24sICRwX3t2YWx1ZX1cc2ltIE5vcm1hbCgwLjUsPz8/KSQ=</div>
 
 
 
