@@ -1,15 +1,18 @@
 ---
-title: "Multiple Comparisons: Homework - 1"
-output: html_notebook
+title: 'Multiple Comparisons: Homework - 1'
+output:
+  github_document
+  # html_notebook: default
+  # pdf_document: default
 ---
 
 
 Submitted by: 
 =============
 
-Eyal Bar-Natan 207630658
+Eyal Bar-Natan - 207630658
 
-Omer Shubi 312236219
+Omer Shubi - 312236219
 
 
 # Question 1
@@ -20,9 +23,16 @@ Omer Shubi 312236219
 
 ### 1.
 
-$H_0:\mu=0,C = \frac{\bar{x} - {\mu}_0}{\sigma/\sqrt{n}}$
-
 Given the question definitions:
+
+$H_0:\mu=0$
+
+$H_1:\mu\geq 0$
+
+and by using the Neyman-Pearson test:
+
+$C = \frac{\bar{x} - {\mu}_0}{\sigma/\sqrt{n}}$
+
 
 ```{r}
 mu <- 0
@@ -37,9 +47,9 @@ means <- rnorm(iterations, mu, sd/sqrt(n))
 Z = (means-mu)/(sd/sqrt(n))
 
 # Calculate the p-values
-pvals <- pnorm(Z, lower.tail = FALSE)
+p_vals <- pnorm(Z, lower.tail = FALSE)
 
-hist(pvals, breaks=10)
+hist(p_vals, breaks=10)
 ```
 
 ### 2.
@@ -52,7 +62,7 @@ The proportion of p-values lower than 0.1 is:
 
 ```{r}
 
-length(pvals[pvals<0.1])/iterations
+length(p_vals[p_vals<0.1])/iterations
 
 ```
 ### 4.
@@ -79,9 +89,9 @@ means <- rnorm(iterations, mu, sd/sqrt(n))
 Z = (means-mu)/(sd/sqrt(n))
 
 # Calculate the p-values
-pvals2 <- pnorm(Z, lower.tail = FALSE)
+p_vals2 <- pnorm(Z, lower.tail = FALSE)
 
-hist(pvals2, breaks=10)
+hist(p_vals2, breaks=10)
 ```
 
 In our opinion, $p_{value}\sim Uni[0, 1]$.
@@ -107,15 +117,15 @@ means <- rnorm(iterations, mu, sd/sqrt(n))
 Z = (means-0)/(sd/sqrt(n))
 
 # Calculate the p-values
-pvals3 <- pnorm(Z, lower.tail = FALSE)
+p_vals3 <- pnorm(Z, lower.tail = FALSE)
 
-hist(pvals3, breaks=10)
+hist(p_vals3, breaks=10)
 ```
 ### 2.
 
 ```{r}
-plot(ecdf(pvals),col='red')
-lines(ecdf(pvals3),col='green')
+plot(ecdf(p_vals),col='red')
+lines(ecdf(p_vals3),col='green')
 ```
 
 P-value is stochastic smaller when the alternative is true.
@@ -127,7 +137,7 @@ This is intuitive because as p-value is smaller, it is easier to disprove $H_0$,
 The proportion of p-values lower than 0.1 is:
 
 ```{r}
-length(pvals3[pvals3<0.1])/iterations
+length(p_vals3[p_vals3<0.1])/iterations
 ```
 
 
@@ -154,15 +164,15 @@ means <- rnorm(iterations, mu, sd/sqrt(n))
 Z = (means-0)/(sd/sqrt(n))
 
 # Calculate the p-values
-pvals4 <- pnorm(Z, lower.tail = FALSE)
+p_vals4 <- pnorm(Z, lower.tail = FALSE)
 
-hist(pvals4, breaks=10)
+hist(p_vals4, breaks=10)
 ```
 
 ### 2. 
 ```{r}
-plot(ecdf(pvals3),col='red')
-lines(ecdf(pvals4),col='green')
+plot(ecdf(p_vals3),col='red')
+lines(ecdf(p_vals4),col='green')
 ```
 
 
@@ -176,7 +186,7 @@ And this makes sense as a higher mu is a indicates that the null hypothesis is n
 
 The proportion of p-values lower than 0.1 is:
 ```{r}
-length(pvals4[pvals4<0.1])/iterations
+length(p_vals4[p_vals4<0.1])/iterations
 ```
 
 The proportion increased as the power of the test increased. 
@@ -207,9 +217,9 @@ means <- rnorm(iterations, mu, sd/sqrt(n))
 Z = (means-0)/(sd/sqrt(n))
 
 # Calculate the p-values
-pvals5 <- pnorm(Z, lower.tail = FALSE)
+p_vals5 <- pnorm(Z, lower.tail = FALSE)
 
-hist(pvals5, breaks=10)
+hist(p_vals5, breaks=10)
 ```
 
 
@@ -217,13 +227,13 @@ hist(pvals5, breaks=10)
 
 
 ```{r}
-plot(ecdf(pvals3),col='red')
-lines(ecdf(pvals5),col='green')
+plot(ecdf(p_vals3),col='red')
+lines(ecdf(p_vals5),col='green')
 ```
 
 
 ```{r}
-length(pvals5[pvals5<0.1])/iterations
+length(p_vals5[p_vals5<0.1])/iterations
 ```
 
 
