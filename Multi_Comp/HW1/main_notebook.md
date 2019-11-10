@@ -61,7 +61,7 @@ The proportion of p-values lower than 0.1 is:
 length(p_vals[p_vals<0.1])/iterations
 ```
 
-    ## [1] 0.0972
+    ## [1] 0.1006
 
 ### 4\.
 
@@ -159,7 +159,7 @@ The proportion of p-values lower than 0.1 is:
 length(p_vals3[p_vals3<0.1])/iterations
 ```
 
-    ## [1] 0.383
+    ## [1] 0.396
 
 ``` r
 1-pnorm(0.282)
@@ -218,7 +218,7 @@ The proportion of p-values lower than 0.1 is:
 length(p_vals4[p_vals4<0.1])/iterations
 ```
 
-    ## [1] 0.767
+    ## [1] 0.7558
 
 The proportion increased as the power of the test increased. The power
 increased because the mu is farther from ![mu\_0
@@ -271,7 +271,7 @@ lines(ecdf(p_vals5),col='green')
 length(p_vals5[p_vals5<0.1])/iterations
 ```
 
-    ## [1] 0.5528
+    ## [1] 0.5572
 
 We can see from the formula that it is decreasing monotone as a function
 of n. Therefore a higher n results in lower p-values. This is exactly
