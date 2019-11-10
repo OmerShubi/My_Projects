@@ -1,0 +1,264 @@
+---
+title: 'Multiple Comparisons: Homework - 1'
+output:
+  github_document:
+    pandoc_args: --webtex
+  # html_notebook: default
+  # pdf_document: default
+---
+
+
+Submitted by: 
+=============
+
+Eyal Bar-Natan - 207630658
+
+Omer Shubi - 312236219
+
+
+# Question 1
+
+
+## Part A
+
+
+### 1.
+
+Given the question definitions:
+
+$H_0:\mu=0$
+
+$H_1:\mu\geq 0$
+
+and by using the Neyman-Pearson test:
+
+$C = \frac{\bar{x} - {\mu}_0}{\sigma/\sqrt{n}}$
+
+
+```{r}
+mu <- 0
+sd <- 2
+n <- 16
+iterations <- 5000
+
+# Simulate 5000 tests, each with 16 samples, assuming H0 is correct meaning, mu~N(0,2^2)
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-mu)/(sd/sqrt(n))
+
+# Calculate the p-values
+p_vals <- pnorm(Z, lower.tail = FALSE)
+
+hist(p_vals, breaks=10)
+```
+
+### 2.
+
+In our opinion, $p_{value}\sim Uni[0, 1]$
+
+### 3.
+
+The proportion of p-values lower than 0.1 is:
+
+```{r}
+
+length(p_vals[p_vals<0.1])/iterations
+
+```
+### 4.
+Probability for a Type 1 error, and it is equal to 0.1, by definition.
+
+### 5.
+  $PV = P_{H_0}(\bar{X}>\bar{x}_{obs}) = P_{H_0}(2\bar{X}>2\bar{X}_{obs})= P(Z>Z_{obs})=1-P(Z\leq Z_{obs}) = 1-F_{Z}(Z_{obs}) \sim Uni[0,1]$
+  
+  n and sd do not change the distribution function, as it is always uniform[0,1], regardless of the values.
+
+## Part B
+
+
+```{r}
+mu <- 0
+sd <- 2
+n <- 32
+iterations <- 5000
+
+# Simulate 5000 tests, each with 16 samples, assuming H0 is correct meaning, mu~N(0,2^2)
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-mu)/(sd/sqrt(n))
+
+# Calculate the p-values
+p_vals2 <- pnorm(Z, lower.tail = FALSE)
+
+hist(p_vals2, breaks=10)
+```
+
+In our opinion, $p_{value}\sim Uni[0, 1]$.
+
+According to what we proved in the previous section, when $H_0$ is correct, the distribution function of P-Value is independent of the parameters: $n$,$sd$. Therefore the distrubtion function stays the same.
+
+
+## Part C
+
+
+### 1.
+
+```{r}
+mu <- 0.5
+sd <- 2
+n <- 16
+iterations <- 5000
+
+# Simulate 5000 tests, each with 16 samples, assuming H0 is correct meaning, mu~N(0,2^2)
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-0)/(sd/sqrt(n))
+
+# Calculate the p-values
+p_vals3 <- pnorm(Z, lower.tail = FALSE)
+
+hist(p_vals3, breaks=10)
+```
+### 2.
+
+```{r}
+plot(ecdf(p_vals),col='red')
+lines(ecdf(p_vals3),col='green')
+```
+
+P-value is stochastic smaller when the alternative is true.
+
+This is intuitive because as p-value is smaller, it is easier to disprove $H_0$, and as the alternative is true $mu>0$ we get small p-value.
+
+### 3.
+
+The proportion of p-values lower than 0.1 is:
+
+```{r}
+length(p_vals3[p_vals3<0.1])/iterations
+```
+
+
+```{r}
+1-pnorm(0.282)
+```
+
+
+## Part D
+
+
+### 1.
+
+```{r}
+mu <- 1
+sd <- 2
+n <- 16
+iterations <- 5000
+
+# Simulate 5000 tests, each with 16 samples, assuming H0 is correct meaning, mu~N(0,2^2)
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-0)/(sd/sqrt(n))
+
+# Calculate the p-values
+p_vals4 <- pnorm(Z, lower.tail = FALSE)
+
+hist(p_vals4, breaks=10)
+```
+
+### 2. 
+```{r}
+plot(ecdf(p_vals3),col='red')
+lines(ecdf(p_vals4),col='green')
+```
+
+
+Assuming $mu=1$ results in stochastically lower p-values compared to when $mu=0.5$. 
+
+Lower p-values give stronger evidence that we should reject the null hypothesis. 
+
+And this makes sense as a higher mu is a indicates that the null hypothesis is not the reality.
+
+### 3.
+
+The proportion of p-values lower than 0.1 is:
+```{r}
+length(p_vals4[p_vals4<0.1])/iterations
+```
+
+The proportion increased as the power of the test increased. 
+The power increased because the mu is farther from $mu_0 = 0$, and because the power is an increasing monotone as a function of mu (by definition).
+
+Assuming $\alpha=0.1$ and the Neyman-Pearson test:
+```{r}
+1-pnorm(1.282-2)
+
+```
+
+
+## Part E
+
+
+### 1.
+
+```{r}
+mu <- 0.5
+sd <- 2
+n <- 32
+iterations <- 5000
+
+# Simulate 5000 tests, each with 16 samples, assuming H0 is correct meaning, mu~N(0,2^2)
+means <- rnorm(iterations, mu, sd/sqrt(n))
+
+# Calculate the z-score for each simulation
+Z = (means-0)/(sd/sqrt(n))
+
+# Calculate the p-values
+p_vals5 <- pnorm(Z, lower.tail = FALSE)
+
+hist(p_vals5, breaks=10)
+```
+
+
+
+
+
+```{r}
+plot(ecdf(p_vals3),col='red')
+lines(ecdf(p_vals5),col='green')
+```
+
+
+```{r}
+length(p_vals5[p_vals5<0.1])/iterations
+```
+
+
+We can see from the formula that it is decreasing monotone as a function of n. Therefore a higher n results in lower p-values. This is exactly what we see in the observations, but of course can be predicted strictly from the formula.
+
+
+## F.
+
+Summary:
+
+Assuming the null hypothesis is correct: 
+
+- $P-Value \sim Uni[0,1]$
+
+- It is not affected by changes in $n$ or by $sd$.
+
+Assuming the alternative hypothesis is correct: 
+
+- P-value is stochastic smaller when the alternative is true compared to when the null is true.
+
+- *Lower values* get *higher probability*, and *higher values* get *lower probability*, as mu (and/or) n increase.
+
+- *Increasing* the standard diviation has the same effect as *decreasing* mu (and/or) n. High enough sd give a result that resembles the Uni[0,1] distribution.
+
+
+
+
