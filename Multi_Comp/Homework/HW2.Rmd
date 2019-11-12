@@ -1,10 +1,10 @@
 ---
 title: 'Multiple Comparisons: Homework - 2'
 output:
-  html_notebook: default
+  pdf_document: default
   github_document: 
     pandoc_args: --webtex
-  pdf_document: default
+  html_notebook: default
 ---
 
 
@@ -148,16 +148,14 @@ Add r.v. that we found
 
 ## Part E.
 
+
 ```{r}
-iterations <- 5000
-m <- 100
-mat <- replicate(iterations, runif(m,0, 1))
-vecmin <- apply(mat, 2, min)
-Y <- 1-(1-vecmin)^m
+Y <- 1-(1-vecmin_100)^100
 hist(Y)
 ```
+For $Y=1-(1-U_{(1)})^m$,
 
-
+as can be seen, the random variable $Y$ that we found , holds $Y\sim Uni[0,1]$ as expected.
 
 ## Part F.
 
@@ -167,19 +165,14 @@ This corresponds exactly to the function we found in part C:
 
 $p_{value}^{adj}=1-(1-P_{value})^{\frac{1}{m}}$
 
-where $m$ is the total number of courses.
+where $m$ is the total number of courses (because $m=m_0$ according to the question assumptions).
 
+So for $p_{value}=0.05$ we get:
 
-### 2.
+$p_{value}^{adj}=1-(1-0.05)^{\frac{1}{m}} = 1-(0.95)^{\frac{1}{m}}$ 
 
+As we showed and proved in previous sections, this equation is provides the adjusted pvalue, as desired. 
 
-# Question 2.
-
-```{r}
-p <- c(0.01,0.015,0.005)
-p <- 1-(1-p)^3
-p
-```
 
 
 
