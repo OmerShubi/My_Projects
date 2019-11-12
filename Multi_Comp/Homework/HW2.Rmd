@@ -22,70 +22,103 @@ Omer Shubi - 312236219
 ## Part A
 
 
-### 1.
+We perform $iterations=5,000$ simulations, in which each time we randomly pick $m=5$ values out a Uniform Distribution ($U\sim Uni[0,1]$).
+In each simulation, out of the picked values we select the one with the minimum value. The result of these simulations is stored in $vecmin\_m$.
 
+ 
 ```{r}
 iterations <- 5000
-m <- 5
-mat <- replicate(iterations, runif(m,0, 1))
-vecmin <- apply(mat, 2, min)
-hist(vecmin)
 ```
 
 ```{r}
-length(vecmin[vecmin<0.05])/iterations
+m <- 5
+mat_5 <- replicate(iterations, runif(m,0, 1))
+vecmin_5 <- apply(mat_5, 2, min)
 ```
 
-Exactly like taking the minimum p_value, becuase p-value$\sim$ Uni[0,1] in $\aleph$
+and similarly with $m=20$:
 
+```{r}
+m <- 20
+mat_20 <- replicate(iterations, runif(m,0, 1))
+vecmin_20 <- apply(mat_20, 2, min)
+```
+
+and $m=100$:
+
+```{r}
+m <- 100
+mat_100 <- replicate(iterations, runif(m,0, 1))
+vecmin_100 <- apply(mat_100, 2, min)
+```
+
+### 1.
+
+The proportion of $U_{(1)}<0.05$ when $m=5$:
+
+```{r}
+length(vecmin_5[vecmin_5<0.05])/iterations
+```
+
+Similarly to section $\aleph$ in H.W. 1 - in which $p_{value}\sim Uni[0,1]$, and we were requested to retrieve the minimal $p_{value}$.
+
+This is exactly what we are asked to find in this question as well, 
+by defining $U_i={p_{value}}_i\sim Uni[0,1]$ and $U_{(1)} = min(U_1,U_2,\ldots,U_m)$
+we are dealing with the same thing.
 
 ### 2.
+
+Histogram of $U_{(1)}$ with $m=5$:
+```{r}
+hist(vecmin_5, xlim=c(0,1))
+```
+Histogram of $U_{i}$ with $m=5$:
+
+```{r}
+hist(mat_5, xlim=c(0,1))
+```
+
 
 By running the ecdf function we can visual the cdf of both functions clearly. 
 
 ```{r}
-plot(ecdf(vecmin),col='red', main='CDF of U(1)')
-lines(ecdf(mat[1,]),col='green')
-legend(0, 1, legend=c('pvals1 (mu=0)', 'pvals3 (mu=0.5)'), col=c("red", "green"), lty=1, cex=0.8)
-# TODO update legend
-# TODO update vecmin names
+plot(ecdf(vecmin_5),col='red', main='CDF of Uni[0,1] and U(1)', xlim=c(0,1))
+lines(ecdf(mat_5),col='green')
+legend(0, 1, legend=c(expression(U[(1)]), 'Uni[0,1]'), col=c("red", "green"), lty=1, cex=0.8)
 ```
+As can be seen from both the histograms and the cdf functions,
 
-It is clear that $U_{(1)}$ is stochastically smaller ($\prec$) than $Uni[0,1]$
+it is clear that $U_{(1)}$ is stochastically smaller ($\prec$) than $Uni[0,1]$.
 
 ### 3.
 
+
+Histogram of $U_{(1)}$ with $m=5$:
+
 ```{r}
-iterations <- 5000
-m <- 20
-mat <- replicate(iterations, runif(m,0, 1))
-vecmin <- apply(mat, 2, min)
-hist(vecmin)
+hist(vecmin_5, xlim=c(0,1))
+```
+Histogram of $U_{(1)}$ with $m=20$:
+
+```{r}
+hist(vecmin_20, breaks = 20, xlim=c(0,1))
+```
+Histogram of $U_{(1)}$ with $m=100$:
+
+```{r}
+hist(vecmin_100, xlim=c(0,1))
 ```
 
 ```{r}
-iterations <- 5000
-m <- 100
-mat <- replicate(iterations, runif(m,0, 1))
-vecmin <- apply(mat, 2, min)
-hist(vecmin)
-```
+plot(ecdf(vecmin_5),col='red', main='CDF of U(1) with different m values', xlim=c(0,0.65))
+lines(ecdf(vecmin_20),col='green')
+lines(ecdf(vecmin_100),col='blue')
 
-```{r}
-iterations <- 5000
-m <- 2
-mat <- replicate(iterations, runif(m,0, 1))
-vecmin <- apply(mat, 2, min)
-hist(vecmin)
+legend(0.5, 0.5, legend=c(expression(U[(1)],widehat(U[(1)]),widetilde(U[(1)]))), col=c("red", "green", "blue"), lty=1)
 ```
+$U_{(1)}$ is with $m=5$, $\widehat U_{(1)}$ is with $m=20$ and $\widetilde U_{(1)}$ is with $m=100$.
 
-```{r}
-iterations <- 5000
-m <- 1
-vecmin <- replicate(iterations, runif(m,0, 1))
-hist(vecmin)
-```
-
+It can be clearly observed that:
 
 if $m > m'$  then $U_{(1)} \prec U_{(1)}'$
 
@@ -101,13 +134,7 @@ $U_{(1)}\prec U_i \iff P(U_{(1)}\leq a) \geq P(U_i\leq a)$
 
 
 
-```{r}
-plot(ecdf(vecmin),col='red', main='CDF of U(1)')
-lines(ecdf(mat[1,]),col='green')
-legend(0, 1, legend=c('pvals1 (mu=0)', 'pvals3 (mu=0.5)'), col=c("red", "green"), lty=1, cex=0.8)
-# TODO update legend
-# TODO update vecmin names
-```
+
 
 $U_{(1)} \sim Beta(1,m)$ therefore has the same cdf of Beta(1,m).
 

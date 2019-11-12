@@ -1,10 +1,10 @@
 ---
 title: 'Multiple Comparisons: Homework - 1'
 output:
-  html_notebook: default
+  pdf_document: default
   github_document:
     pandoc_args: --webtex
-  pdf_document: default
+  html_notebook: default
 ---
 
 
