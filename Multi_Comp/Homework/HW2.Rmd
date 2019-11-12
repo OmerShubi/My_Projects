@@ -1,0 +1,158 @@
+---
+title: 'Multiple Comparisons: Homework - 2'
+output:
+  html_notebook: default
+  github_document: 
+    pandoc_args: --webtex
+  pdf_document: default
+---
+
+
+Submitted by: 
+=============
+
+Eyal Bar-Natan - 207630658
+
+Omer Shubi - 312236219
+
+
+# Question 1
+
+
+## Part A
+
+
+### 1.
+
+```{r}
+iterations <- 5000
+m <- 5
+mat <- replicate(iterations, runif(m,0, 1))
+vecmin <- apply(mat, 2, min)
+hist(vecmin)
+```
+
+```{r}
+length(vecmin[vecmin<0.05])/iterations
+```
+
+Exactly like taking the minimum p_value, becuase p-value$\sim$ Uni[0,1] in $\aleph$
+
+
+### 2.
+
+By running the ecdf function we can visual the cdf of both functions clearly. 
+
+```{r}
+plot(ecdf(vecmin),col='red', main='CDF of U(1)')
+lines(ecdf(mat[1,]),col='green')
+legend(0, 1, legend=c('pvals1 (mu=0)', 'pvals3 (mu=0.5)'), col=c("red", "green"), lty=1, cex=0.8)
+# TODO update legend
+# TODO update vecmin names
+```
+
+It is clear that $U_{(1)}$ is stochastically smaller ($\prec$) than $Uni[0,1]$
+
+### 3.
+
+```{r}
+iterations <- 5000
+m <- 20
+mat <- replicate(iterations, runif(m,0, 1))
+vecmin <- apply(mat, 2, min)
+hist(vecmin)
+```
+
+```{r}
+iterations <- 5000
+m <- 100
+mat <- replicate(iterations, runif(m,0, 1))
+vecmin <- apply(mat, 2, min)
+hist(vecmin)
+```
+
+```{r}
+iterations <- 5000
+m <- 2
+mat <- replicate(iterations, runif(m,0, 1))
+vecmin <- apply(mat, 2, min)
+hist(vecmin)
+```
+
+```{r}
+iterations <- 5000
+m <- 1
+vecmin <- replicate(iterations, runif(m,0, 1))
+hist(vecmin)
+```
+
+
+if $m > m'$  then $U_{(1)} \prec U_{(1)}'$
+
+if $m < m'$  then $U_{(1)} \succ U_{(1)}'$
+
+
+## Part B.
+
+
+add proof from Eyal of 2 & 3
+
+$U_{(1)}\prec U_i \iff P(U_{(1)}\leq a) \geq P(U_i\leq a)$
+
+
+
+```{r}
+plot(ecdf(vecmin),col='red', main='CDF of U(1)')
+lines(ecdf(mat[1,]),col='green')
+legend(0, 1, legend=c('pvals1 (mu=0)', 'pvals3 (mu=0.5)'), col=c("red", "green"), lty=1, cex=0.8)
+# TODO update legend
+# TODO update vecmin names
+```
+
+$U_{(1)} \sim Beta(1,m)$ therefore has the same cdf of Beta(1,m).
+
+## Part C.
+
+Add function that we found
+
+## Part D.
+
+Add r.v. that we found
+
+## Part E.
+
+```{r}
+iterations <- 5000
+m <- 100
+mat <- replicate(iterations, runif(m,0, 1))
+vecmin <- apply(mat, 2, min)
+Y <- 1-(1-vecmin)^m
+hist(Y)
+```
+
+
+
+## Part F.
+
+### 1.
+
+This corresponds exactly to the function we found in part C:
+
+$p_{value}^{adj}=1-(1-P_{value})^{\frac{1}{m}}$
+
+where $m$ is the total number of courses.
+
+
+### 2.
+
+
+# Question 2.
+
+```{r}
+p <- c(0.01,0.015,0.005)
+p <- 1-(1-p)^3
+p
+```
+
+
+
