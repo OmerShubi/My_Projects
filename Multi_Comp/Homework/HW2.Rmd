@@ -130,7 +130,7 @@ if $m < m'$  then $U_{(1)} \succ U_{(1)}'$
  
 
 $F_{U_{(1)}}(x) = P(U_{(1)}<x) = 1 - P(U_{(1)}\geq x) = 1 -P(U_{1}\geq x,\ldots ,  U_{m}\geq x)$
-$= 1 - P(U_{1}\geq x)*\ldots* P(U_{m}\geq x) = 1 - (1-x)^m$, $\forall x : 0\leq x\leq 1$
+$= 1 - P(U_{1}\geq x)*\ldots* P(U_{m}\geq x) = 1 - (1-x)^m$, $\forall x : 0\leq x\leq$. $ 1 : x\geq 1, 0 : x\leq 0$
 
  
 
