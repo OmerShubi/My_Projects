@@ -74,6 +74,7 @@ p_vals <- pnorm(Z, lower.tail = FALSE)
 
 hist(p_vals)
 ```
+
 ### 3.
 
 The proportion of p-values lower than 0.1 is:
@@ -309,5 +310,14 @@ Assuming the alternative hypothesis is correct:
 - *Increasing* the standard deviation has the same effect as *decreasing* $\mu$. High enough $sd$ give a result that resembles the Uni[0,1] distribution.
 
 
+## G.
 
+$Pvalue = $
 
+Assuming the alternative is correct $\mu>\mu_0$
+Null Hypothesis correct:
+
+Alternative Hypothesis correct:
+$Z_{obs}+\underbrace{\frac{\mu-\mu_0}{\frac{\sigma}{\sqrt{n}}}}_{>0} > Z_{obs}+\underbrace{\frac{\mu-\mu_0}{\frac{\sigma}{\sqrt{n}}}}_{=0}$
+
+$\Cap$

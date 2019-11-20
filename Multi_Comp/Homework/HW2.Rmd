@@ -127,24 +127,81 @@ if $m < m'$  then $U_{(1)} \succ U_{(1)}'$
 
 ## Part B.
 
+ 
 
-add proof from Eyal of 2 & 3
+$F_{U_{(1)}}(x) = P(U_{(1)}<x) = 1 - P(U_{(1)}\geq x) = 1 -P(U_{1}\geq x,\ldots ,  U_{m}\geq x)$
+$= 1 - P(U_{1}\geq x)*\ldots* P(U_{m}\geq x) = 1 - (1-x)^m$, $\forall x : 0\leq x\leq 1$
+
+ 
+
+This comes from independence of $U_i$, definition of $U_{(1)}$ and uniform distribution.
+
+ 
+
+Proof of part 2:
+
+ 
 
 $U_{(1)}\prec U_i \iff P(U_{(1)}\leq a) \geq P(U_i\leq a)$
+$\iff F_{U_{(1)}}(a) \geq F_{U_{i}}(a)$
+$\iff 1-(1-F_{U_{i}}(a))^{m}\geq F_{U_{i}}(a)$
+$\iff 1-F_{U_{i}}(a)\geq (1-F_{U_{i}}(a))^{m}$
+$\iff 1\geq (1-F_{U_{i}}(a))^{m-1}$
+$\iff 1\geq 1-F_{U_{i}}(a)$
+$\iff F_{U_{i}}(a)\geq 0$ $\space_{\blacksquare}$
 
+ 
 
+Proof of part 3:
 
+ 
 
+$U'_{(1)}\prec U_{(1)} \iff F_{U'_{(1)}}(a)\geq F_{U_{(1)}}(a)$
+$\iff 1-(1-F_{U'_{i}}(a))^{m'} \geq 1-(1-F_{U_{i}}(a))^{m}$
+$\iff (1-F_{U'_{i}}(a))^{m'}\leq (1-F_{U_{i}}(a))^{m}$
+$\iff (1-F_{U_{i}}(a))^{m'}\leq (1-F_{U_{i}}(a))^{m}$
+$\iff 1\geq (1-F_{U_{i}}(a))^{m'-m}$, $m'\geq m$
+$\Longrightarrow 0\leq 1-F_{U_{i}}(a)\leq 1$
+, which is always true. $_{\blacksquare}$
 
-$U_{(1)} \sim Beta(1,m)$ therefore has the same cdf of Beta(1,m).
+ 
 
 ## Part C.
 
-Add function that we found
+ 
+
+$F_{U_{(1)}}(x) = 1 - (1-F_{U_{i}}(x))^{m} = 1 - (1-x)^{m}$
+
+ 
+
+Therefore,
+
+ 
+
+$P(U_{(1)}\leq g(t,m)) = F_{U_{(1)}}(g(t,m)) = 1-(1-g(t,m))^{m} = t$
+$\iff 1-t = (1-g(t,m))^{m}$
+$\iff (1-t)^{1/m} = 1 - g(t,m)$
+$\iff g(t,m)= 1 - (1-t)^{1/m}$
+
+Therefore, the function is : $g(t,m)= 1 - (1-t)^{1/m}$.
+
+ 
 
 ## Part D.
 
-Add r.v. that we found
+ 
+
+$P(U_{(1)}\leq 1 - (1-t)^{1/m}) = t$
+$\iff P(1-U_{(1)}\geq (1-t)^{1/m}) = t\iff$
+
+ 
+
+$P((1-U_{(1)})^{m}\geq 1 -t) = t$
+$\iff P(1-(1-U_{(1)})^{m}\leq t) = t$
+
+ 
+
+Therefore the random variable $Y$ is given by: $Y = h_m(U_{(1)}) = 1-(1-U_{(1)})^{m}$
 
 ## Part E.
 
@@ -172,6 +229,57 @@ So for $p_{value}=0.05$ we get:
 $p_{value}^{adj}=1-(1-0.05)^{\frac{1}{m}} = 1-(0.95)^{\frac{1}{m}}$ 
 
 As we showed and proved in previous sections, this equation is provides the adjusted pvalue, as desired. 
+
+
+# Question 2
+
+## Part 1
+
+$P_i \leq 1-(1-\alpha)^{\frac{1}{m}}=\alpha_{sid}$
+$\iff P_i + (1-\alpha)^{\frac{1}{m}}\leq 1$
+$\iff (1-\alpha)^{\frac{1}{m}}\leq 1-P_i$
+$\iff 1-\alpha \leq (1-P_i)^m$
+$\iff \alpha \geq 1-(1-P_i)^m$
+
+Therefore,
+
+$q_{i_{sid}} = 1-(1-P_i)^m$
+
+
+## Part 2 
+
+ 
+
+$P(V>0) \underbrace{=}_{(1)} P(\exists\space  i: \mu_{i}\notin I_{i}'(X))\underbrace{\leq}_{(2)}\alpha$
+
+ 
+
+(1) By definition of the test.
+(2) By definition of simultaneous confidence intervals.
+
+ 
+
+Therefore, the given test is a FWER-controlling procedure at level $\alpha$.
+
+## Part 3
+
+From definition and independence,  
+
+$P(\forall i, \mu_i \in I_i'(X))=P(\mu_1\in I_1'(X))\cdot \ldots\cdot P(\mu_m\in I_m'(X))=(1-\frac{\alpha}{m})^{m}$
+
+To prove that Bonferroni CI are simultaneous CI at confidence level of at least $1-\alpha$ we need to show that $(1-\frac{\alpha}{m})^{m} \geq 1 - \alpha$.
+
+By applying the $log$ function (allowed because both sides are non negative for $m\geq 0$, $0\leq\alpha\leq1$) on both sides we get:
+
+$(1-\frac{\alpha}{m})^{m} \geq 1 - \alpha \iff(log(1-\frac{\alpha}{m}))^{m}\geq log(1-\alpha) \iff mlog(1-\frac{\alpha}{m})\geq log(1-\alpha)$
+
+Assuming $m\geq1$ we show that
+
+$log(1-\frac{\alpha}{m})\geq log(1-\alpha) \iff 1-\frac{\alpha}{m}\geq 1-\alpha \iff m\geq1$.
+
+From the assumption this is always true. $\space _{\blacksquare}$ 
+
+## Part 4
 
 
 
