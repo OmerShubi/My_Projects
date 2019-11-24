@@ -233,7 +233,7 @@ As we showed and proved in previous sections, this equation is provides the adju
 
 # Question 2
 
-## Part 1
+## Part 1 - Sidak's Adjusted p-values
 
 $P_i \leq 1-(1-\alpha)^{\frac{1}{m}}=\alpha_{sid}$
 $\iff P_i + (1-\alpha)^{\frac{1}{m}}\leq 1$
@@ -246,7 +246,7 @@ Therefore,
 $q_{i_{sid}} = 1-(1-P_i)^m$
 
 
-## Part 2 
+## Part 2 - Simultaneous CI are FWER controlling Proc.
 
  
 
@@ -261,7 +261,14 @@ $P(V>0) \underbrace{=}_{(1)} P(\exists\space  i: \mu_{i}\notin I_{i}'(X))\underb
 
 Therefore, the given test is a FWER-controlling procedure at level $\alpha$.
 
-## Part 3
+## Part 3 - Bonferroni CI are Simultaneous CI
+
+As seen in class, bonferroni CI for $\mu_i$ at confidence level $1-\alpha$ if it holds that $P(\mu_i \in I_i(X)) \geq 1-\frac{\alpha}{m}$ or alternatively $P(\mu_i \notin I_i(X)) < \frac{\alpha}{m}$ $(*)$
+
+Therefore, 
+
+$P(\exists i: \mu_i \notin I_i'(X)) = P(\bigcup\limits_{i=1}^m \{\mu_i \notin I_i'(X)\})$ 
+$\underbrace{\leq}_{\mbox{bonferroni ineq.}} \sum\limits_{i=1}^m P(\mu_i\notin I_i'(X)) \underbrace{<}_{\mbox{from }(*)} \sum\limits_{i=1}^{m}\frac{\alpha}{m} = \alpha$
 
 From definition and independence,  
 
