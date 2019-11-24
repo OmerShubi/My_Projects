@@ -1,10 +1,10 @@
 ---
 title: 'Multiple Comparisons: Homework - 2'
 output:
-  html_notebook: default
+  pdf_document: default
   github_document: 
     pandoc_args: --webtex
-  pdf_document: default
+  html_notebook: default
 ---
 
 
@@ -228,7 +228,9 @@ So for $p_{value}=0.05$ we get:
 
 $p_{value}^{adj}=1-(1-0.05)^{\frac{1}{m}} = 1-(0.95)^{\frac{1}{m}}$ 
 
-As we showed and proved in previous sections, this equation is provides the adjusted pvalue, as desired. 
+As we showed and proved in previous sections, this equation provides the adjusted pvalue, as desired. 
+
+For $m=5$ we get $p_{value}^{adj}=1-0.95^\frac{1}{5}=0.0102$. Therefore the desired bound should be ~$0.01$.
 
 
 # Question 2
@@ -254,7 +256,7 @@ $P(V>0) \underbrace{=}_{(1)} P(\exists\space  i: \mu_i \in M_0,\space\mu_{i}\not
 
  
 
-(1) By definition of the test.
+(1) By definition of the test, as we know that rejecting $H_0$ by the dual-sided test is equivalent to rejecting $H_0$ by the eq. CI.
 (2) $M_0 \subseteq M$ therefore it holds that $\forall x:Pr(x\in M_0)\leq Pr(x\in M)$.
 (3) By definition of simultaneous confidence intervals.
 
@@ -264,26 +266,31 @@ Therefore, the given test is a FWER-controlling procedure at level $\alpha$.
 
 ## Part 3 - Bonferroni CI are Simultaneous CI
 
-As seen in class, bonferroni CI for $\mu_i$ at confidence level $1-\alpha$ if it holds that $P(\mu_i \in I_i(X)) \geq 1-\frac{\alpha}{m}$ or alternatively $P(\mu_i \notin I_i(X)) < \frac{\alpha}{m}$ $(*)$
+As seen in class, bonferroni CI for $\mu_i$ at confidence level $1-\alpha$ if it holds that $P(\mu_i \in I_i(X)) = 1-\frac{\alpha}{m}$ or alternatively $(*)$ $P(\mu_i \notin I_i(X)) = \frac{\alpha}{m}$ 
 
 Therefore, 
 
 $P(\exists i: \mu_i \notin I_i'(X)) = P(\bigcup\limits_{i=1}^m \{\mu_i \notin I_i'(X)\})$ 
-$\underbrace{\leq}_{\mbox{bonferroni ineq.}} \sum\limits_{i=1}^m P(\mu_i\notin I_i'(X)) \underbrace{<}_{\mbox{from }(*)} \sum\limits_{i=1}^{m}\frac{\alpha}{m} = \alpha$
+$\underbrace{\leq}_{\mbox{bonferroni ineq.}} \sum\limits_{i=1}^m P(\mu_i\notin I_i'(X)) \underbrace{=}_{\mbox{from }(*)} \sum\limits_{i=1}^{m}\frac{\alpha}{m} = \alpha$
 
 And therefore Bonferroni CI are also Simultaneous CI.
 
 No assumptions are needed for bonferroni. 
 
-## Part 4
+## Part 4 - Sidak CI
 
 We construct Simultaneous CI that are equivalent to Sidak's procedure by constructing Sidak CI that hold:
 
-$P(\mu_i \in I_i'(X)) \geq 1- \alpha_{sid} = 1- [1-(1-\alpha)^\frac{1}{m}] = (1-\alpha)^\frac{1}{m}$ $(*)$
+$P(\mu_i \notin I_i'(X)) = \alpha_{sid} = 1-(1-\alpha)^\frac{1}{m} \iff$
+
+$P(\mu_i \in I_i'(X)) = 1- \alpha_{sid} = 1- [1-(1-\alpha)^\frac{1}{m}] = (1-\alpha)^\frac{1}{m}$ $(*)$
 
 
 $P(\forall i: \mu_i \in I_i'(X)) \underbrace{=}_{\mbox{independent}} \prod\limits_{i=1}^m P(\mu_i \in I_i'(X))$
-$\underbrace{\geq}_{(*)}\prod\limits_{i=1}^m[(1-\alpha)^\frac{1}{m}] = 1-\alpha$
+
+$\underbrace{=}_{(*)}\prod\limits_{i=1}^m[(1-\alpha)^\frac{1}{m}] = 1-\alpha$
+
+$\iff P(\exists i: \mu_i \notin I_i'(X)) = \alpha$
 
 
 Therefore Sidak's  CI are also Simultaeous CI and are equivalent to the procedure.
