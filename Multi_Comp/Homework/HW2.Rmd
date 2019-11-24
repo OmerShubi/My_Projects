@@ -275,7 +275,7 @@ And therefore Bonferroni CI are also Simultaneous CI.
 
 No assumptions are needed for bonferroni. 
 
-## Part 4
+## Part 4 - Sidak CI
 
 We construct Simultaneous CI that are equivalent to Sidak's procedure by constructing Sidak CI that hold:
 
