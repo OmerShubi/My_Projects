@@ -271,23 +271,26 @@ Therefore,
 $P(\exists i: \mu_i \notin I_i'(X)) = P(\bigcup\limits_{i=1}^m \{\mu_i \notin I_i'(X)\})$ 
 $\underbrace{\leq}_{\mbox{bonferroni ineq.}} \sum\limits_{i=1}^m P(\mu_i\notin I_i'(X)) \underbrace{<}_{\mbox{from }(*)} \sum\limits_{i=1}^{m}\frac{\alpha}{m} = \alpha$
 
-From definition and independence,  
+And therefore Bonferroni CI are also Simultaneous CI.
 
-$P(\forall i, \mu_i \in I_i'(X))=P(\mu_1\in I_1'(X))\cdot \ldots\cdot P(\mu_m\in I_m'(X))=(1-\frac{\alpha}{m})^{m}$
-
-To prove that Bonferroni CI are simultaneous CI at confidence level of at least $1-\alpha$ we need to show that $(1-\frac{\alpha}{m})^{m} \geq 1 - \alpha$.
-
-By applying the $log$ function (allowed because both sides are non negative for $m\geq 0$, $0\leq\alpha\leq1$) on both sides we get:
-
-$(1-\frac{\alpha}{m})^{m} \geq 1 - \alpha \iff(log(1-\frac{\alpha}{m}))^{m}\geq log(1-\alpha) \iff mlog(1-\frac{\alpha}{m})\geq log(1-\alpha)$
-
-Assuming $m\geq1$ we show that
-
-$log(1-\frac{\alpha}{m})\geq log(1-\alpha) \iff 1-\frac{\alpha}{m}\geq 1-\alpha \iff m\geq1$.
-
-From the assumption this is always true. $\space _{\blacksquare}$ 
+No assumptions are needed for bonferroni. 
 
 ## Part 4
+
+We construct Simultaneous CI that are equivalent to Sidak's procedure by constructing Sidak CI that hold:
+
+$P(\mu_i \in I_i'(X)) \geq 1- \alpha_{sid} = 1- [1-(1-\alpha)^\frac{1}{m}] = (1-\alpha)^\frac{1}{m}$ $(*)$
+
+
+$P(\forall i: \mu_i \in I_i'(X)) \underbrace{=}_{\mbox{independent}} \prod\limits_{i=1}^m P(\mu_i \in I_i'(X))$
+$\underbrace{\geq}_{(*)}\prod\limits_{i=1}^m[(1-\alpha)^\frac{1}{m}] = 1-\alpha$
+
+
+Therefore Sidak's  CI are also Simultaeous CI and are equivalent to the procedure.
+
+The assumptions needed are that the test statistics are independent from each other.
+
+
 
 
 
