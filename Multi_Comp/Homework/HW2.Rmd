@@ -1,10 +1,10 @@
 ---
 title: 'Multiple Comparisons: Homework - 2'
 output:
-  html_notebook: default
+  pdf_document: default
   github_document: 
     pandoc_args: --webtex
-  pdf_document: default
+  html_notebook: default
 ---
 
 
@@ -275,15 +275,15 @@ And therefore Bonferroni CI are also Simultaneous CI.
 
 No assumptions are needed for bonferroni. 
 
-## Part 4
+## Part 4 - Sidak CI
 
 We construct Simultaneous CI that are equivalent to Sidak's procedure by constructing Sidak CI that hold:
 
-$P(\mu_i \in I_i'(X)) \geq 1- \alpha_{sid} = 1- [1-(1-\alpha)^\frac{1}{m}] = (1-\alpha)^\frac{1}{m}$ $(*)$
+$P(\mu_i \in I_i'(X)) = 1- \alpha_{sid} = 1- [1-(1-\alpha)^\frac{1}{m}] = (1-\alpha)^\frac{1}{m}$ $(*)$
 
 
 $P(\forall i: \mu_i \in I_i'(X)) \underbrace{=}_{\mbox{independent}} \prod\limits_{i=1}^m P(\mu_i \in I_i'(X))$
-$\underbrace{\geq}_{(*)}\prod\limits_{i=1}^m[(1-\alpha)^\frac{1}{m}] = 1-\alpha$
+$\underbrace{=}_{(*)}\prod\limits_{i=1}^m[(1-\alpha)^\frac{1}{m}] = 1-\alpha$
 
 
 Therefore Sidak's  CI are also Simultaeous CI and are equivalent to the procedure.
