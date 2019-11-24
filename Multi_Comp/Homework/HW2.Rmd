@@ -1,10 +1,10 @@
 ---
 title: 'Multiple Comparisons: Homework - 2'
 output:
-  pdf_document: default
+  html_notebook: default
   github_document: 
     pandoc_args: --webtex
-  html_notebook: default
+  pdf_document: default
 ---
 
 
@@ -130,7 +130,7 @@ if $m < m'$  then $U_{(1)} \succ U_{(1)}'$
  
 
 $F_{U_{(1)}}(x) = P(U_{(1)}<x) = 1 - P(U_{(1)}\geq x) = 1 -P(U_{1}\geq x,\ldots ,  U_{m}\geq x)$
-$= 1 - P(U_{1}\geq x)*\ldots* P(U_{m}\geq x) = 1 - (1-x)^m$, $\forall x : 0\leq x\leq$. $ 1 : x\geq 1, 0 : x\leq 0$
+$= 1 - P(U_{1}\geq x)*\ldots* P(U_{m}\geq x) = 1 - (1-x)^m$, $\forall x : 0\leq x\leq$. $1 : x\geq 1, 0 : x\leq 0$
 
  
 
@@ -238,7 +238,7 @@ As we showed and proved in previous sections, this equation is provides the adju
 $P_i \leq 1-(1-\alpha)^{\frac{1}{m}}=\alpha_{sid}$
 $\iff P_i + (1-\alpha)^{\frac{1}{m}}\leq 1$
 $\iff (1-\alpha)^{\frac{1}{m}}\leq 1-P_i$
-$\iff 1-\alpha \leq (1-P_i)^m$
+$\underbrace{\iff}_{\mbox{both }\geq0} 1-\alpha \leq (1-P_i)^m$
 $\iff \alpha \geq 1-(1-P_i)^m$
 
 Therefore,
@@ -250,12 +250,13 @@ $q_{i_{sid}} = 1-(1-P_i)^m$
 
  
 
-$P(V>0) \underbrace{=}_{(1)} P(\exists\space  i: \mu_{i}\notin I_{i}'(X))\underbrace{\leq}_{(2)}\alpha$
+$P(V>0) \underbrace{=}_{(1)} P(\exists\space  i: \mu_i \in M_0,\space\mu_{i}\notin I_{i}'(X)) \underbrace{\leq}_{(2)} P(\exists\space  i: \mu_i \in M, \space\mu_{i}\notin I_{i}'(X))\underbrace{\leq}_{(3)}\alpha$
 
  
 
 (1) By definition of the test.
-(2) By definition of simultaneous confidence intervals.
+(2) $M_0 \subseteq M$ therefore it holds that $\forall x:Pr(x\in M_0)\leq Pr(x\in M)$.
+(3) By definition of simultaneous confidence intervals.
 
  
 
