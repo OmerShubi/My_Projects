@@ -1,9 +1,9 @@
 ---
 title: 'Multiple Comparisons: Homework - 2'
 output:
-  pdf_document: default
   github_document: 
     pandoc_args: --webtex
+  pdf_document: default
   html_notebook: default
 ---
 
