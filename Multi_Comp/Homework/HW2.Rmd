@@ -130,6 +130,7 @@ if $m < m'$  then $U_{(1)} \succ U_{(1)}'$
  
 
 $F_{U_{(1)}}(x) = P(U_{(1)}<x) = 1 - P(U_{(1)}\geq x) = 1 -P(U_{1}\geq x,\ldots ,  U_{m}\geq x)$
+
 $= 1 - P(U_{1}\geq x)*\ldots* P(U_{m}\geq x) = 1 - (1-x)^m$, $\forall x : 0\leq x\leq$. $1 : x\geq 1, 0 : x\leq 0$
 
  
@@ -143,11 +144,17 @@ Proof of part 2:
  
 
 $U_{(1)}\prec U_i \iff P(U_{(1)}\leq a) \geq P(U_i\leq a)$
+
 $\iff F_{U_{(1)}}(a) \geq F_{U_{i}}(a)$
+
 $\iff 1-(1-F_{U_{i}}(a))^{m}\geq F_{U_{i}}(a)$
+
 $\iff 1-F_{U_{i}}(a)\geq (1-F_{U_{i}}(a))^{m}$
+
 $\iff 1\geq (1-F_{U_{i}}(a))^{m-1}$
+
 $\iff 1\geq 1-F_{U_{i}}(a)$
+
 $\iff F_{U_{i}}(a)\geq 0$ $\space_{\blacksquare}$
 
  
@@ -157,11 +164,17 @@ Proof of part 3:
  
 
 $U'_{(1)}\prec U_{(1)} \iff F_{U'_{(1)}}(a)\geq F_{U_{(1)}}(a)$
+
 $\iff 1-(1-F_{U'_{i}}(a))^{m'} \geq 1-(1-F_{U_{i}}(a))^{m}$
+
 $\iff (1-F_{U'_{i}}(a))^{m'}\leq (1-F_{U_{i}}(a))^{m}$
+
 $\iff (1-F_{U_{i}}(a))^{m'}\leq (1-F_{U_{i}}(a))^{m}$
+
 $\iff 1\geq (1-F_{U_{i}}(a))^{m'-m}$, $m'\geq m$
+
 $\Longrightarrow 0\leq 1-F_{U_{i}}(a)\leq 1$
+
 , which is always true. $_{\blacksquare}$
 
  
@@ -179,8 +192,11 @@ Therefore,
  
 
 $P(U_{(1)}\leq g(t,m)) = F_{U_{(1)}}(g(t,m)) = 1-(1-g(t,m))^{m} = t$
+
 $\iff 1-t = (1-g(t,m))^{m}$
+
 $\iff (1-t)^{1/m} = 1 - g(t,m)$
+
 $\iff g(t,m)= 1 - (1-t)^{1/m}$
 
 Therefore, the function is : $g(t,m)= 1 - (1-t)^{1/m}$.
@@ -192,11 +208,12 @@ Therefore, the function is : $g(t,m)= 1 - (1-t)^{1/m}$.
  
 
 $P(U_{(1)}\leq 1 - (1-t)^{1/m}) = t$
-$\iff P(1-U_{(1)}\geq (1-t)^{1/m}) = t\iff$
+
+$\iff P(1-U_{(1)}\geq (1-t)^{1/m}) = t$
 
  
+$\iff P((1-U_{(1)})^{m}\geq 1 -t) = t$
 
-$P((1-U_{(1)})^{m}\geq 1 -t) = t$
 $\iff P(1-(1-U_{(1)})^{m}\leq t) = t$
 
  
@@ -232,6 +249,7 @@ As we showed and proved in previous sections, this equation provides the adjuste
 
 For $m=5$ we get $p_{value}^{adj}=1-0.95^\frac{1}{5}=0.0102$. Therefore the desired bound should be ~$0.01$.
 
+\newpage
 
 # Question 2
 
