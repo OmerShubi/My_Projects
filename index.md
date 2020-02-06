@@ -1,3 +1,6 @@
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/scaperex" data-color-scheme="no-preference: dark; light: dark; dark: dark;" data-size="large" aria-label="Follow @scaperex on GitHub">Follow @scaperex</a>
+
 # My Projects!
   
   All sorts of data science & Computer science exercises and programs for future reference
