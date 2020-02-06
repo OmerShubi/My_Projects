@@ -9,8 +9,7 @@
   5. [Optimization](#optimization)
   6. [Others](#others)
   
-Text Related
-////////////
+## Text Related
   
   * [Alice in Wonderland - Basic Word Mapping (Bash)](/Text_Related/Alice_in_Wonderland)
   * [Amazon Reviews Sentiment - Rocchio Classifier (Python)](/Text_Related/Amazon_Reviews_Sentiment_Analysis)
