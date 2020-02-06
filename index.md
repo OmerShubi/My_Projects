@@ -1,4 +1,5 @@
   # My Projects!
+  
   All sorts of data science & Computer science exercises and programs for future reference
     
   1. [Text Related](#text-related)
@@ -34,6 +35,7 @@
   * [Noisy Gradient Descent Example (MATLAB)](/Optimization/Gradient_Descent/README.md#noisy-gradient-descent-example)
   * [Gradient Descent Example Performance (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-example-usage)
   * [Gradient Descent kappa coef effect (MATLAB)](/Optimization/Gradient_Descent_kappa_coef_effect)
+  
   ## Others
   * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)
 
