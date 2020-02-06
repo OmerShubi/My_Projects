@@ -22,7 +22,7 @@
   * [Gradient Descent vs FISTA for Image Deblurring (MATLAB)](/Image_Related/Image_Deblurring)
   
   ## Tabular Data
-  * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio)
+  * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio/README.md)
   
   ## Data Structures
   * [Stack Implementation (C++)](/Data_Structures/Stack_Example/README.md)
