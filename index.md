@@ -1,4 +1,4 @@
-  # My Projects
+  # My Projects!
   All sorts of data science & Computer science exercises and programs for future reference
     
   1. [Text Related](#text-related)
