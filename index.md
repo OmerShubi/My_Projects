@@ -26,7 +26,7 @@
   * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio)
   
   ## Data Structures
-  * [Stack Implementation (C++)](/Data_Structures/Stack_Example)
+  * [Stack Implementation (C++)](/Data_Structures/Stack_Example/README.md)
 
   ## Optimization
   * [Optimal Warehouse Location for Shipments - CVX (MATLAB)](/Optimization/optimal_warehouse_location_for_shipments)
