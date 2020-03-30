@@ -9,7 +9,7 @@
   6. [Others](#others)
   
   ## Text Related
-  * [Alice in Wonderland - Basic Word Mapping (Bash)](/Text_Related/Alice_in_Wonderland)
+  * [Alice in Wonderland - Basic Word Mapping (Bash)](/Text_Related/Alice_in_Wonderland_Basic_Words_Analysis)
   * [Amazon Reviews Sentiment - Rocchio Classifier (Python)](/Text_Related/Amazon_Reviews_Sentiment_Analysis)
   * [Reuters 1987 Articles Label Model - Rocchio Classifier (Python)](https://github.com/scaperex/Reuters_1987_Classification)
   
