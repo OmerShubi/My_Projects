@@ -24,7 +24,7 @@
   
   ## Data Structures and Algorithms
   * [Stack Implementation (C++)](/Data_Structures_and_Algorithms/Stack_Example)
-  * [Dynamic Tree Graph + BFS, DFS, SCC (C++)](https://github.com/scaperex/Dynamic_Graph)
+  * [Dynamic Tree Graph + BFS, DFS, SCC (C++)](/Data_Structures_and_Algorithms/Dynamic_Graph)
 
   ## Optimization
   * [Optimal Warehouse Location for Shipments - CVX (MATLAB)](/Optimization/optimal_warehouse_location_for_shipments)
