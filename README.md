@@ -37,4 +37,5 @@
   * [Gradient Descent kappa coef effect (MATLAB)](/Optimization/Gradient_Descent_kappa_coef_effect)
   ## Others
   * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)
+  * [GPU vs CPU (Python)](/Others/GPU_TESTS)
 
