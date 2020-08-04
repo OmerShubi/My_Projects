@@ -1,3 +1,17 @@
+# CIFAR-10 Dataset Classification w/ KNN + PCA
+
+KNN and PCA Implementation
+
+Iterates over different k and s values for KNN and PCA.
+
+To reproduce results:
+
+```shell script
+conda env create -f cifar10_environment.yml
+conda activate cifar10
+python cifar10_pca_knn_analysis.py
+```
+
 Q. Do you think that PCA is effective for kNN? 
 
 A. Yes! With a very small PCA value the error rate is very similar to performing kNN algorithm with the full data.
