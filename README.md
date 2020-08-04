@@ -38,7 +38,7 @@
   * [Gradient Descent kappa coef effect (MATLAB)](/Optimization/Gradient_Descent_kappa_coef_effect)
   
   ## Database Management
-  * [Theoretical_DB_Schema_and_Queries](/Database_Management/Theoretical_DB_Schema_and_Queries)
+  * [Theoretical DB Schema and Queries](/Database_Management/Theoretical_DB_Schema_and_Queries)
   
   ## Others
   * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)

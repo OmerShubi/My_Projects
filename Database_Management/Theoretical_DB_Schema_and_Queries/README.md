@@ -2,7 +2,7 @@
 
 Theoretical DB with the following Schema:
 
-![Schema](/DB_Schema.png)
+![Schema](/Database_Management/Theoretical_DB_Schema_and_Queries/DB_Schema.png)
 
 Files:
  - createTablesScript.sql - creates the tables
