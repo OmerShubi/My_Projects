@@ -15,7 +15,7 @@
   
   ## Image Related
   * [Analyzing scikit-learn's digits dataset (Python)](/Image_Related/scikit_digits_KNN_Rocchio_analysis)
-  * [Best rank K Approximation (Python)](/Image_Related/SVD_Image_Compression)
+  * [SVD Image Compression - Best rank K Approximation (Python)](/Image_Related/SVD_Image_Compression)
   * [PCA + KNN on CIFAR10 (Python)](/Image_Related/PCA+KNN_on_CIFAR10)
   * [Gradient Descent vs FISTA for Image Deblurring (MATLAB)](/Image_Related/Image_Deblurring)
   
