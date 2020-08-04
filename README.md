@@ -4,7 +4,7 @@
   1. [Text Related](#text-related)
   2. [Image Related](#image-related)
   3. [Tabular Data](#tabular-data)
-  4. [Data Structures](#data-structures)
+  4. [Data Structures and Algorithms](#Data-Structures-and-Algorithms)
   5. [Optimization](#optimization)
   6. [Others](#others)
   
@@ -15,15 +15,16 @@
   
   ## Image Related
   * [Analyzing scikit-learn's digits dataset (Python)](/Image_Related/scikit_digits_KNN_Rocchio_analysis)
-  * [Best rank K Approximation (Python)](/Image_Related/Best_K_Approximation)
+  * [Best rank K Approximation (Python)](/Image_Related/SVD_Image_Compression)
   * [PCA + KNN on CIFAR10 (Python)](/Image_Related/PCA+KNN_on_CIFAR10)
   * [Gradient Descent vs FISTA for Image Deblurring (MATLAB)](/Image_Related/Image_Deblurring)
   
   ## Tabular Data
   * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio)
   
-  ## Data Structures
-  * [Stack Implementation (C++)](/Data_Structures/Stack_Example)
+  ## Data Structures and Algorithms
+  * [Stack Implementation (C++)](/Data_Structures_and_Algorithms/Stack_Example)
+  * [Dynamic Tree Graph + BFS, DFS, SCC (C++)](/Data_Structures_and_Algorithms/Dynamic_Graph)
 
   ## Optimization
   * [Optimal Warehouse Location for Shipments - CVX (MATLAB)](/Optimization/optimal_warehouse_location_for_shipments)
@@ -36,4 +37,5 @@
   * [Gradient Descent kappa coef effect (MATLAB)](/Optimization/Gradient_Descent_kappa_coef_effect)
   ## Others
   * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)
+  * [GPU vs CPU (Python)](/Others/GPU_TESTS)
 
