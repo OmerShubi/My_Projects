@@ -27,9 +27,9 @@ Create Fractal Images
 (CPU+GPU Upgraded) Mandelbrot created in 0.006650 s
 ```
 
-![Mandelbrot_1](/results/Mandelbrot_1.png)
+![Mandelbrot_1](/Others/GPU_TESTS/results/Mandelbrot_1.png)
 
-![Mandelbrot_2](/results/Mandelbrot_2.png)
+![Mandelbrot_2](/Others/GPU_TESTS/results/Mandelbrot_2.png)
 
 
 Run `python gpu_tests.py` to reproduce the results.
