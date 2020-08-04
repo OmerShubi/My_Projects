@@ -4,7 +4,7 @@
   1. [Text Related](#text-related)
   2. [Image Related](#image-related)
   3. [Tabular Data](#tabular-data)
-  4. [Data Structures](#data-structures)
+  4. [Data Structures and Algorithms](#Data-Structures-and-Algorithms)
   5. [Optimization](#optimization)
   6. [Others](#others)
   
@@ -22,8 +22,9 @@
   ## Tabular Data
   * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio)
   
-  ## Data Structures
+  ## Data Structures and Algorithms
   * [Stack Implementation (C++)](/Data_Structures/Stack_Example)
+  * [Dynamic Tree Graph + BFS, DFS, SCC (C++)](https://github.com/scaperex/Dynamic_Graph)
 
   ## Optimization
   * [Optimal Warehouse Location for Shipments - CVX (MATLAB)](/Optimization/optimal_warehouse_location_for_shipments)
