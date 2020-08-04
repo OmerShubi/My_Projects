@@ -5,11 +5,11 @@
 #    pip-compile requirements.in
 #
 cycler==0.10.0            # via matplotlib
-django==2.2.4             # via image
-image==1.5.27
+django==2.2.13            # via image
+image==1.5.27             # via -r requirements.in
 kiwisolver==1.1.0         # via matplotlib
-matplotlib==3.0.3
-numpy==1.16.3
+matplotlib==3.0.3         # via -r requirements.in
+numpy==1.16.3             # via -r requirements.in, matplotlib
 pillow==6.0.0             # via image
 pyparsing==2.4.0          # via matplotlib
 python-dateutil==2.8.0    # via matplotlib
