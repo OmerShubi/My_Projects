@@ -6,7 +6,8 @@
   3. [Tabular Data](#tabular-data)
   4. [Data Structures and Algorithms](#Data-Structures-and-Algorithms)
   5. [Optimization](#optimization)
-  6. [Others](#others)
+  6. [Database Management](#Database-Management)
+  7. [Others](#others)
   
   ## Text Related
   * [Alice in Wonderland - Basic Word Mapping (Bash)](/Text_Related/Alice_in_Wonderland_Basic_Words_Analysis)
@@ -35,6 +36,10 @@
   * [Noisy Gradient Descent Example (MATLAB)](/Optimization/Gradient_Descent/README.md#noisy-gradient-descent-example)
   * [Gradient Descent Example Performance (MATLAB)](/Optimization/Gradient_Descent/README.md#gradient-descent-example-usage)
   * [Gradient Descent kappa coef effect (MATLAB)](/Optimization/Gradient_Descent_kappa_coef_effect)
+  
+  ## Database Management
+  * [Theoretical_DB_Schema_and_Queries](/Database_Management/Theoretical_DB_Schema_and_Queries)
+  
   ## Others
   * [Petridish Simulation - Inheritance (C++)](/Others/PetriDish_Simulation)
   * [GPU vs CPU (Python)](/Others/GPU_TESTS)
