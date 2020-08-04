@@ -23,7 +23,7 @@
   * [Classifing high rated movies by IMBD dataset - KNN & Rocchio (Python)](/Tabular_Related/IMDB_High_Score_Predictor_KNN_Rocchio)
   
   ## Data Structures and Algorithms
-  * [Stack Implementation (C++)](/Data_Structures/Stack_Example)
+  * [Stack Implementation (C++)](/Data_Structures_and_Algorithms/Stack_Example)
   * [Dynamic Tree Graph + BFS, DFS, SCC (C++)](https://github.com/scaperex/Dynamic_Graph)
 
   ## Optimization

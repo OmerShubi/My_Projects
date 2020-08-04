@@ -1,0 +1,74 @@
+The out degree of node 3 is 0
+The in degree of node 7 is 0
+Print in layers after SCC:
+0
+10,11
+9
+1
+3
+7
+5,6,2
+8
+4
+Preorder print after SCC:
+0,10,9,1,3,7,5,8,4,6,2,11
+The out degree of node 5 is 3
+Print in layers after SCC:
+0
+10,11,12
+9
+1
+3
+7
+5,6,2
+8
+4
+Preorder print after SCC:
+0,10,9,1,3,7,5,8,4,6,2,11,12
+The out degree of node 3 is 3
+Print in layers after BFS:
+7
+3,5,10,9,6
+4,1,12,8,2
+Preorder print after BFS:
+7,3,4,1,5,12,8,10,2,9,6
+Print in layers after BFS:
+4
+8,2,3
+7,5,9,1
+10,6,12
+Preorder print after BFS:
+4,8,7,10,6,5,12,9,2,3,1
+Print in layers after BFS:
+11
+Preorder print after BFS:
+11
+The out degree of node 6 is 1
+The out degree of node 5 is 4
+Print in layers after SCC:
+0
+10,11,12,13,14
+9
+1
+3
+7
+8,6,2
+4,5
+Preorder print after SCC:
+0,10,9,1,3,7,8,4,5,6,2,11,12,13,14
+The in degree of node 4 is 3
+Print in layers after BFS:
+5
+12,8,7,6
+9,3,10
+4,2,1
+Preorder print after BFS:
+5,12,8,9,4,7,3,2,1,10,6
+The out degree of node 4 is 3
+Print in layers after BFS:
+3
+2,7,4,1
+14,5,10,9,6,8
+12
+Preorder print after BFS:
+3,2,14,7,5,12,10,9,6,4,8,1
