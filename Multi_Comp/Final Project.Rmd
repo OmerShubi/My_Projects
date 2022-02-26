@@ -1,0 +1,2224 @@
+---
+title: "MCP - Final Project"
+author: "Eyal Bar-Natan, Nitzan Shamir, Omer Shubi"
+date: "05/04/2020"
+output:
+  pdf_document:
+    latex_engine: xelatex
+    toc: yes
+  html_document:
+    df_print: paged
+    toc: yes
+params:
+  printcode: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = params$printcode, cache = TRUE)
+
+# Required packages
+library(zeallot)
+library(tidyverse)
+library(tibble)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+```
+
+
+
+\newpage
+
+# Task 1
+
+## Part A.
+
+$P(P_i \leq \alpha )\overbrace {=}^{p\_value \ definition} P[P_{H_0} (X>X_i)\leq \alpha]=P[P_{H_0}(\frac{X-\mu _0}{1}>\frac {X_i-\mu _0}{1})\leq \alpha ]\overbrace {=}^{X\underset{H_0}{\sim} N(0 ,1)}P[P(Z>X_i)\leq \alpha ]$
+
+$=P[1-\Phi (X_i)\leq \alpha]=P[\Phi (X_i)\geq 1-\alpha ]=P[\Phi (X_i)\geq \Phi (Z_{1-\alpha })]\overbrace {=}^{\Phi \ is  \ monotone \ increasing }P(X_i \geq Z_{1-\alpha })$
+
+
+For the case where $P_i$ is a p-value of a false null hypothesis: 
+
+$P(P_i \leq \alpha ) = \cdots = P(X_i \geq Z_{1-\alpha }) =P(\frac {X_i -\mu _i}{1}\geq \frac {Z_{1-\alpha }-\mu _i}{1})\overbrace {=}^{X_i\underset{H_1}{\sim} N(\mu _1 ,1)}$
+
+$P(\frac {X_i -\mu _1}{1}\geq \frac {Z_{1-\alpha }-\mu _1}{1})\overbrace {=}^{X_i\underset{H_1}{\sim} N(\mu _1 ,1)} P(Z_i \geq Z_{1-\alpha }-\mu _1)= 1-\Phi(Z_{1-\alpha}-\mu_1)$
+
+
+For the case where $P_i$ is a p-value of a true null hypothesis: 
+
+As we showed above, $P(P_i \leq \alpha ) = \cdots = P(X_i \geq Z_{1-\alpha })$
+
+Therefore, 
+
+$P(P_i \leq \alpha ) = \cdots = P(X_i \geq Z_{1-\alpha }) = 1 - P(X_i \leq Z_{1-\alpha }) \underbrace{=}_{X_i\underset{H_0}{\sim}N(0,1)} 1-\Phi(Z_{1-\alpha})=1-(1-\alpha)=\alpha$
+
+$\Longrightarrow P_i \ ' s \ distribution \ is \ uniform [0,1]$
+
+
+To conclude,
+
+When $P_i$ is a p-value of a false null hypothesis, $P(P_i \leq \alpha )= 1-\Phi(Z_{1-\alpha}-\mu_1)$,
+
+and when $P_i$ is a p-value of a true null hypothesis, $P(P_i \leq \alpha )  = \alpha$.
+
+\newpage
+
+## Part B. 
+
+FWER = $P[V\geq1]=1-P[V=0]\underbrace{=}_{\mbox{Def. }V }1-P[\Sigma_{i\in M_0}I\{H_i \ is \ rejected \}=0]$
+
+$=1-P[\forall i\in M_0 : H_i \ is \ not \ rejected]=1-P[\forall i\in M_0 : P_i >\alpha]$
+
+$=1-P[\bigcap_{i \in M_0}P_i >\alpha ]=1-\Pi _{i \in M_0 }P[P_i >\alpha ]\underbrace{=}_{\mbox{Part A.}}1-\Pi _{i \in M_0 }\Phi(Z_{1-\alpha} -\mu _i)$
+
+$=1-\Phi(Z_{1-\alpha})^{m_0}=1-(1-\alpha)^{m_0}$
+
+FWER depends on the variables $m_0$ and $\alpha$.
+
+As $\alpha \in (0,1), m_0 \geq 0$, it increases as each of $\alpha$ and $m_0$ increases.
+
+This behaviour is intuitive.
+
+For each true null hypothesis, the probability of performing a type I error is constant given $\alpha$ (and it is equal to $\alpha$).
+Therefore, if there are more true null hypotheses ($m_0$ increases), the probability of having at least one type I error (FWER) increases as well. 
+The intuition here says that there is more room for this kind of mistakes.
+
+Moreover, for a given $m_0$, when alpha increases, our approach for rejecting null hypotheses is more liberal i.e. we allow more freedom for type I errors, thus increasing the chance of making at least one type I error.
+
+\ 
+
+PFER = $\mathbb{E}(v)=\mathbb{E}[\Sigma _{i \in M_0 }I \{ H_i \ is \ rejected  \}]\overbrace {=}^{linearity+\\ expectancy \ of \ indicator }$
+
+$=\Sigma _{i \in M_0 }P(H_i \ is \ rejected)=\Sigma _{i \in M_0 }P(P_i \leq \alpha)\overbrace{=}^{according \ to \ part\ A} m_0 \alpha$
+
+We can note that this expression could be achieved also by the expectancy of a binomial random variable.
+
+PFER depends on the variables $m_0$ and $\alpha$.
+
+It increases as each of $\alpha$ and $m_0$ increases.
+
+The intuition for such behavior, derives from the fact that the expectancy of an r.v increases as the probability that the r.v is positive,  increases. In our case, this probability defined as FWER, which we saw before that is increasing while these variables are increasing.
+
+For $m_0 \neq m$:
+
+$\Pi^{AVG}= \mathbb{E}(S/m_1)=\frac{1}{m_1}\mathbb{E}(S)=\frac{1}{m_1}\mathbb{E}[\Sigma_{i \in M_1}I\{H_i \ is \ rejected\}]$
+
+$\overbrace {=}^{linearity+\\ expectancy \ of \ indicator }\frac{1}{m_1}\Sigma_{i \in M_1}P(H_i \ is \ rejected)$
+
+$=\frac{1}{m_1}\Sigma _{i \in M_1 }P(P_i \leq \alpha)\overbrace{=}^{according \ to \ part\ A}\frac{1}{m_1}\Sigma_{i \in M_1}[1-\Phi(Z_{1-\alpha}-\mu _1 )]$
+
+$=1-\Phi(Z_{1-\alpha}-\mu _1 )$
+
+For $m_0=m$:
+
+This means that $m_1=0\Rightarrow S=0$ and then $\Pi^{AVG}=0$.
+
+$\Pi^{AVG}$ depends on $\mu_1$ and $\alpha$.
+
+It increases when each of $\alpha$ and $\mu_1$ increases (because $\Phi$ is an increasing function).
+
+This behavior squares with the intuition that as the distance of $\mu_1$ from 0 ($\mu_0$) is bigger, it makes the alternative hypothesis stronger. It helps us to distinguish between the hypotheses. And it is known that the power of hypotheses testing increases when it is easier to make null hypotheses rejections (when $\alpha$ increases). 
+
+\newpage
+
+## Part C.
+
+According to the previous calculations (of FWER), we can note that:
+
+$$P(V=k)={m_0 \choose k}[P_{H_0}(P_i\leq\alpha)]^k\cdot[1-P_{H_0}(P_i\leq\alpha)]^{m_0-k}$$
+
+$$\overbrace{=}^{according \ to \ part \ A}{m_0 \choose k} \alpha^k\cdot(1-\alpha)^{m_0-k}$$
+
+This outcome is applied, because the p-values of the hypotheses are independent and identically distributed. 
+
+V counts the number of the true null hypotheses ($m_0$) that are rejected $(w.p. \ \alpha)$.
+
+Therefore, 
+
+$$V\sim Bin(m_0,\alpha)$$
+
+\
+
+According to the previous calculations (of $\Pi^{AVG}$), we can note that:
+
+$$P(S=k)={m_1 \choose k} [P_{H_1}(P_i\leq\alpha)]^k\cdot[1-P_{H_1}(P_i\leq\alpha)]^{m_1-k}$$
+
+$$\overbrace{=}^{according \ to \ part \ A}{m_1 \choose k}[1-\Phi(Z_{1-\alpha}-\mu_1)]^k\cdot [\Phi(Z_{1-\alpha}-\mu_1)]^{m_1-k}$$
+
+This outcome is applied, because the p-values of the hypotheses are independent and identically distributed. 
+
+S counts the number of the false null hypotheses ($m_1$) that are rejected (w.p $1-\Phi(Z_{1-\alpha}-\mu_1)$).
+
+Therefore, 
+
+$$S\sim Bin(m_1,1-\Phi(Z_{1-\alpha}-\mu_1))$$
+
+\newpage
+
+## Part D.
+
+### 1.
+
+It is given that $m=2$.
+
+For the case of  $\underline {m_0=0}$: 
+
+$$\underline{FWER}=1-(1-\alpha)^0=0$$
+
+$$\underline{PFER}=m_0\alpha=0$$
+
+$$m_0=0 \Rightarrow V=0 \Rightarrow FDP=0 \Rightarrow \underline{FDR}=0$$
+
+For the case of  $\underline {m_0=1}$: 
+
+$$\underline{FWER}=1-(1-\alpha)^1=\alpha$$
+
+$$\underline{PFER}=m_0\alpha=\alpha$$
+
+$m_0=1\Rightarrow V\leq1\Rightarrow FDP\leq1$.
+
+
+\[ P(FDP=\frac{V}{R}=k) =
+  \begin{cases}
+    p_1       & \quad  k=0 \ \ \ \ \ (V=0 \ or \ R=0) \\
+    p_2  & \quad k=1 \ \ \ \ \  (V=R=1) \\
+    p_3  & \quad k=0.5 \ \ (V=1,R=2)
+  \end{cases}
+\]
+
+$\Rightarrow FDR=\mathbb{E}[FDP]=0\cdot P_1+1\cdot P_2+0.5\cdot P_3$
+    
+$=0\cdot P(V=0 \vee R=0)+1\cdot P(V=R=1)+0.5\cdot P(V=1,R=2)$
+
+$=P(V=R=1)+0.5\cdot P(V=1,R=2)=P(V=1,S=0)+0.5\cdot P(V=1,S=1)$
+
+$=P(H_{0_1} \ is \ true)\cdot P_{H_0}(P_1\leq \alpha)\cdot P_{H_1}(P_2> \alpha)+P(H_{0_2} \ is \ true)\cdot P_{H_1}(P_1> \alpha)\cdot P_{H_0}(P_2\leq \alpha)+$
+
+$+0.5\cdot [P(H_{0_1} \ is \ true)\cdot P_{H_0}(P_1\leq \alpha)\cdot P_{H_1}(P_2\leq \alpha)+P(H_{0_2} \ is \ true)\cdot P_{H_0}(P_2\leq \alpha)\cdot P_{H_1}(P_1\leq \alpha)]$
+
+$\underbrace{=}_{(*,***)}0.5\cdot P_{H_0}(P_1\leq \alpha)\cdot P_{H_1}(P_2>\alpha)+0.5\cdot P_{H_1}(P_1>\alpha)\cdot P_{H_0}(P_2\leq \alpha)+$
+
+$+0.5\cdot [P_{H_0}(P_i\leq \alpha)\cdot P_{H_1}(P_i\leq \alpha)]$
+
+$\underbrace{=}_{(**,***)}P_{H_0}(P_i\leq\alpha)\cdot P_{H_1}(P_i>\alpha)+0.5\cdot [\alpha\cdot (1-\Phi(Z_{1-\alpha}-\mu_1))]$
+
+$\underbrace{=}_{(**)}\alpha\cdot \Phi(Z_{1-\alpha}-\mu_1)+0.5\cdot [\alpha\cdot (1-\Phi(Z_{1-\alpha}-\mu_1))]$
+
+$$\Rightarrow \underline{FDR}=0.5\alpha[1+\Phi(Z_{1-\alpha}-\mu_1)]$$
+
+
+$(*)$ Given that $m, m_0$ are both known, the true null hypotheses are distributed uniformal over all the null hypotheses. Thus given that $m=2, m_0=1$ the probability that each null hypothesis is true is $0.5$.
+
+$(**)$ Part A.
+
+$(***)$ Pvalues of true null hypotheses are i.i.d. and Pvalues of false null hypotheses are i.i.d.
+
+\newpage
+
+For the case of  $\underline {m_0=2}$:
+
+$$\underline{FWER}=1-(1-\alpha)^2=2\alpha-\alpha^2$$
+
+$$m_0=m\Rightarrow V=R\Rightarrow FDP=I(V>0)$$
+
+$$\Rightarrow \underline{FDR}=P(V>0)=FWER=2\alpha-\alpha^2$$
+
+$$\underline{PFER}=m_0\alpha=2\alpha$$
+
+
+\
+
+For any $\underline{m_0<m}$:
+
+$\Pi^{AVG}=1-\Phi(Z_{1-\alpha}-\mu_1)$
+
+And for $m_0=m=2$:
+
+$\Pi^{AVG}=0$, because all hypotheses are right. Therefore, no rejections are justified.
+
+Summary of the theoretical measures for each $m_0$, as a function of $\alpha$ and $\mu_1$:
+
+|                | FWER                    | PFER | FDR | AVG-Power
+|----------------|-------------------------|---------------------------|---------------------|---------------------|
+| $m_0=0$ | $\ \ \ 0$ | $\ \ 0$ | $0$ | $\ \ 1-\Phi(Z_{1-\alpha}-\mu_1)$ |
+| $m_0=1$ | $\ \ \ \alpha$ | $\ \ \alpha$ | $0.5\alpha[1+\Phi(Z_{1-\alpha}-\mu_1)]$ | $\ \ 1-\Phi(Z_{1-\alpha}-\mu_1)$ |
+| $m_0=2$ | $\ \ \ 2\alpha-\alpha^2$ | $\ \ 2\alpha$ |$2\alpha-\alpha^2$ | $\ \ 0$ |
+
+### 2.
+
+For $\alpha=0.05$:
+
+Theoretical Values for $m = 2, \mu = 1$, as a function of $m_0$:
+
+```{r "Theoretical Measures' Values"}
+# Theoretical Measure Values as a function of m0, according to previous part
+# Calculations where made by hand. These are the results
+m0 <- c(0,1,2)
+FWER <- c(0, 0.05, 0.0975)
+PFER <- c(0, 0.05, 0.1)
+FDR <- c(0, 0.0435, 0.0975)
+avg.power <- c(0.26, 0.26, 0)
+
+# Displays the table
+real_values <- as.data.frame(cbind(m0,FWER, PFER, FDR, avg.power))
+names(real_values)[1] <- '$m_0$'
+kable(real_values,
+      align = c("l", "c", "c", "c", "c"), escape = FALSE) %>%
+  kable_styling("striped", latex_options = "hold_position")
+```
+
+```{r create_indicators function}
+create_indicators <- function(m, m1) {
+  # Creates and returns an indicator vector of length m
+  # where the first m1 values are 1 and the last m-m1 values are 0
+  indicators <- rep(0, m)
+  if (m1 > 0) {
+    indicators[1:m1] <- 1
+  }
+  return(indicators)
+}
+```
+
+```{r create_pvalues function}
+create_pvalues <- function(m, m1, mu1) {
+  # creates and returns a vector of p-values of length m
+  # the first m1 values correspond to pvalues that are a result of x that is normally distributed with mean=0 and sd=1
+  # the last m-m1 values correspond to pvalues that are a result of x that is normally distributed with mean=mu1 and sd=1
+  pvalues <- list()
+  randnormvec <- rnorm(n = m, mean = 0, sd = 1)
+  j <- 1
+  for (mu in mu1){
+    updatedvec <- randnormvec
+    if (m1 > 0) {
+      updatedvec[1:m1] <- updatedvec[1:m1] + mu
+    }
+    pvalues[[toString(j)]] <- pnorm(updatedvec, lower.tail = FALSE)
+    j <- j + 1
+  }
+  return(pvalues)
+}
+```
+
+```{r calculate_measures_helper function}
+calculate_measures_helper <- function(pvalues, indicators, alpha) {
+  # given vector of pvalues and indicators (corresponding to whether the null hypotheses are true or false) and alpha - the threshold
+  # Calculates I(V>0), V, FDP and S/m1 and returns them in a list
+  
+  S <- sum(pvalues <= alpha & indicators == 1) # Rejected in practice and also should be rejected
+  V <- sum(pvalues <= alpha & indicators == 0) # Rejected in practice and also should not have been rejected (type 1 error)
+  R <- S + V # total rejected in practice
+  m1 <- sum(indicators) # total false null hypotheses
+  
+  # I(V>0)
+  if(V>0){
+  ind.V <- 1
+  } else {
+    ind.V <- 0
+  }
+  
+  # FDP 
+  if (R > 0) {
+    FDP <- V / R
+  } else {
+    FDP <- 0
+  }
+  
+  # S/m1
+  if (m1 > 0) {
+    S.out.of.m1 <- S / m1
+  }
+  else{
+    S.out.of.m1 <- 0
+  }
+  
+  return(list(ind.V, FDP, V, S.out.of.m1))
+}
+```
+
+```{r simulation_run function}
+simulation_run <- function(m,
+                           m1,
+                           mu1,
+                           alpha = 0.05,
+                           iterations = 1000) {
+  # Calculates the FWER, PFER, FDR and Average Power from the given parameters
+  
+  # Arguments:
+  
+  #   m - int, number of Hypotheses being tested
+  #   m1 - int, number of incorrect hypotheses, should be between 0 and m
+  #   mu1 - expectation of the incorrect hypotheses, should be greater than zero
+  #   alpha - double, Type I error rate, default is 0.05, should be between zero and one
+  #   iterations - int, number of iterations for the simulations, default is 1000, should be greater than zero
+  
+  # Returns:
+  
+  #   Result - dataframe with one row, each column corresponds to a different measure - 
+  #            FWER, PFER, FDR and the average power
+  
+  # Initialize containers
+  vec.V <- data.frame(matrix(ncol = iterations, nrow = length(mu1)))
+  vec.ind.V <- data.frame(matrix(ncol = iterations, nrow = length(mu1)))
+  vec.FDP <- data.frame(matrix(ncol = iterations, nrow = length(mu1)))
+  vec.S.out.of.m1 <- data.frame(matrix(ncol = iterations, nrow = length(mu1)))
+  
+  # Create the indicators vector - first m1 elements are incorrect - '1', last m-m1 elemnts are correct - '0'
+  indicators <- create_indicators(m, m1)
+  
+  results <- data.frame()
+  num_mu1 <- length(mu1)
+  for (i in 1:iterations) {
+    # In each iteration 
+    #   1. Randomly draw the m pvalues
+    #   2. calculate and store the V, I(V>0), FDP, S/m1
+    
+    pvalues <- create_pvalues(m, m1, mu1)
+
+    for(mu_index in 1:num_mu1){
+      c(ind.V, FDP, V, S.out.of.m1) %<-% calculate_measures_helper(pvalues[[toString(mu_index)]], indicators, alpha)
+    
+      vec.ind.V[mu_index,i] <- ind.V
+      vec.V[mu_index,i] <- V
+      vec.FDP[mu_index,i] <- FDP
+      vec.S.out.of.m1[mu_index,i] <- S.out.of.m1
+    }
+  }  
+  for(mu_index in 1:length(mu1)){
+
+  # Estimate and return the PFER, FWER, FDR and the average power
+  PFER <- sum(vec.V[mu_index,]) / iterations
+  
+  FWER <- sum(vec.ind.V[mu_index,]) / iterations
+  
+  FDR <- sum(vec.FDP[mu_index,]) / iterations
+  
+  average.power <- sum(vec.S.out.of.m1[mu_index,]) / iterations
+  
+  # Concatenate the results
+  result <-
+    structure(
+      list(FWER, PFER, FDR, average.power),
+      names = c("FWER", "PFER", "FDR", "avg.power")
+    )
+  
+  result <- as.data.frame(result)[1:3]
+  results <- rbind(results,result)
+  }
+  return(results)
+}
+```
+
+
+```{r "Simulation with m = 2, mu1 = 1, m1 ={0,1,2}"}
+# given parameters
+vec.m1 <- c(2, 1, 0)
+m <- 2
+
+results <- data.frame() # init container
+
+# Performs the simulation 3 times, with m = 2, mu1 = 1, m1 ={0,1,2}
+for (m1 in vec.m1) {
+  result <- simulation_run(m = m, m1 = m1, mu1 = 1,iterations = 25000)
+  results <- rbind(results, result)
+}
+
+# Add m0 column to results
+results <- cbind(m - vec.m1, results)
+names(results)[1] <- '$m_0$'
+
+# Displays the table
+kable(results,
+      align = c("l", "c", "c", "c", "c"),
+      caption = "Simulation results for m = 2, mu = 1, as a function of m0", escape = FALSE) %>%
+  kable_styling("striped", latex_options = "hold_position")
+```
+
+As can be seen, the measures obtained from the simulation are close to the theoretical values, as expected.
+
+\newpage
+
+## Part E
+
+### 1.
+
+```{r "run simulation with given m, mu's and m0's"}
+# run simulation with given m, mu's and m0's
+#   Stores the result in 'all.results1' ,a list, where each entry is a dataframe 'results' which corresponds with a give m0
+#   each row in 'results' corresponds to a given mu, and each column is a different measure (FWER, PFER, FDR, Avg Power).
+
+# Given parameters
+vec.mu <- seq(0, 5, by = 0.5)
+m <- 32
+vec.m0 <- c(m / 4, m / 2, 3 * m / 4, m)
+
+all.results1 <- list() # Init result container
+
+# Run the simulations for the given m, and all given m0 proportions and mu's 
+for (m0 in vec.m0) {
+
+  all.results1[[toString(m0 / m)]] <- simulation_run(m = m, m1 = m - m0, mu1 = vec.mu)
+}
+```
+
+```{r plot_measures function}
+plot_measures <- function(m0.m, y_lim=2){
+  # Plots the FDR, FWER and PFER for a given m0/m, as a function of mu
+  results <- all.results1[[m0.m]]
+  plot(
+    1,
+    main = bquote("Measures vs "~ mu[1] ~" for " ~m[0]/m == .(m0.m)),
+    type = 'n',
+    xlim = c(0, 5),
+    ylim = c(0, y_lim),
+    xlab = bquote(mu[1]),
+    ylab = 'Values'
+  )
+  lines(vec.mu, results$FDR , type = "o", col = "blue")
+  lines(vec.mu,  results$FWER , type = "o", col = "red")
+  lines(vec.mu, results$PFER , type = "o", col = "green")
+}
+```
+
+Error measures as a function of $mu_1$, for different $\frac{m_0}{m}$ proportions, given $m=32:$
+
+```{r "plots the measures 2x2", fig.height=12, fig.width=12, warning=FALSE}
+
+# Plots the 4 plots related to the m0/m proportions, on a 2x2 grid, with one common legend
+par(mfrow = c(2, 2))
+
+plot_measures(m0.m = "0.25", y_lim = 1)
+
+plot_measures("0.5", y_lim = 1)
+
+plot_measures("0.75", y_lim = 1.5)
+
+plot_measures("1")
+
+legend(
+  -1.3,
+  2.5,
+  legend = c("FDR", "FWER", "PFER"),
+  lty = 1,
+  col = c("blue", "red", "green"),
+  xpd = "NA"
+)
+
+```
+
+*Note that the Y axis is different in the different plots
+
+**Note that for $\frac{m_0}{m} = 1$, it is proved that FDR = FWER. In the bottom right graph the red (FWER) 
+is on top of the blue (FDR), therefore cannot be seen.
+
+\newpage
+
+### 2.
+
+In this section we assume $\mu_1 = 1$
+
+```{r "run simulation with given mu, m's and m0's"}
+# run simulation with given m's, mu and m0's
+#   Stores the result in 'all.results2' ,a list, where each entry is a dataframe 'results' which corresponds with a give m
+#   each row in 'results' corresponds to a given m0 proprtion, and each column is a different measure (FWER, PFER, FDR).
+
+# Given parameters
+vec.m <- c(8, 32, 512, 1000)
+mu1 <- 1
+
+all.results2 <- list()
+
+# Run the simulations for the given mu, and all given m's and m0 proportions 
+for (m in vec.m) {
+  results <- data.frame()
+
+  vec.m0 <- c(m / 4, m / 2, 3 * m / 4, m)
+  
+  for (m0 in vec.m0){
+      result <- simulation_run(m = m, m1 = m-m0, mu1 = mu1)
+      results <- rbind(results, result[1:3])
+  }
+  
+  # Add m0/m as first column for clearer viewing
+  results <- cbind(vec.m0/m, results)
+  names(results)[1] <- '$m_0/m$'
+  all.results2[[toString(m)]] <- results
+}
+
+```
+
+
+```{r display_measures function}
+display_measures <- function(m){
+  # Displays the FWER, PFER and FDR for a given m, each row represents a different m0/m
+  kable(all.results2[[m]],
+        align = c("l", "c", "c", "c"),
+        caption = paste("Results for m = ", m), escape = FALSE) %>%
+    kable_styling("striped", latex_options = "hold_position")
+}
+```
+
+```{r "display_measures"}
+# Displays the measures
+display_measures(m="8")
+display_measures(m = "32")
+display_measures(m = "512")
+display_measures(m = "1000")
+```
+
+\newpage
+
+## Part F.
+
+### 1.
+
+There is an order between these three error rate metrics: $PFER\geq FWER\geq FDR$. This order is consistent through all values of $\mu_1$ of which we used in part E, as can be seen in the simulations and the plots. 
+
+First we prove that $FDR\leq FWER$:
+
+1. If $m_0=m$, then $FDR=FWER$.
+
+Proof: 
+
+$m_0=m\Rightarrow V=R\Rightarrow$
+
+\[ FDP =
+  \begin{cases}
+    \frac{V}{R}=1       & \quad  R=V>0 \\
+    0  & \quad R=V=0 \ 
+  \end{cases}
+\]
+
+$\Rightarrow FDP=I(V>0)$
+
+$\Rightarrow FDR=\mathbb{E}[I(V>0)] = P(V>0)=FWER$
+
+2. If $m_0<m$, then FDR$\leq$FWER.
+
+Proof: 
+
+Recall that $FWER = P(V>0)=\mathbb{E}[I(V>0)], \ FDR = \mathbb{E}(FDP)$. 
+We can notice that it is sufficient to prove that FDP$\leq I(V>0)$.
+
+\[ FDP =
+  \begin{cases}
+    \frac{V}{R}       & \quad  R>0 \\
+    0  & \quad R=0 \ 
+  \end{cases}
+\]
+
+It holds that 
+
+$\forall R\geq0:V\leq R \Rightarrow FDP\leq1 \Rightarrow$
+
+a. If $I(V>0)=1$, then $FDP \leq I(V>0)$.
+
+b. If $I(V>0)=0$, this means that $V=0$ and then $FDP=0\leq I(V>0)$.
+
+We got that for all $0 \leq m_0 \leq m$ it holds that $FDR\leq FWER$. 
+
+This result is independent of the procedure used (according to the proof above) thus, it is possible to conclude that $FDR\leq FWER$ for any procedure.
+
+
+Proof that $FDR\leq FWER \leq PFER$:
+
+$$PFER=\mathbb{E}(V) = \sum\limits_{v=0}^{\infty}v\cdot P(V=v)= \sum\limits_{v=1}^{\infty}v\cdot P(V=v) \geq \sum\limits_{v=1}^{\infty}1\cdot P(V=v) = P(V > 0)  = FWER$$
+
+$$\Rightarrow FWER \leq PFER$$
+This result is independent of the procedure used (according to the proof above) thus, it is possible to conclude that $FWER \leq PFER$ for any procedure.
+
+And in total,
+
+$$\Rightarrow FDR\leq FWER \leq PFER$$
+
+For any procedure.
+
+
+### 2.
+
+Let us recall the following expressions applied in part B in our case (meaning test each hypothesis at level $\alpha$):
+
+$FWER=1-(1-\alpha)^{m_0}$,$PFER=m_0\alpha$.
+
+PFER and FWER are independent of  $\mu_1$, therefore - constant as a function of $\mu_1$ with constant $m_0,m$.
+
+This can also be seen in the plots.
+
+When $\frac{m_0}{m} \in (0,1)$, 
+
+according to the graphs applied in part E, it seems that FDR is decreasing, as a function of $\mu_1$ with constant $m_0,m$, and converges to a constant value. 
+
+This result is intuitive as $V$ isn't affected by changes in $\mu_1$, as as we showed before $V\sim Bin(m_0,\alpha)$ and $m_0,\alpha$ aren't related to  $\mu_1$. 
+Intuitively because it measures the number of type 1 errors out of the true null hypotheses which are unaffected by the false null hypotheses because each hypothesis is tested independently at level $\alpha$.
+
+And meanwhile $R$ potentially increases as $S$ can increase when $\mu_1$ increases (higher probability) as as we showed before $S\sim Bin(m_1,p=1-\Phi(Z_{1-\alpha}-\mu_1))$
+as $\mu_1$ increases $p$ increases.
+Intuitively because as the distance of $\mu_1$ from $0 (\mu_0)$ is bigger, it makes each
+false null hypothesis stronger (independently) thus easier to reject.
+
+When $\frac{m_0}{m} = 0,1$ the FDR is constant as well, as FDR equals FWER.
+
+### 3.
+
+
+For constant $\mu_1, m$, all three error rate metrics are increasing while $\frac{m_0}{m}$ is increasing.
+
+With constant $m$, while $\frac{m_0}{m}$ is increasing, $m_0$ is increasing.
+
+As explained in part B, FWER and PFER are increasing while $m_0$ is increasing, thus also while $\frac{m_0}{m}$ is increasing.
+
+This corresponds with the simulation results.
+
+According to the tables applied in part E, it seems that while $m$ and $\mu_1$ are constant, in each of the four tables, through the increment of the $\frac{m_0}{m}$ values, FDR is increasing.
+
+FDP can be written as $\frac{V}{V+S}$. Given $m$ and $\mu_1$, when $m_0$ increases $m_1$ decreases as $m=m_0+m_1$.
+
+As $m_0$ increases $V$ can only increase, and $S$ can only decrease accordingly therefore in this case $\frac{V}{V+S}$ increases as well.
+
+For example, in the case where we change $H_i$ that was false to true meaning $m_0 = m_0 +1$ and $m_1 = m_1 -1$, we separate into cases,
+
+If beforehand $H_i$ was not rejected and now it is also not rejected $\Rightarrow$ no change in FDP.
+
+If beforehand $H_i$ was not rejected and now it is rejected $\Rightarrow V = V +1, S=S \Rightarrow$ FDP increases.
+
+If beforehand $H_i$ was rejected and now it is also rejected $\Rightarrow V = V +1, S=S-1 \Rightarrow$ FDP increases.
+
+If beforehand $H_i$ was rejected and now it is not rejected $\Rightarrow$ no change in FDP.
+
+\newpage
+
+### 4.
+
+From part B:
+
+$$FWER=1-(1-\alpha)^{m_0}$$
+
+$$PFER=m_0\alpha$$
+
+So, when $\underline{\frac{m_0}{m}=1}:$
+
+$\Rightarrow m_0=m$
+
+So $\underline{FWER}=1-(1-\alpha)^{m}$ and $\underline{PFER}=m\alpha$.
+
+We saw earlier that when $m_0=m$, $FDR=FWER$, so $\underline{FDR}=1-(1-\alpha)^{m}$.
+
+
+
+When $\underline{\frac{m_0}{m}=0}:$
+
+$\Rightarrow m_0=0$,
+
+So $\underline{FWER}=1-1=0$ and $\underline{PFER}=0$.
+
+
+We saw earlier that when $m_0<m$: $0\leq FDR\leq FWER$.
+
+So if $m_0=0$, then $\underline{FDR}=0$, as $FWER=0$.
+
+This corresponds with the simulation results.
+
+\newpage
+
+### 5. 
+
+With constant $\frac{m_0}{m}$ and $\mu_1$, when $m$ is increasing, all three error rate metrics are increasing, and FWER converges to $1$. 
+
+We can see this behavior represented in the tables in part E.2, when examining each of the four $\frac{m_0}{m}$ values, through all four tables ($m$ is increasing from one table to another).
+
+#### 5.1. 
+
+With constant $\frac{m_0}{m}$ and $\mu_1$, when $m$ is increasing, we can conclude that $m_0$ is increasing as well.
+
+Thus, we have the same results we had in section F.3, when $m_0$ was increasing, which means that FWER and PFER are increasing, as they are not dependent on $m$ and $\mu_1$ (but only on $m_0$ and $\alpha$).
+
+Regarding the convergence of FWER, When $m_0$ increases, $V$ can stay the same or increase (depending on if the hypothesis was rejected or not). 
+
+Therefore, 
+
+$$FWER = P(V>0)= 1-P(V=0) \underbrace{=}_{V\sim Bin(m_0,\alpha)} 1 -(1-\alpha)^{m_0}\underbrace{\longrightarrow}_{m_0\rightarrow \infty} 1-0 =1$$
+
+#### 5.2. 
+
+What Benjamini and Hochberg called the false discovery rate (FDR) they denote by E(FDR), and receive:
+
+$E(FDR)=\frac{\frac{m_0}{m}\alpha}{\frac{m_0}{m}\alpha+\frac{m_1}{m}F(\alpha)}+O(\frac{1}{\sqrt m})$, when $F(\alpha)$ depends on $\mu_1$ 
+
+Where F is the distribution of the p-value under the alternative. In our case, $F(\alpha)=P_{H_1}(P_i\leq \alpha)$).
+
+*In the article the authors used $c$, which in our case is exactly $\alpha$ as we test each hypothesis at level $\alpha$.
+
+According to Genovese and Wasserman, 2002 theory, the expected FDR is controlled regardless of $m_0$ and regardless of the marginal distributions for the p-values corresponding to the false null hypotheses.
+
+In their results, they used asymptotics in which the fraction of true null hypotheses 
+$\frac{m_0}{m}$ is kept fixed.
+
+Thus, we can see that according to their theory, $\underline{FDR}$ converges to a specfic value for large $m$ values and constant $\mu_1, \frac{m_0}{m}$.
+
+This is as $O(\frac{1}{\sqrt m}) \rightarrow 0$ as $m\rightarrow \infty$,  $\frac{m_1}{m}=\frac{m-m_0}{m}=1-\frac{m_0}{m}$ and $F(\alpha)$ (as we show below) stays constant as well.
+
+We can see this behavior represented in the tables in part E.2, when examining each of the four $\frac{m_0}{m}$ values, through all four tables ($m$ is increasing from one table to another). For easier visualization we plotted the results in one graph.
+
+```{r "Plot FDR vs m", fig.height=4, fig.width=8}
+# Plot FDR vs m, for different m0/m ratios
+
+# First retrieve the relevant results from the previous simulation
+FDR.results <- as.data.frame(cbind(
+  all.results2[["8"]]$FDR,
+  all.results2[["32"]]$FDR,
+  all.results2[["512"]]$FDR,
+  all.results2[["1000"]]$FDR
+))
+
+# Each object represents the FDR for a given m0/m ratio, as a function of m
+FDR_0.25 <- FDR.results[1,]
+FDR_0.5 <-  FDR.results[2,]
+FDR_0.75 <- FDR.results[3,]
+FDR_1 <-  FDR.results[4,]
+
+
+# Plot structure
+plot(
+  1,
+  main = bquote("FDR vs m, for different "~m[0]/m~" ratios"),
+  xlim=c(0,1000),
+  ylim=c(0,1),
+  type = 'n',
+  xlab = 'm',
+  ylab = 'FDR'
+)
+# Plot content
+m <- c(8,32,512,1000)
+lines(m ,FDR_0.25, type='o', col='red')
+lines(m ,FDR_0.5, type='o', col = 'green')
+lines(m ,FDR_0.75, type='o', col = 'blue')
+lines(m ,FDR_1, type='o', col ='orange')
+
+# Adds legend
+legend(700,0.9, legend = c(expression(m[0]/m == 0.25),expression(m[0]/m == 0.5),expression(m[0]/m == 0.75),expression(m[0]/m == 1)),
+       lty=1, col=c("red", "green", "blue", "orange" ))
+
+```
+
+We saw in part A that for false null hypotheses we have:
+
+$P(P_i \leq \alpha )= 1-\Phi(Z_{1-\alpha}-\mu_1)$
+
+Therefore $F_{P_i}(\alpha) =  1-\Phi(Z_{1-\alpha}-\mu_1)$
+
+We can notice that this result is independent of any variables except $\alpha$, when $\mu_1$ is fixed.
+
+Therefore, we can conclude that all p-values of false null hypotheses, have the same distribution. 
+
+The equation assumes that the p-values are i.i.d. (true and false seperately) and then the authors used the binomial distribution for rejection with probability of $F(\alpha)$ to reach eq. 8 (from the article).
+
+We showed that in our case all p-values of false null hypotheses, have the same distribution therefore, as the other conditions hold from the building method of the simulation, the equation can be used.
+
+#### 5.3. 
+
+$$E(FDR)=\frac{\frac{m_0}{m}\alpha}{\frac{m_0}{m}\alpha+\frac{m_1}{m}F(\alpha)}+O(\frac{1}{\sqrt m})$$
+
+When $F(\alpha) \ is \ P_{H_1}(P_i\leq \alpha)$, thus according to our results, $F(\alpha)=1-\Phi(Z_{1-\alpha}-\mu_1)$.
+
+$$\Rightarrow E(FDR)=\frac{\frac{1}{2}\alpha}{\frac{1}{2}\alpha+\frac{1}{2}(1-\Phi(Z_{1-\alpha}-1))}+0$$
+
+In our case, for $\alpha = 0.05$, $E(FDR)=\frac{\frac{1}{2}\cdot0.05}{\frac{1}{2}\cdot0.05+\frac{1}{2}(1-\Phi(Z_{1-0.05}-1))}$
+$= \frac{\frac{1}{2}\cdot0.05}{\frac{1}{2}\cdot0.05+\frac{1}{2}(1-\Phi(Z_{0.95}-1))}$
+$= \frac{0.025}{0.025+\frac{1}{2}(1-\Phi(0.645))}$
+$= \frac{0.025}{0.025+\frac{1}{2}(1-0.7405364)}$
+$= \frac{0.025}{0.025+\frac{1}{2}(0.2594636)}$
+$$\Rightarrow \underline{E(FDR)=0.1615699}$$
+
+This corresponds with the results we got in the simulation, as can be seen in the plot of section 5.2 and in the table in section E.2.
+
+\newpage
+
+### 6.
+
+#### 6.1 
+
+Without accounting for multiple comparisons, all error measures for all tested values of $m$ and $\frac{m_0}{m}$ are not controlled at level $\alpha$ for small enough $\mu_1$. 
+
+For higher $\mu_1$ values, FWER is still not controlled.
+
+This result corresponds with what we learned all year - multiple comparisons require adjustments if control of the error measures is desired.
+
+#### 6.2 
+
+PFER as a function of $\frac{m_0}{m}$, for different values of m
+
+```{r "Plot PFER vs m0/m ratio, for different m's"}
+# Plot PFER vs m0/m, for different m's
+
+# First retrieve the relevant results from the previous simulation
+PFER.results <- as.data.frame(cbind(
+  all.results2[["8"]]$PFER,
+  all.results2[["32"]]$PFER,
+  all.results2[["512"]]$PFER,
+  all.results2[["1000"]]$PFER
+))
+
+# Each object represents the PFER for a given m as a function of the m0/m ratio
+PFER_8 <- PFER.results[,1]
+PFER_32 <-  PFER.results[,2]
+PFER_512 <- PFER.results[,3]
+PFER_1000 <-  PFER.results[,4]
+
+# Plot structure
+plot(
+  1,
+  main = bquote("PFER vs " ~ m[0]/m ~ ", for different "~m),
+  xlim=c(0.2,1),
+  ylim=c(0,50),
+  type = 'n',
+  xlab = bquote(m[0]/m),
+  ylab = 'PFER'
+)
+
+# Plot content
+m0.m <- c(0.25,0.5,0.75,1)
+lines(m0.m ,PFER_8, type='o', col='red')
+lines(m0.m ,PFER_32, type='o', col = 'green')
+lines(m0.m ,PFER_512, type='o', col = 'blue')
+lines(m0.m ,PFER_1000, type='o', col ='orange')
+
+# Adds legend
+legend(0.2,50, legend = c( "m=8","m=32","m=512","m=1000"), lty=1, col =c("red", "green", "blue", "orange" ))
+
+```
+
+\newpage
+
+And zoomed in on the case where $m=8,32$:
+
+```{r "Plot PFER vs m0/m ratio, for different m's, zoomed in"}
+# Plot Structure
+plot(
+  1,
+  main = bquote("PFER vs "~m[0]/m~", for different "~m),
+  xlim = c(0.2, 1),
+  ylim = c(0, 2),
+  type = 'n',
+  xlab = bquote(m[0] / m),
+  ylab = 'PFER'
+)
+
+# Plot content
+lines(m0.m , PFER_8, type = 'o', col = 'red')
+lines(m0.m , PFER_32, type = 'o', col = 'green')
+
+# Adds legend
+legend(
+  0.2,
+  2,
+  legend = c("m=8", "m=32"),
+  lty = 1,
+  col = c("red", "green")
+)
+
+```
+
+As can be seen, PFER increases linearly as the proption of $m_0$ out of $m$ increases.
+
+This result correspond with the theoretical function that we've shown - $PFER = m_0\cdot \alpha$. 
+
+#### 6.3 
+
+Note that for $\frac{m_0}{m} = 1$, we proved in section F.1. that FDR = FWER.
+
+From the simulation results as displayed in the tables in section E.2 we can see that the simulation corresponds with the theory.
+
+#### 6.4 
+
+From theory we know that $FWER \leq 1, FDR \leq 1$.
+
+From the simulation results as displayed in the tables and graphs in section E we can see that the simulation corresponds with the theory.
+
+#### 6.5 
+
+Given a $\frac{m_0}{m}$ proportion ,if $m$ grows times $c$,  $m_0$ grows times $c$ as well. Therefore PFER grows times $c$ as well.
+
+This can be seen in simulation table results, for example - for $\frac{m_0}{m}=0.5$, 
+when $m=8: PFER\approx 0.2$, and when $m=32: PFER\approx 0.8$. Meaning $m$ increased times $4$. PFER increased times $4$ as well.
+
+This result correspond with the theoretical function that we've shown - $PFER = m_0\cdot \alpha$. 
+
+\newpage
+
+# Task 2 - Unit 1
+
+## Part A.
+
+As learnt in class, if the test statistics are independent and continuous FDR of the BH procedure for the hypotheses is $FDR_q=\frac{m_0}{m}\cdot q$. 
+
+## Part B.
+
+Define $\tilde{q} =\frac{m}{m_0}\cdot q$.
+
+As $m \geq m_0$ we get that $\tilde{q} \geq q$ as desired.
+
+Under the assumptions of part A,
+
+$FDR_{\tilde{q}}=\frac{m_0}{m}\cdot \tilde{q} \underbrace{=}_{\mbox{by def. of }\tilde{q}} \frac{m_0}{m}\frac{m}{m_0}\cdot q = q$
+
+$\tilde{q}$ depends only on $q$ and on $m_0$ when $m$ is known, as required.
+
+And FDR is controlled at level q by definition, and furthermore, FDR equals q.
+
+\newpage
+
+## Part C.
+
+The thresholds for the BH procedure at level $q$ are $\forall i \in \{1,\cdots,m\}:c_i = \frac{i\cdot q}{m}$
+
+Therefore for $\tilde{q} =\frac{m}{m_0}\cdot q$ we get 
+
+$\forall i \in \{1,\cdots,m\}:\tilde{c_i} = \frac{i\cdot \tilde{q}}{m}=\frac{i\cdot q \frac{m}{m_0}}{m}= \frac{i\cdot q }{m_0}$
+
+As $m_0 \leq m$ we get that $\forall i: \tilde{c_i}\geq c_i$.
+
+
+In BH procedure at level $q$ we look for the $k$ such that $k_{BH_q}=max\{i:P_{(i)}\leq \frac{qi}{m}\}$. If we compare each PV to a bigger or equal thershold we get a K only equal or higher.
+So it holds that 
+
+$$k_{BH_q} \leq k_{BH_{\tilde{q}}}$$
+As the $K_{BH}$ is equal or larger when using $\tilde{q}$, by def of BH we reject more hypotheses and therefore the group of rejections of the BH procedure at level $q$ is contained in the group of rejections of the BH procedure at level $\tilde{q}$.
+
+Formally, 
+
+$$k_{BH_q}=max\{i:P_{(i)}\leq \frac{qi}{m}\} \Rightarrow P_{(k_{BH_q})}\leq \frac{qk_{BH_q}}{m} \leq \frac{\tilde{q} k_{BH_q}}{m}$$
+$$\Rightarrow P_{(k_{BH_q})} \leq \frac{\tilde{q} k_{BH_q}}{m}$$
+$$\Rightarrow k_{BH_q} \leq k_{BH_{\tilde{q}}}$$
+
+Where,
+
+$$k_{BH_{\tilde{q}}}=max\{i:P_{(i)}\leq \frac{\tilde{q} i}{m}\}$$
+
+This is because we found a PV, specifically  $P_{(k_{BH_q})}$ which is smaller or equal to its threshold when using BH at level $\tilde{q}$, 
+and because we are looking for the maximum $k$ then $k_{BH_{\tilde{q}}}$ can only be equal or greater than $k_{BH_q}$.
+
+
+The BH procedure at level $q$ rejects $H_{(1)}\cdots H_{(k_{BH_q})}$.
+
+The BH procedure at level $\tilde{q}$ rejects $H_{(1)}\cdots H_{(k_{BH_{\tilde{q}}})}$.
+
+Therefore $$\Re^{BH_q} \subseteq \Re^{BH_{\tilde{q}}}$$
+
+\newpage
+
+## Part D.
+
+From part C,
+
+$$\Re^{BH_q} \subseteq \Re^{BH_{\tilde{q}}}$$
+
+Therefore,
+
+$$\mathbb{S}^{BH_q} =\Re^{BH_q} \cap \mathbb{M}_1 \subseteq \Re^{BH_{\tilde{q}}} \cap \mathbb{M}_1 = \mathbb{S}^{BH_{\tilde{q}}}$$
+Where $\mathbb{M}_1$ is the group of false hypotheses, and $|\mathbb{M}_1| =m_1$,
+and $\mathbb{S}$ is the group of false hypotheses that were rejected, and $|\mathbb{S}| =S$.
+
+Therefore
+
+$$S^{BH_q} \leq S^{BH_{\tilde{q}}}$$
+
+And finally,
+
+$$\Pi_{BH_q}^{AVG} \underbrace{=}_{{Def. \ S}} \mathbb{E}(\frac{S^{BH_q}}{m_1}) \leq \mathbb{E}(\frac{S^{BH_{\tilde{q}}}}{m_1})= \Pi_{BH_{\tilde{q}}}^{AVG}$$
+
+
+## Part E.
+
+Given independent and continuous test statistics, $q$ and $m_0$, we would use the BH procedure at level $\tilde{q} =\frac{m}{m_0}\cdot q$
+and would get that BH still controls FDR at level $q$, by part A.
+
+As we showed before (part C), this would result in an equal or higher number of rejected hypotheses, meaning higher power compared to BH at level q(Part D).
+
+Thus we would get a more powerful prodecure, while still controlling FDR at the given level.
+
+\newpage
+
+## Part F.
+
+Generalised adaptive linear step-up procedure at level q:
+
+
+Let $P_i$ be the observed p-values of the test for $H_i$.
+
+1. Compute $\hat{m_0}$
+
+2. If $\hat{m_0}=0$ reject all hypotheses.
+
+3. Else, test the hypotheses using the linear
+step-up procedure at level $\hat{q}=\frac{qm}{\hat{m_0}}$.
+
+Where the linear step-up procedure at level $\hat{q}=\frac{qm}{\hat{m_0}}$ is defined as:
+
+Order the pvalues.
+
+If $P_{(m)} \leq \frac{mq}{\hat{m_0}}$ reject $H_{(1)},\cdots,H_{(m)}$ and stop.
+
+Else if $P_{(m-1)} \leq \frac{(m-1)q}{\hat{m_0}}$ reject $H_{(1)},\cdots,H_{(m-1)}$ and stop.
+
+...
+
+
+
+Else if $P_{(1)} \leq \frac{q}{\hat{m_0}}$ reject $H_{(1)}$ and stop.
+
+Otherwise, reject no hypothesis.
+
+Using the adaptive linear step-up procedure, assuming that $\hat{m_0} \leq m$:
+
+$$\forall i:\hat{c_i}=\frac{i\cdot q }{\hat{m_0}} \geq \frac{i\cdot q }{m}=c_i$$
+
+This means that the adaptive method is more permissive (less conservative) than BH, thus we would get a more powerful prodecure, as we showed in the previous sections. Note that in this case FDR control is not promised, as it depends on the method of calculation of $\hat{m_0}$.
+
+## Part G.
+
+
+The estimator for FDP that the BH procedure makes use of is 
+
+
+$$\hat{FDP}(\alpha) = \frac{m\alpha}{R(\alpha)}$$
+
+Where $R(\alpha) = \sum\limits_{i=1}^mI(P_i\leq\alpha)$, the number of hypotheses such that their p values are less than $\alpha$, meaning the number of rejected hypotheses.
+
+\newpage
+
+## Part H.
+
+BH adaptive at level $q$ uses the BH procedure at level $\tilde{q}$, therefore:
+
+$$k_{BH-ADP}=max\{i:P_{(i)}\leq \frac{\tilde{q}i}{m}=\frac{qi}{\hat{m_0}}\}$$
+
+We will prove that 
+$P_{(k_{BH-ADP})}$ is the solution of the next maximum optimization problem:
+
+$$\underset{\alpha}{max}  \ \ R(\alpha) \ \  s.t. \frac{\hat{m_0}\alpha}{R(\alpha)}\leq q$$
+we will show that we can look only at $\alpha \in P_{(1)},...,P_{(m)}$  to find the solution of the problem.
+
+Define $P_{(m+1)}=1$.
+
+(1) If for some $i$ it holds that $P_{(i)} \leq \alpha \leq P_{(i+1)}$ so $R(\alpha)=i$ because we reject $H_{(1)},\cdots,H_{(i)}$ 
+(2) In addition assume $\alpha$ sustains the constraint of the problem
+
+From (1) and (2):
+
+$$\frac{\hat{m_0}P_{(i)}}{i} \underbrace{\leq}_{1} \frac{\hat{m_0}\alpha}{R(\alpha)} \underbrace{\leq}_{2} q$$
+
+so we can look only on $\alpha \ s.t. \alpha \in \{P_{(1)},...,P_{(m)}\}$
+
+for $\alpha=P_{(k_{BH-ADP})}$ we get:
+
+(3) $R(\alpha)=k_{BH-ADP}$ because we reject $H_{(1)},\cdots,H_{(k_{BH-ADP})}$ 
+
+(4) $P_{(k_{BH-ADP})} \leq  \frac{k_{BH-ADP} \ q}{\hat{m_0}}$
+by def of procedure.
+
+From (3) and (4) we get:
+
+$$\frac{\hat{m_0}P_{(k_{BH-ADP})}}{k_{BH-ADP}} \leq q$$
+
+$$\rightarrow \frac{\hat{m_0}\alpha}{R(\alpha)}=\frac{\hat{m_0}P_{(k_{BH-ADP})}}{k_{BH-ADP}}\leq q$$
+
+so the constraint of the optimization problem holds, and from def of the procedure:
+
+$$P_{(k_{BH-ADP}+1)} > \frac{(k_{BH-ADP}+1)q}{\hat{m_0}}$$
+
+$$\rightarrow \frac{P_{(k_{BH-ADP}+1)}\hat{m_0}}{k_{BH-ADP}+1}>q$$
+
+so we got that $k_{BH-ADP}$ is the maximum $\alpha$ that holds the constraints.
+
+$\widehat{FDP}=\widehat{\frac{V(\alpha)}{R(\alpha)}}$ when $\hat{V(\alpha)}=\hat{m_0}\alpha$ so the constraint is exactly $\widehat{FDP_{adp}}\leq q$
+
+Explanation on the reasoning behind $\widehat{FDP}$:
+
+$$FDP(\alpha)=\frac{V(\alpha)}{R(\alpha)}$$
+
+We don't know $V(\alpha)$ so to estimate it we use $\mathbb{E}(V(\alpha))$
+
+$$\mathbb{E}(V(\alpha)) = m_0P(P_i\leq\alpha) \underbrace{\leq}_{(*)} m_0 \alpha$$
+(*) Under $H_0:P(P_i\leq\alpha) \leq \alpha$
+
+We take the estimator for the upperbound of $\mathbb{E}(V(\alpha))$, which is  $\widehat{V(\alpha)}=\hat{m_0}\alpha$ 
+
+## Part I
+
+for the optimization problems :
+
+(1)BH: $\underset{\alpha}{max}  \ \ R(\alpha) \ \  s.t. \widehat{FDP}\leq q$
+
+(2)ADP_BH: $\underset{\alpha}{max}  \ \ R(\alpha) \ \  s.t. \widehat{FDP_{adp}}\leq q$
+
+assuming $\hat{m_0}\leq m$ we get:
+$\widehat{FDP_{adp}}=\frac{\hat{m_0}\alpha}{R(\alpha)} \leq \frac{m\alpha}{R(\alpha)}=  \widehat{FDP}$
+
+from the assumption $\hat{m_0}\leq m$ we get: $\alpha^*_{adp} \geq \alpha^*$ 
+
+this is because given $\alpha^*$ the solution of problem (1), in problem (2) we decrease the term that we have upperbound constraints for, therefor the $\alpha^*_{adp}$ can only be equal or greater than $\alpha^*$.
+
+from the conclusion above and Given q for both procedures if $H_j \in \Re^{BH}$ it holds that $p_{(j)}\leq \alpha^* \leq \alpha_{adp}^* \Rightarrow p_{(j)}\leq \alpha_{adp}^* \Rightarrow H_j \in \Re^{BH-ADP}$
+
+Meaning $\Re^{BH} \subseteq \Re^{BH-ADP}$
+
+
+## Part J
+
+The motivation to create an adaptive BH procedure is to get a more powerful procedure.
+
+As we showed in Part D $\Pi_{BH_q}^{AVG} \leq \Pi_{BH_{\tilde{q}}}^{AVG}$. 
+
+An adaptive BH procedure at level $q$ is basically the BH procedure at level $\tilde{q}$
+
+Therefore an adaptive procedure at level $q$ would result in $\Pi_{BH_q}^{AVG} \leq \Pi_{ADP-BH_{q}}^{AVG}$.
+
+Note that even though it is not guaranteed that FDR is controlled at level q if $\hat{m_0} \approx {m_0}$ it can holds.
+
+\newpage
+
+# Task 2 - Unit 2
+
+## Part A.
+
+```{r BH_Procedure, echo=TRUE}
+#' The BH (Linear Step Up) Procedure
+#'
+#' @param pvalues - vector of p-values of length m
+#' @param q - the desired BH threshold, default is 0.05
+#'
+#' @return rejected_indexes, the indexes corresponding to the pvalues
+#'         related to the hypotheses that the BH Procedure at level q rejects
+BH_Procedure <- function(pvalues, q=0.05) {
+  pv_order <- order(pvalues) # Pvalues Order (indexes) in increasing order
+  m <- length(pvalues)
+  i <- m
+  # Step up itetarions
+  while (i >= 1) {
+    threshold <- i * q / m # BH threshold for the i'th ordered pvalue
+    
+    # On the first time entering the if condition - 
+    # stop and rejected hyptoheses 1 through i (including) 
+    if (pvalues[pv_order[i]] <= threshold) { 
+      rejected_indexes <- pv_order[1:i]
+      return(rejected_indexes)
+    }
+    i <- i - 1
+  }
+}
+```
+
+```{r BH_ADP_Procedure, echo=TRUE}
+#' The Median Adaptive BH (Linear Step Up) Procedure 
+#'
+#' @param pvalues - vector of p-values of length m
+#' @param q - the desired BH threshold (before applying the adaptive method),
+#'            default is 0.05
+#'
+#' @return rejected_indexes, the indexes corresponding to the pvalues
+#'         corresponding to the hypotheses that the 
+#'         Median Adaptive BH Procedure at level q rejects
+BH_ADP_Procedure <- function(pvalues, q = 0.05) {
+  m <- length(pvalues)
+  sorted_pv <- sort(pvalues) # Sorts the pvalues in ascending order
+  
+  # Estimate m0 according to Article definitions
+  # Ceiling is used to handle the case where m is odd.
+  # Note that the original instructions were to use floor
+  m0_hat <- (m - ceiling(m / 2)) / (1 - sorted_pv[ceiling(m / 2)])
+
+  # Update the threshold to be according to article defitions
+  q <- q * m / m0_hat 
+  
+  # Run the BH procedure with the *updated* q threshold
+  rejected_indexes <- BH_Procedure(pvalues, q) 
+  return (rejected_indexes)
+}
+```
+\newpage
+
+## Part B.
+
+We will show the construction of the estimator for $m_0$ as this shows the logic behind the estimator.
+
+$R(\alpha) = \sum\limits_{i=1}^m I(P_i\leq\alpha)$, the number of hypotheses such that their pvalues are less than $\alpha$, meaning the number of rejected hypotheses.
+it holds that $m_0=m-(R-V)$
+
+but, we dont know V so we can estimate it:
+$\widehat{V(\alpha)}=\mathbb{E}{(V(\alpha))}=\mathbb{E}[\Sigma _{i \in M_0 }I \{ H_i \ is \ rejected  \}]\overbrace {=}^{linearity+\\ expectancy \ of \ indicator }$
+
+$=\Sigma _{i \in M_0 }P(H_i \ is \ rejected)=\Sigma _{i \in M_0 }P(P_i \leq \alpha)\overbrace{=}^{(*)} m_0 \alpha$
+
+(*) the pvalues of the true null hypotheses are distributed uniform 0-1, as we proved in HW. so for $i \in M_0 : P(p_i \leq \alpha)=\alpha$
+
+and because we don't know $m_0 \rightarrow \widehat{V(\alpha)}=\hat{m_0}\alpha$
+
+and we get:
+$\hat{m_0}=m-(R(\alpha)-\hat{V(\alpha))}=m-(R(\alpha)-\hat{m_0}\alpha) \rightarrow$
+$\hat{m_0}-\hat{m_0}\alpha=m-R(\alpha)\rightarrow$
+$\hat{m_0}=\frac{m-R(\alpha)}{1-\alpha}$
+
+if we take $\alpha=p_{(\lceil{m/2}\rceil)}$ - the median, we reject all $p_{(1)},..,p_{(\lceil{m/2}\rceil)}$ so $R(\alpha)= \lceil{m/2}\rceil$
+
+Thus, $\hat{m_0}=\frac{m-R(\alpha)}{1-\alpha}=\frac{m-\lceil{m/2}\rceil}{1-p_{(\lceil{m/2}\rceil)}}$
+
+```{r create_indicators_2 function}
+# Creates and returns an indicator vector of length m
+# where for each index in the rejected_indexes vector the indicator vector is 1, otherwise 0
+create_indicators_2 <- function(m, rejected_indexes) {
+  
+  indicators <- rep(0, m)
+  
+  for(index in rejected_indexes){
+    indicators[index] <- 1  
+  }
+  return(indicators)
+}
+```
+
+
+```{r calculate_measures_helper_2 function}
+calculate_measures_helper_2 <- function(real_indicators, indicators) {
+  # given vector of real_indicators (corresponding to whether the null hypotheses are true or false)
+  # and indicators (corresponding to whether the the hypotheses where rejected or not)
+  # Calculates I(V>0), V, FDP and S/m1 and returns them in a list
+  
+  S <- sum(real_indicators == 1 & indicators == 1) # Rejected in practice and also should be rejected
+  V <- sum(real_indicators == 0 & indicators == 1) # Rejected in practice and also should not have been rejected (type 1 error)
+  R <- S + V # total rejected in practice
+  m1 <- sum(real_indicators) # total false null hypotheses
+  
+  # I(V>0)
+  if (V > 0){
+    ind.V <- 1
+  } else {
+    ind.V <- 0
+  }
+  
+  # FDP 
+  if (R > 0) {
+    FDP <- V / R
+  } else {
+    FDP <- 0
+  }
+  
+  # S/m1
+  if (m1 > 0) {
+    S.out.of.m1 <- S / m1
+  }
+  else{
+    S.out.of.m1 <- 0
+  }
+  
+  return(list(ind.V, FDP, V, S.out.of.m1))
+}
+```
+
+```{r Simulation_run_2 Generic Function}
+Simulation_run_2 <- function(m,
+                             m1,
+                             mu1,
+                             alpha = 0.05,
+                             iterations = 1000) {
+  # Calculates the FWER, PFER, FDR and Average Power from the given parameters
+  
+  # Arguments:
+  
+  #   m - int, number of Hypotheses being tested
+  #   m1 - int, number of incorrect hypotheses, should be between 0 and m
+  #   mu1 - expectation of the incorrect hypotheses, should be greater than zero
+  #   alpha - double, Type I error rate, default is 0.05, should be between zero and one
+  #   iterations - int, number of iterations for the simulations, default is 1000, should be greater than zero
+  
+  # Returns:
+  
+  #   List of BH.Result and ADP.Result -
+  #           each is a dataframe with one row,
+  #           each column corresponds to a different measure -
+  #           FWER, PFER, FDR and the average power
+  
+  # Initialize containers
+  bh.vec.ind.V <- data.frame()
+  bh.vec.V <- data.frame()
+  bh.vec.FDP <- data.frame()
+  bh.vec.S.out.of.m1 <- data.frame()
+  adp.vec.ind.V <- data.frame()
+  adp.vec.V <- data.frame()
+  adp.vec.FDP <- data.frame()
+  adp.vec.S.out.of.m1 <- data.frame()
+  
+  # Init containers for each m0/m
+  bh.results <- data.frame()
+  adp.results <- data.frame()
+  bh.avg.power <- data.frame()
+  adp.avg.power <- data.frame()
+  
+  # Create the real_indicators vector -
+  #first m1 elements are incorrect - '1', last m-m1 elemnts are correct - '0'
+  real_indicators <- rep(0, m)
+  if (m1 > 0) {
+    real_indicators[1:m1] <- 1
+  }
+  
+  # In each iteration
+  #   1. Randomly draw the m pvalues
+  #   2. Run the BH and adaptive BH procedures on the pvalues, at level alpha
+  #   2. For each procedure calculate and store the V, I(V>0), FDP, S/m1
+  for (i in 1:iterations) {
+    
+    pvalues <- create_pvalues(m, m1, mu1)
+    
+    for(mu_index in 1:length(mu1)){
+      
+      bh_order_pv <- BH_Procedure(pvalues[[toString(mu_index)]], alpha)
+      
+      adp_order_pv <- BH_ADP_Procedure(pvalues[[toString(mu_index)]], alpha)
+      
+      bh_indicators <- create_indicators_2(m, bh_order_pv)
+      
+      adp_indicators <- create_indicators_2(m, adp_order_pv)
+    
+    
+      c(ind.V, FDP, V, S.out.of.m1) %<-% calculate_measures_helper_2(real_indicators, bh_indicators)
+      
+      bh.vec.ind.V[mu_index,i] <- ind.V
+      bh.vec.V[mu_index,i] <- V
+      bh.vec.FDP[mu_index,i] <- FDP
+      bh.vec.S.out.of.m1[mu_index,i] <- S.out.of.m1
+      
+      c(ind.V, FDP, V, S.out.of.m1) %<-% calculate_measures_helper_2(real_indicators, adp_indicators)
+      
+      adp.vec.ind.V[mu_index,i] <- ind.V
+      adp.vec.V[mu_index,i] <- V
+      adp.vec.FDP[mu_index,i] <- FDP
+      adp.vec.S.out.of.m1[mu_index,i] <- S.out.of.m1
+    
+    }
+  }
+  
+  for(mu_index in 1:length(mu1)){
+
+    
+    # Estimate and return the PFER, FWER, FDR and the average power 
+    # of each procedure
+  
+    BH.PFER <- sum(bh.vec.V[mu_index,]) / iterations
+    
+    BH.FWER <- sum(bh.vec.ind.V[mu_index,]) / iterations
+    
+    BH.FDR <- sum(bh.vec.FDP[mu_index,]) / iterations
+    
+    BH.average.power <- sum(bh.vec.S.out.of.m1[mu_index,]) / iterations
+    
+    ADP.PFER <- sum(adp.vec.V[mu_index,]) / iterations
+    
+    ADP.FWER <- sum(adp.vec.ind.V[mu_index,]) / iterations
+    
+    ADP.FDR <- sum(adp.vec.FDP[mu_index,]) / iterations
+    
+    ADP.average.power <- sum(adp.vec.S.out.of.m1[mu_index,]) / iterations
+    
+    
+    # Concatenate the results
+    BH.result <-
+      structure(
+        list(BH.FWER, BH.PFER, BH.FDR, BH.average.power),
+        names = c("FWER", "PFER", "FDR", "average.power")
+      )
+    
+    ADP.result <-
+      structure(
+        list(ADP.FWER, ADP.PFER, ADP.FDR, ADP.average.power),
+        names = c("FWER", "PFER", "FDR", "average.power")
+      )
+    
+    result <- list(as.data.frame(BH.result), as.data.frame(ADP.result))
+    
+    
+    #Store the results
+    bh.result <- result[[1]]
+    adp.result <- result[[2]]
+    
+    bh.results <- rbind(bh.results, bh.result[1:3])   
+    adp.results <- rbind(adp.results, adp.result[1:3])  
+    bh.avg.power <- rbind(bh.avg.power, bh.result[4])   
+    adp.avg.power <- rbind(adp.avg.power, adp.result[4]) 
+  }
+  return(list(bh.results, adp.results, bh.avg.power, adp.avg.power))
+}
+```
+
+
+```{r Run Simulation}
+# Simulation for m=512, mu between 0 and 5 and m0/m = (0, m / 4, m / 2, 3 * m / 4, 7*m/8,m)
+vec.mu <- seq(0, 5, by = 0.5)
+m <- 512
+vec.m0 <- c(0, m / 4, m / 2, 3 * m / 4, 7*m/8,m)
+
+# Init full simulation containers
+bh.all.results1 <- list()
+adp.all.results1 <- list()
+bh.all.avg.power1 <- list()
+adp.all.avg.power1 <- list()
+
+for (m0 in vec.m0){
+  # Run the simulation for each m0, and for each mu given m0
+  c(bh.results, adp.results, bh.avg.power, adp.avg.power) %<-% Simulation_run_2(m = m, m1 = m-m0, mu1 = vec.mu)
+
+  #Store the results  
+  bh.all.results1[[toString(m0/m)]] <- bh.results
+  adp.all.results1[[toString(m0/m)]] <- adp.results
+  bh.all.avg.power1[[toString(m0/m)]] <- bh.avg.power
+  adp.all.avg.power1[[toString(m0/m)]] <- adp.avg.power
+}
+```
+
+```{r plot_measures 2 function}
+#' Plot the measures of bh and of adaptive bh, as a function of mu1, for a given mo/m ratio
+#'
+#' @param m0.m the given m0/m ratio
+#' @param y_lim the plot y limit, for correct display purposes, default = 2
+
+plot_measures <- function(m0.m, y_lim=2, draw_line=FALSE, x_legend = 0){
+
+  # Retrieve relevant data from simulation results
+  bh.results <- bh.all.results1[[m0.m]]
+  adp.results <- adp.all.results1[[m0.m]]
+  
+  # Creates an empty plot
+  plot(
+    1,
+    main = bquote("Measures vs "~ mu[1] ~" for " ~m[0]/m == .(m0.m)),
+    type = 'n',
+    xlim = c(0, 5),
+    ylim = c(0, y_lim),
+    xlab = bquote(mu[1]),
+    ylab = 'Values'
+  )
+  # Adds the lines
+  lines(vec.mu, bh.results$FDR , type = "o", lty=1, col = "black")
+  lines(vec.mu,  bh.results$FWER , type = "o",lty=2, col = "black")
+  lines(vec.mu, bh.results$PFER , type = "o", lty=3, col = "black")
+  lines(vec.mu, adp.results$FDR , type = "o",lty=1, col = "red")
+  lines(vec.mu,  adp.results$FWER , type = "o", lty=2,col = "red")
+  lines(vec.mu, adp.results$PFER , type = "o", lty=3,col = "red")
+  if(draw_line==TRUE){
+      lines(vec.mu, rep(0.05,11),col = "blue")
+  }
+  # Adds the legend
+  legend(x = x_legend, y = y_lim, 
+         legend = c("FDR-BH","FWER-BH","PFER-BH","FDR-ADP","FWER-ADP","PFER-ADP"), 
+         lty=c(1,2,3,1,2,3), col =c("black", "black", "black", "red", "red", "red"))
+
+}
+```
+
+```{r plot_power function}
+#' Plot the avg power of bh and of adaptive bh, as a function of mu1, for a given mo/m ratio
+#'
+#' @param m0.m the given m0/m ratio
+#' @param y_lim the plot y limit, for correct display purposes, default = 2
+plot_power <- function(m0.m, y_lim=2){
+  # Retrieve relevant data from simulation results
+  bh.power <- bh.all.avg.power1[[m0.m]]
+  adp.power <- adp.all.avg.power1[[m0.m]]
+  
+  # Creates an empty plot
+  plot(
+    1,
+    main = bquote("Average Power vs "~ mu[1] ~" for " ~m[0]/m == .(m0.m)),
+    type = 'n',
+    xlim = c(0, 5),
+    ylim = c(0, y_lim),
+    xlab = bquote(mu[1]),
+    ylab = 'Values'
+  )
+  # Adds the lines
+  lines(vec.mu, bh.power$average.power , type = "o", lty=1, col = "black")
+  lines(vec.mu, adp.power$average.power , type = "o",lty=1, col = "red")
+  
+  # Adds the legend
+  legend(0,1,legend = c( "ADP-BH","BH"), lty=1, col =c("red", "black"))
+
+}
+```
+
+\newpage
+
+## Part C.
+
+```{r "Part C code", fig.height=12, fig.width=12, warning=FALSE}
+# Plot the measures and power for m0/m=0,1 on a 2x2 grid
+par(mfrow=c(2,2))
+
+plot_measures("0", y_lim = 0.01)
+
+plot_power("0", y_lim=1)
+
+plot_measures("1", y_lim = 0.1)
+
+plot_power("1", y_lim=1)
+```
+
+*Note that the Y axis is different in the different plots
+
+
+For the case where $\frac{m_0}{m} = 0$, as $m>0$ we get that$m_0 =0$ and therefore by def of $V$, as $V$ is the number of incorrectly rejected hypotheses, $V=0$.
+
+Therefore, theoretically in our case, 
+
+1. $PFER=\mathbb{E}(V|V=0)=\mathbb{E}(0)=0$
+
+2. $FDR=\mathbb{E}(\frac{V}{R}|V=0,R>0)\cdot P(R>0)=\mathbb{E}(\frac{0}{R})=0$
+
+3. $FWER=P(V>0|V=0)=0$
+
+The simulation results lines up with what we expect in theory. 
+This is true  for both procedures, as it is indepenedent on $q$.
+
+
+
+For the case where $\frac{m_0}{m} = 1$, we get that$m_0 = m$ and $m_1=0$ as $m_1=m-m_0=m-m=0$, therefore by def of $S$, as $S$ is the number of correctly rejected hypotheses, $S=0$. 
+
+$Average\_Power=\mathbb{E}(\frac{S}{m_1}|m_1>0)\cdot P(m_1>0)+\mathbb{E}(0|m_1=0)\cdot P(m_1=0) = 0$
+
+The simulation results lines up with what we expect in theory. 
+This is true  for both procedures, as it is indepenedent on $q$.
+
+
+The relationship between $FWER$, and $FDR$, for the case where $\frac{m_0}{m} = 1$:
+
+For the case where $\frac{m_0}{m} = 1$, we get that$m_0 = m$ and $m_1=0$ as $m_1=m-m_0=m-m=0$, therefore by def of $V$, as $V$ is the number of incorrectly rejected hypotheses, $V=R$.
+
+Therefore, 
+
+$FDR=\mathbb{E}(\frac{V}{R}|V=R,R>0)\cdot P(R>0) =\mathbb{E}(1|V=R,R>0)\cdot P(R>0) = P(R>0)=P(V>0)=FWER$
+
+In the simulation:
+
+For the BH Procedure:
+
+* FWER:
+```{r "show bh fwer"}
+(bh.all.results1[["1"]]$FWER)
+```
+
+* FDR:
+```{r "show bh fdr"}
+
+(bh.all.results1[["1"]]$FDR)
+```
+
+For the adaptive BH Procedure:
+
+* FWER:
+```{r "show bh-adp fwer"}
+(adp.all.results1[["1"]]$FWER)
+```
+
+* FDR:
+```{r "show bh-adp fdr"}
+(adp.all.results1[["1"]]$FDR)
+```
+
+We got that $FDR=FWER$ and the simulation results lines up with what we expect in theory.
+This is true  for both procedures, as it is indepenedent on $q$.
+
+
+
+\newpage
+
+## Part D
+
+```{r "plot measures 2x2 zoomed", fig.height=12, fig.width=12, warning=FALSE}
+# Plots the measures vs mu1 for each m0/m ratio, on a 2x2 grid
+par(mfrow=c(2,2))
+
+plot_measures("0.25", y_lim=11)
+
+plot_measures("0.5", y_lim=15)
+
+plot_measures("0.75", y_lim = 8)
+
+plot_measures("0.875", y_lim = 4)
+```
+
+*Note that the Y axis is different in the different plots
+
+
+```{r "plot power 2x2", fig.height=12, fig.width=12, warning=FALSE}
+# Plots the power vs mu1 for each m0/m ratio, on a 2x2 grid
+par(mfrow=c(2,2))
+
+plot_power("0.25", y_lim=1)
+
+plot_power("0.5", y_lim=1)
+
+plot_power("0.75", y_lim = 1)
+
+plot_power("0.875", y_lim = 1)
+```
+
+
+### 1. 
+
+As we proved in Unit 1 Part D, in theory $\Pi_{BH_q}^{AVG} \leq \Pi_{BH_{\tilde{q}}}^{AVG}$.
+
+Meaning that the average power of the BH-adaptive procedure is higher or equal to that of the BH procedure. 
+
+As can be seen above, the simulation results lines up with what we expect in theory.
+
+\newpage 
+
+### 2. 
+
+As the proportion increases the difference in the average powers decreases.
+
+This behaviour is expected.
+
+Explanation:
+
+The adaptive procedure uses an estimator for $m_0$. 
+
+Assuming $\hat{m_0}\leq m$ (*), and the trivial assumption that $\hat{m_0}$ has a positive correlation with $m_0$, 
+
+It holds that $\frac{m}{\hat{m_0}}\geq 1$.
+
+As $\frac{m_0}{m}$ increases it means that $m_0$ increases (as $m$ is const.), therefore $\hat{m_0}$ increases. Therefore  $\frac{m}{\hat{m_0}}$ decreases.
+
+Therefore, $\tilde{q}=\frac{m}{\hat{m_0}}q$ gets closer to  $q$.
+
+So the adaptive BH applies the BH procedure at a level that gets closer to $q$ as the proportion increases, so the group of rejects ($\Re$) becomes more similar, and therefore the average power as well. 
+
+(*)  $\hat{m_0}\geq m$ can happen by def of $\hat{m_0}$, but this is an extreme case, thus we ignore it. 
+
+\newpage
+
+### 3. 
+
+As learnt in class, if the test statistics are independent and continuous FDR of the BH procedure for the hypotheses is $FDR=\frac{m_0}{m}\cdot q$. 
+
+As a function of $\mu_1$ the $FDR$ is constant. It depends on the $q$ BH-threshold, $m$ and $m_0$.
+
+Let's zoom in on the graphs:
+
+```{r "plot measures 2x2 zoomed 2", fig.height=12, fig.width=12, warning=FALSE}
+# Plots the measures vs mu1 for each m0/m ratio, on a 2x2 grid
+par(mfrow=c(2,2))
+
+plot_measures("0.25", y_lim=0.05, x_legend = 3.5)
+
+plot_measures("0.5", y_lim=0.1, x_legend = 3.5)
+
+plot_measures("0.75", y_lim = 0.1, x_legend = 3.5)
+
+plot_measures("0.875", y_lim = 0.1, x_legend = 3.5)
+```
+
+*Note that the Y axis is different in the different plots
+
+
+As can be seen above, the simulation results lines up with what we expect in theory.
+
+Note that there are slight changes in the $FDR$ for each $\mu_1$, as even though we drawed the random variable
+only once for all $\mu_1$s, the actual pvalues still change for each $\mu_1$ and therefore the procedures reject a few hypotheses more or less due to randomness.
+
+\newpage
+
+### 4. 
+
+Let's plot the upper bound, $FDR=0.05$:
+
+```{r "plot measures 2x2 with line", fig.height=12, fig.width=12, warning=FALSE}
+# Plots the measures vs mu1 for each m0/m ratio, on a 2x2 grid
+par(mfrow=c(2,2))
+
+plot_measures("0.25", y_lim=0.05, draw_line = TRUE, x_legend = 3.5)
+
+plot_measures("0.5", y_lim=0.1, draw_line = TRUE, x_legend = 3.5)
+
+plot_measures("0.75", y_lim = 0.1, draw_line = TRUE, x_legend = 3.5)
+
+plot_measures("0.875", y_lim = 0.1, draw_line = TRUE, x_legend = 3.5)
+```
+
+
+The FDR of the adaptive BH is closer to the upper bound than the BH procedure.
+
+According to Unit 1, Part A & B:
+
+$FDR_{BH_q}=\frac{m_0}{m}\cdot q$
+
+$FDR_{\tilde{q}}=\frac{m_0}{m}\cdot \tilde{q} \underbrace{=}_{\mbox{by def. of }\tilde{q}} \frac{m_0}{m}\frac{m}{\hat{m_0}}\cdot q = \frac{m_0}{\hat{m_0}}\cdot q$
+
+And if $\hat{m_0}$ is close enough to $m_0$ then $FDR_{\tilde{q}}\approx q$
+
+
+$FDR_{BH_q} \leq FDR_{ADP-BH\tilde{q}} \approx q=$ Desired FDR.
+
+
+As can be seen above, the simulation results lines up with what we expect in theory.
+
+
+### 5
+
+#### 5.1
+
+FWER:
+
+For both procedures, we can see that $FWER$ can get to 1 (it's upper bound), meaning that the procedures do not control FWER, at any reasonable level.
+
+Specifically $FWER > 0.05$.
+
+
+PFER:
+
+For both procedures, $PFER$ can increase unboundedly, as as $m$ and $m_0$ increase $V$ can increase as well.
+
+Specifically $PFER > 0.05$.
+
+
+Meaning that the procedures do not control PFER, at any reasonable level. 
+
+#### 5.2
+
+For both FWER and PFER, the adaptive BH has higher values than the BH procedure.
+
+This is intuitive.
+
+As we proved in Unit 1 part C, the adaptive BH rejects equal or more hypotheses than BH. 
+
+Therefore it is intuitive that the adaptive BH will make more false rejections than BH, thus resulting in a higher or equal PFER and FWER, by their defitions.
+
+Explanation:
+
+As proven in Unit 1 part C:
+
+$\Re^{BH_q} \subseteq \Re^{ADP-BH_{\tilde{q}}}$
+
+Given the same $M_0$ for both procedures, we get $\mathbb{V}^{BH_q} \subseteq \mathbb{V}^{ADP-BH_{\tilde{q}}}$ as $\mathbb{V}=\Re\cap M_0$.
+
+Therefore  $V^{BH_q} \leq V^{ADP-BH_{\tilde{q}}}$, so from probability:
+
+Thus, $FWER_{BH} = P(V_{BH}>0) \leq P(V_{ADP-BH}>0) = FWER_{ADP-BH}$
+
+And, $PFER_{BH} = \mathbb{E}(V_{BH}) \leq \mathbb{E}(V_{ADP-BH}) = PFER_{ADP-BH}$
+
+
+#### 5.3
+
+For both FWER and PFER, and for both the adaptive BH procedure and the BH procedure as $\mu_1$ increases, the measures increase as well (till reaching an upper bound).
+
+Explanatation:
+
+As $\mu_1$ increases, thus the difference between $\mu_1$ and $\mu_0=0$ increases. Therefore the p-values of the false null hypotheses ($M_1$) gets smaller and approach 0.
+
+In the procedures, the p-values are sorted in ascending order. Thus we get a situation in which the p-values of the false null hypotheses are (probably) smaller than the p-values of the true null hypotheses.
+
+The p-values of the false null hypotheses increase the threshold for the p-values of the true null hypotheses, thus it is easier to reject the true null hypotheses and make a type 1 error (V increases).
+
+
+Upper bound of FWER is 1 as it is a probability, and upper bound of PFER is $m_0$.
+
+\newpage
+
+### 6. 
+
+
+
+#### 6.1
+
+As $\mu_1$ increases, the average power increases, for both procedures. 
+
+This is intuitive as as $\mu_1$ increases, p-values of the false null hypotheses ($M_1$) gets smaller and approach 0. Thus the procedures reject more hypotheses that increase $S$.
+
+#### 6.2
+
+The average power increases as $\frac{m_0}{m}$ decreases ($m_0$ decreases), for a given $\mu_1$. 
+
+When there are more false null hypotheses we get more justified rejections ($S$).
+
+#### 6.3 
+
+The adaptive BH procedure doesn't control FDR.
+
+This can be seen in part D section 3, for example for  $\frac{m_0}{m}=0.875$ and for $\mu_1=2$ we get $FDR > 0.05$. 
+
+#### 6.4
+
+As learnt in class, for any procedure it is supposed to hold that
+
+$$FDR\leq FWER \leq PFER$$
+
+In this simulation the results we got correspond with the theory.
+
+```{r message=FALSE, warning=FALSE}
+# Installing the library and downloading the data
+if(!requireNamespace("BiocManager")){
+install.packages("BiocManager")
+}
+# BiocManager::install("phyloseq") # Uncomment if not already installed
+library("phyloseq")
+data("GlobalPatterns")
+```
+
+\newpage
+
+# Task 3
+
+## Part A.
+
+Number of bacteria populations of phylum type 'Proteobacteria', found in at least one sample:
+
+```{r}
+ex3 <- subset_taxa(GlobalPatterns, Phylum == "Proteobacteria")
+abundances <- ex3@otu_table
+abundances<-abundances[apply(abundances[,-1], 1, function(x) !all(x==0))]
+nrow(abundances)
+```
+
+## Part B.
+
+### B.1
+
+The ANOVA model (normal based, linear model) for a given bacteria population $K$:
+
+$$Y^K_{ij} = \mu_i^K +\varepsilon^K_{i,j}$$
+$$Y^K_{ij} \sim N(\mu_i^K,\sigma_K^2), \ i=1,\cdots, 9 \ ,j=1,\cdots,n_i$$
+Where each $i$ represents a sample type (environment), and $n_i$ is the number of samples taken from sample type $i$.
+
+
+### B.2
+
+$$H_0^K : \mu_1^K =\cdots = \mu_9^K$$
+$$H_1^K: Otherwise$$
+
+The null hypothesis claims that the expectation of the prevalence of bacteria population $K$ is the same in each environment.
+
+If $H_0^K$ is rejected this means that their prevalence distribution differs in different environments, meaning $K$ is an 'interesting' population.
+
+
+### B.3
+
+The assumptions in ANOVA are that
+
+1. Each $\varepsilon^K_{ij}$ comes from a normal distribution
+
+2. The variance ($\sigma_K^2$) of prevalence of bacteria population K is the same in each environment  (Homogeneity of variances)
+
+3. The data points are independent, so each sample is randomly selected and independent
+
+By the above assumptions we get that each $\varepsilon^K_{ij}$ is independent and is distributed $N(0,\sigma^2)$.
+
+Thus each $Y^K_{ij} \sim N(\mu_i^K,\sigma^2)$
+
+### B.4
+
+```{r}
+# Displays the table
+sample_types <- GlobalPatterns@sam_data[,c(1,6),drop=FALSE]
+# Fix weird display bug
+#column_to_rownames(sample_types[,1:2])
+sample_types <- data.frame(sample_types[,2])
+names(sample_types) <- c("Type")
+kable(sample_types,
+      caption = "Sample type of each sample",
+      align = c("l", "c"))%>%
+  kable_styling("striped", latex_options = "hold_position")
+```
+
+
+```{r}
+# Displays the table
+kable(abundances[c("249529", "129416", "103231", "327333", "255272"),c(1:8)],
+      caption = "Otu Table for the 5 selected Bacteria Populations") %>%
+  kable_styling("striped", latex_options = "hold_position")
+```
+
+```{r}
+# Displays the table
+kable(abundances[c("249529", "129416", "103231", "327333", "255272"),c(9:17)],
+      caption = "Otu Table for the 5 selected Bacteria Populations") %>%
+  kable_styling("striped", latex_options = "hold_position")
+```
+
+```{r}
+# Displays the table
+kable(abundances[c("249529", "129416", "103231", "327333", "255272"),c(18:26)],
+      caption = "Otu Table for the 5 selected Bacteria Populations") %>%
+  kable_styling("striped", latex_options = "hold_position")
+```
+
+For the 5 bacteria populations that we display, the prevalence in almost each population and for each sample in each environment is zero, 
+meaning the prevalence is many times exactly the same.
+This is unlikely if we assume the random variables to come from a normal distribution, 
+because the r.v. is continous and the probability that it will get the same values is zero, thus it seems that the normality assumption does not hold. 
+
+
+\newpage
+
+## Part C.
+
+```{r echo=TRUE}
+pvalues <- vector()
+g <- as.vector(GlobalPatterns@sam_data$SampleType) # Sample Types in order as in data 
+for (row_index in 1:nrow(abundances)) {
+  # For each bacteria population perform the kruskal test 
+  x <- as.vector(abundances[row_index])
+  pvalues[row_index] <- kruskal.test(x, g)[["p.value"]]
+}
+```
+
+
+
+## Part D.
+
+Number of interesting bacteria populations, meaning number of pvalues that are smaller than 0.05:
+
+```{r}
+length(pvalues[pvalues<0.05])
+```
+
+The problem is that we did not account for the multiple comparisons!
+
+If we do not account for the multiple comparisons, then the error measures such as FWER and FDR are not controlled. 
+
+Usually researchers need to control these measures in order to show that their results are meaningful thus if they are not controlled
+their results are deemed not reliable.
+
+Not accounting for the multiple comparisons can result in us rejecting more hypotheses just because we performed more comparisons.
+
+So possibly more hypotheses are rejected just due to chance and not because they are false.
+
+In particular this can result in rejecting more true null hypotheses, thus making more type I mistakes.
+
+\newpage
+
+## Part E.
+
+
+```{r BH_ADP-BH_Hochberg, echo=TRUE}
+# BH from Mission 2
+reject.indexes.bh <- BH_Procedure(pvalues, q=0.05)
+
+# Adaptive BH from Mission 2
+reject.indexes.adp.bh <- BH_ADP_Procedure(pvalues, q=0.05)
+
+# Hochberg
+pvalues.hochberg <- p.adjust(pvalues,method = 'hochberg')
+```
+
+We define 'Discovery' by procedure X - If the procedure X determines a population to be interesting. So we think (aka the procedure rejects the null hypothesis of this population) that their prevalence distribution differs in different environments, 
+and 'False Discovery' by procedure X - If the procedure X determines a population as a discovery, but it is not. Meaning that the population's actual prevalence distribution is equal in all different environments, but we thought otherwise.
+
+All three procedures deal with the problem by accounting for the multiple comparisons in someway or another. 
+
+1. BH
+
+The BH procedure controls the FDR rate at level 0.05 (if the test statistics are independent/independent and continuous/positive dependent). 
+
+Note that if we have no knowledge about the test statistics then the BH procedure controls the FDR rate at level $0.05*(1+\frac{1}{2}+\cdots + \frac{1}{m})$
+
+However, the FWER is not controlled at level 0.05 (unless all null hypotheses are true and then FWER=FDR)
+
+In our case it means that the expectancy of the number of false discoveries by BH out of the total number of discoveries by BH is at most 5 percent (FDR).
+
+2. Adaptive BH
+
+The adaptive BH does not control the FDR rate. However, if the estimator for $m_0$ as defined in the procedure is equal
+(or close enough) to the actual $m_0$ then it does control the FDR.
+
+In our case it means that the expectancy of the number of false discoveries by
+the Adaptive BH out of the total number of discoveries by the Adaptive BH is at most 5 percent (FDR, if the estimator is good enough).
+
+
+Unfortunately FWER is not controlled at level 0.05.
+
+
+3. Hochberg
+
+Hochberg's procedure promises us control of the FDR and of the FWER, 
+under the assumption that the test statistics are continuous and independent/positive dependent.
+
+In our case it means that the expectancy of the number of false discoveries by Hochberg out of the total number of discoveries by Hochberg is at most 5 percent (FDR).
+
+In addition, the probability that the number of false discoveries by Hochberg is greater than zero is at most 5 percent (FWER).
+
+\newpage
+
+## Part F.
+
+* Number of discoveries (interesting bacteria populations) by BH procedure:
+
+```{r}
+(num.rejects.bh <- length(reject.indexes.bh))
+```
+
+This is smaller than the number of discoveries we got in part D (3507).
+
+\ \
+
+* Number of discoveries (interesting bacteria populations) by the Adaptive BH procedure:
+
+```{r}
+(num.rejects.adp.bh <- length(reject.indexes.adp.bh))
+```
+
+This is greater than the number of discoveries we got in part D (3507).
+
+\ \
+
+* Number of discoveries (interesting bacteria populations) by the Hochberg procedure:
+
+```{r}
+(num.rejects.hochberg <- length(pvalues.hochberg[pvalues.hochberg<0.05]))
+```
+
+This is smaller than the number of discoveries we got in part D (3507).
+
+\newpage
+
+## Part G.
+
+It can be predicted that the number of rejected hypotheses by the BH procedure 
+will be less or equal to the number of rejected hypotheses made by the researcher in Part D.
+
+This corresponds with the result we got before.
+
+Proof:
+
+For a given $\alpha=0.05$, and given $H_i \in \Re^{BH}$ it holds that $P_{(i)}^{ADJ-BH} \leq \alpha$
+
+
+
+It holds that
+
+$$(1) \ \ \forall i \in \{1,\cdots, m\} : P_{(i)} \leq p_{(i)}^{ADJ-BH}$$
+From (1) (proved below the main proof)
+ 
+$$P_{(i)} \leq P_{(i)}^{ADJ-BH} \leq \alpha \  \Longrightarrow  \ P_{(i)} \leq \alpha$$
+
+Therefore, given that $\alpha$ is the same $\alpha$ used by the researcher, it holds that
+
+$$H_i \in \Re^{Researcher}$$
+Meaning
+
+$$\Re^{BH}  \subseteq \Re^{Researcher}$$
+
+Thus concluding the proof.
+
+Proof of (1):
+
+Define
+
+$$j^*= arg\min\limits_{i\leq j \leq m}\frac{m}{j}p_{(j)}$$
+
+
+It holds that $\forall i\leq j \leq m: P_{(i)}\leq P_{(j)}$ by def of order statistics.
+
+Therefore as $\frac{m}{j}\geq0$ it holds that $\frac{m}{j}P_{(i)}\leq \frac{m}{j}P_{(j)}$.
+
+In particular,
+
+$$(2) \ \ \frac{m}{j^*}P_{(i)}\leq \frac{m}{j^*}P_{(j^*)}$$
+
+So the adjusted pvalue according to the BH procedure is:
+
+$$p_{(i)}^{ADJ-BH}=\min\limits_{i\leq j \leq m}\frac{m}{j}p_{(j)}=\frac{m}{j^*}\cdot P_{(j^*)} \underbrace{\geq}_{(2)} \frac{m}{j^*}P_{(i)} \underbrace{\geq}_{\frac{m}{j^*} \geq 1} P_{(i)} $$
+
+Note, if $min\{1, \min\limits_{i\leq j \leq m}\frac{m}{j}p_{(j)}\} =1$  it is trivial that $p_{(i)}^{ADJ-BH}=1\geq P_{(i)}$ and the inequality holds as well.
+
+We got that
+
+$$(1) \ \ \forall i \in \{1,\cdots, m\} : p_{(i)}^{ADJ-BH}\geq P_{(i)}$$
+
+
+## Part H.
+
+From the previous sections, 
+
+$$0\leq 1512 \leq 3551$$
+
+Meaning that,
+
+$$|\Re^{Hochberg} | \leq |\Re^{BH}| \leq |\Re^{ADP-BH}|$$
+
+This is expected as even without seeing the actual data:
+
+From Task 2, Unit 1 part c and the fact that an adaptive BH procedure at level $q$ is basically the BH procedure at level $\tilde{q}$:
+
+$$\Re^{BH_q} \subseteq \Re^{BH_{\tilde{q}}} = \Re^{ADP-BH_q}$$
+
+And from HW 5 Q3 part D we know that,
+
+$$\Re^{Hochberg} \subseteq \Re^{BH}$$
+
+So in total,
+
+$$\Re^{Hochberg}  \subseteq \Re^{BH} \subseteq \Re^{ADP-BH}$$
+
+$$\Rightarrow |\Re^{Hochberg} | \leq |\Re^{BH}| \leq |\Re^{ADP-BH}|$$
+
+\newpage
+
+## Part I.
+
+### I.1
+
+#### Case 1.
+
+\ \ 
+
+The researcher is interested in constructing Confidence Intervals (CIs) for the difference in expectation for interesting populations from the soil and fresh water (creek) environments, 
+and that the False coverage rate (FCR) be controlled at level $q=0.05$.
+
+Where FCR is the expectation of proportion of $V$ out of $R$, using the same notation as before.
+
+In order to control the FCR, according to the theorem as learnt in class, the CIs should be constructed at level $1-\frac{|S(T)|}{m}q$.
+
+Where $|S(T)|$ is the number of interesting populations and m is the number of hypotheses (bacteria populations).
+
+Note that the theorem assumptions are that the decision rule $S(T)$ is simple, each marginal CI is monotone in the confidence level and the components of T are independent, where T is the vector of estimators.
+
+In our case, each CI should be constructed at level:
+
+```{r echo=TRUE}
+m <- nrow(abundances) 
+q <- 0.05
+s.T <- num.rejects.bh
+
+1- q*s.T/m
+```
+
+
+#### Case 2.
+
+\ \ 
+
+The researcher is interested in constructing CIs, and that $P(\exists i \in S: \Theta_i \notin CI_i)=P(V_{CI}(S)>0)\leq q=0.05$ 
+
+Where $S$ is any subgroup of $\{1,\cdots ,m \}$, and $V_{CI}(S)$ is the number of CIs that the parameter is not inside them, out of the constructed CIs $(S)$.
+
+To get the desired results, the CIs should be simultaneous at level $1-q$ , meaning each CI should be constructed at level $1-\frac{q}{m}$ (by bonferroni, as we proved in HM 2 question 2).
+
+As learnt in class this would provide control of $P(V_{CI}(S)>0)$ at level q.
+
+
+In our case, each CI should be constructed at level:
+
+```{r echo=TRUE}
+1-q/m
+```
+
+### I.2
+
+As the confidence level 1- $\alpha$ increases the CI is getting wider as learnt in class.
+
+In the previous section we got that the CIs of case 2 should be constructed at a level greater than that of the CIs of case 1.
+
+Therefore, in case 2 we would get wider CIs than in Case 1, for the same populations.
+
+This result is intuitive because we saw in class that $P(V_{CI}(S)>0)$ (which is the required assurance in case 2) is a more conservative measure than $FCR$ (which is the required assurance in case 1). Therefore, the CIs in case 2 will be wider (more conservative) than the CIs in case 1, as they control a more conservative measure. 
+
+
+
