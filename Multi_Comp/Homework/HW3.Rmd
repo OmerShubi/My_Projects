@@ -1,0 +1,154 @@
+---
+title: 'Multiple Comparisons: Homework - 2'
+output:
+  html_notebook: default
+  github_document: 
+    pandoc_args: --webtex
+  pdf_document: default
+---
+
+
+Submitted by: 
+=============
+
+Eyal Bar-Natan - 207630658
+
+Omer Shubi - 312236219
+
+
+
+
+# Question 2
+
+## Part a.
+```{r}
+rec <- recovery
+
+sum_desc=group_by(rec, blanket) %>%
+  summarise(
+    count = n(),
+    mean = mean(minutes, na.rm = TRUE),
+    sd = sd(minutes, na.rm = TRUE)
+  )
+sum_desc$blanket
+sum_desc$mean
+sum_desc$sd
+sum_desc
+```
+
+```{r}
+boxplot(minutes ~ blanket, data = rec,
+        xlab = "Blanket", ylab = "Minutes",
+        frame = FALSE, col = c("#00AFBB", "#E7B800", "#FC4E07"))
+```
+ 
+In our opinion it seems as if the recovery time when using blanket $b_2$ is different than the recovery time when using blankets $b_0, b_1$, and $b_3$.
+
+In our opinion it seems as if the recovery time when using blanket $b_2$ is lower than the recovery time when using blanket $b_0$.
+
+## Part b.
+
+The assumptions in ANOVA are that
+
+1. The data points are independent. 
+
+2. Each population comes from a normal distribution, and all have the same standard deviation.
+
+# TODO VERIFY FROM NOTEBOOK
+
+
+
+```{r}
+
+###Compute One-way ANOVA test
+rec.aov <- aov(minutes ~ blanket, data = rec)
+```
+```{r}
+#1. Homogeneity of variances
+
+plot(rec.aov, 1)
+
+```
+```{r}
+#Levene's test for equality of variances
+leveneTest(minutes ~ blanket, data = rec)
+
+```
+
+
+From the results we can conclude that indeed the variances are equal and the assumption holds.
+
+```{r}
+#Check the normality assumption
+# 2. Normality
+plot(rec.aov, 2)
+```
+```{r}
+#Shapiro-Wilk test on the ANOVA residuals: check normality
+# Extract the residuals
+aov_residuals <- residuals(object = rec.aov )
+# Run Shapiro-Wilk test
+shapiro.test(x = aov_residuals )
+```
+From the results we can conclude that indeed the normality assumption holds.
+
+
+
+## Part c.
+
+The Hypothesis test of ANOVA is:
+
+$H_0 : \mu_1 = \mu_2 \cdots = \mu_k$
+
+$H_1 : otherwise$
+
+
+```{r}
+
+# Summary of the analysis
+summary(rec.aov)
+```
+
+We got F value = 7.55
+
+P-Value = 0.000462
+
+
+```{r}
+###How is the p-value computed?
+1-pf(7.55, 3, 37)
+```
+
+## Part d.
+
+### 1.
+
+Pairwise Comparisons:
+
+$\forall \ i,j \in \{1,\cdots,k\}$
+
+$H_{0_{(i,j)}}:\mu_i = \mu_j$
+
+$H_{1_{(i,j)}}:\mu_i \ne \mu_j$
+
+### 2.
+
+For $\alpha = 0.05$:
+```{r}
+TukeyHSD(rec.aov, conf.level = 0.95)
+```
+
+The blankets that have a difference in terms of recovery time in expectance are:
+
+$(b_0, b_2), (b_2, b_3)$.
+
+
+For $\alpha = 0.1$:
+
+```{r}
+TukeyHSD(rec.aov, conf.level = 0.9)
+```
+
+The blankets that have a difference in terms of recovery time in expectance are:
+
+$(b_0, b_2), (b_1, b_2), (b_2, b_3)$.
