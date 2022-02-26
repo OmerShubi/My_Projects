@@ -1,11 +1,6 @@
 Multiple Comparisons: Homework - 2
 ================
 
-# Submitted by:
-
-Eyal Bar-Natan - 207630658
-
-Omer Shubi - 312236219
 
 # Question 1
 
